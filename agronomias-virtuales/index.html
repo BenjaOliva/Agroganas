@@ -1,0 +1,599 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+
+    <script>
+
+    </script>
+
+    <title id="section-title">Agroganas · Agronomías Virtuales </title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/carousel/">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/sass/ui-assets/components/_elements.scss">
+    <link rel="stylesheet" href="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/css/ui.css">
+    <link rel="stylesheet" href="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/css/responsive.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon"
+        href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png"
+        sizes="180x180">
+    <link rel="icon" href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png"
+        sizes="32x32" type="image/png">
+    <link rel="icon" href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png"
+        sizes="16x16" type="image/png">
+    <link rel="manifest" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/safari-pinned-tab.svg"
+        color="#563d7c">
+    <link rel="icon" href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png">
+    <meta name="msapplication-config"
+        content="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png">
+    <meta name="theme-color" content="#563d7c">
+
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+            /* Since CSS 2.1 */
+            word-wrap: break-word;
+            /* Internet Explorer 5.5+ */
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.4/examples/carousel/carousel.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+</head>
+
+<body>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="d-none d-md-block"></div>
+            <img class="bd-placeholder-img" width="230px" src="../../assets/logo agroganas nuevo-04.png"
+                focusable="false" role="img">
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../../index.html">Inicio </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Productos
+                            <span class="sr-only">(current)</span>
+                        </a>
+                        <ul class="dropdown-menu bg-dark scrollable-menu" aria-labelledby="navbarDropdown3">
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Agroinsumos">Insumos
+                                Agrícolas</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Maquinaria">Maquinaria
+                                Agricola</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Seguros">Seguros</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=AgriculturaPresicion">Agricultura de Presición</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Insumos">Insumos
+                                Nutricion Animal</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=NucleosCorrectoresSuplementos">Núcleos, Correctores y
+                                Suplementos</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=InstalacionesAgroganaderas">Instalaciones
+                                Agroganaderas</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Forrajes">Forrajes</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=InsumosVeterinarios">Insumos Veterinarios</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Instalaciones">Instalaciones</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Generadores">Generadores de Energia</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=BalanzasBasculas">Balanzas y Basculas</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Tanques">Tanques</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=CamposInmuebles">Campos
+                                - Estancias</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Herramientas">Herramientas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=HerramientasJardin">Herramientas de Jardin</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=ArticulosRurales">Articulos Rurales y Herramientas</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=OleoHidraulica">Oleo
+                                Hidraulica</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Herbicidas">Herbicidas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Insecticidas">Insecticidas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Fungicidas">Fungicidas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Inoculantes">Inoculantes</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=CuraSemillas">Curasemillas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Coadyuvantes">Coadyuvantes</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Aceites">Aceites</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Acaricidas">Acaricidas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Fitorreguladores">Fitorreguladores</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Nematicidas">Nematicidas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=SemillasAgrícolas">Semillas Agrícolas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=SemillasForrajeras">Semillas Forrajeras</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=FertilizantesSólidos">Fertilizantes Sólidos</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=FertilizantesLíquidos">Fertilizantes Líquidos</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=FertilizantesFoliares">Fertilizantes Foliares</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Bolsas">Bolsas
+                                Silos</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Combustibles">Combustibles</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Repuestos">Repuestos</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Labranza">Labranza</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Tractores">Tractores</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Cosechadoras">Cosechadoras</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Sembradoras">Sembradoras</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Fumigadoras">Fumigadoras</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=Tolvas">Tolvas</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Fertilizadoras">Fertilizadoras</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Acoplados">Acoplados</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Cabezales">Cabezales</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=Vehículos">Vehículos</a>
+                            <a class="dropdown-item text-white"
+                                href="../sections/index.html?cat=SERVICIOS">SERVICIOS</a>
+                            <a class="dropdown-item text-white" href="../sections/index.html?cat=BANCOS">BANCOS</a>
+                        </ul>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="../../agronomias-virtuales/index.html">Agronomías Virtuales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../contacto.html">Contacto</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="../../inquietudes.html">Inquietudes</a>
+                    </li>
+                </ul>
+                <form hidden id="search-form" class="form-inline mt-2 mt-md-0" action="../../busqueda/index.html"
+                    method="GET">
+                    <input id="barraBusqueda" name="search" class="form-control mr-sm-2" type="text"
+                        placeholder="Buscar..." aria-label="Buscar" required>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        <br>
+        <br>
+        <style>
+            fieldset.active {
+                display: block !important
+            }
+
+            fieldset {
+                display: none
+            }
+
+            .pic0 {
+                width: 82%;
+                margin-left: 85px;
+                margin-right: auto;
+                display: block
+            }
+
+            .product-pic {
+                padding-left: auto;
+                padding-right: auto;
+                width: 100%
+            }
+
+            .thumbnails {
+                position: absolute
+            }
+
+            .fit-image {
+                width: 100%;
+                object-fit: cover
+            }
+
+            .tb {
+                width: 62px;
+                height: 62px;
+                border: 1px solid grey;
+                margin: 2px;
+                opacity: 0.4;
+                cursor: pointer
+            }
+
+            .tb-active {
+                opacity: 1
+            }
+
+            .thumbnail-img {
+                width: 60px;
+                height: 60px
+            }
+
+            @media screen and (max-width: 768px) {
+                .pic0 {
+                    width: 242px;
+                }
+            }
+        </style>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg">
+                    <div class="card shadow p-3 bg-light mb-5 rounded">
+                        <div class="card-body">
+                            <h4 id="first-title" class="card-title"> Agronomías Virtuales</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Provincia</label>
+                                    </div>
+                                    <select class="form-control selectpicker" id="select-provincia"
+                                        data-live-search="true" onchange="cambiarLocalidades()">
+                                        <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
+                                        <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
+                                        <option data-tokens="Chaco" value="Chaco">Chaco</option>
+                                        <option data-tokens="Chubut" value="Chubut">Chubut</option>
+                                        <option data-tokens="Cordoba" value="Córdoba">Cordoba</option>
+                                        <option data-tokens="Corrientes" value="Corrientes">Corrientes</option>
+                                        <option data-tokens="Entre Rios" value="Entre Rios">Entre Rios</option>
+                                        <option data-tokens="Formosa" value="Formosa">Formosa</option>
+                                        <option data-tokens="Jujuy" value="Jujuy">Jujuy</option>
+                                        <option data-tokens="La Pampa" value="La Pampa">La Pampa</option>
+                                        <option data-tokens="La Rioja" value="La Rioja">La Rioja</option>
+                                        <option data-tokens="Mendoza" value="Mendoza">Mendoza</option>
+                                        <option data-tokens="Misiones" value="Misiones">Misiones</option>
+                                        <option data-tokens="Neuquen" value="Neuquen">Neuquen</option>
+                                        <option data-tokens="Rio Negro" value="Rio Negro">Rio Negro</option>
+                                        <option data-tokens="Salta" value="Salta">Salta</option>
+                                        <option data-tokens="San Juan" value="San Juan">San Juan</option>
+                                        <option data-tokens="San Luis" value="San Luis">San Luis</option>
+                                        <option data-tokens="Santa Cruz" value="Santa Cruz">Santa Cruz</option>
+                                        <option data-tokens="Santa Fe" value="Santa Fe">Santa Fe</option>
+                                        <option data-tokens="Santiago del Estero" value="Sgo. del Estero">Sgo. del
+                                            Estero</option>
+                                        <option data-tokens="Tierra del Fuego" value="Tierra del Fuego">Tierra del Fuego
+                                        </option>
+                                        <option data-tokens="Tucuman" value="Tucuman">Tucuman</option>
+                                    </select>
+                                </div>
+                                <hr>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Localidad</label>
+                                    </div>
+                                    <select class="form-control selectpicker" id="select-localidad"
+                                        data-live-search="true">
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <button class="btn btn-primary" onclick="filtrarArray()"> Filtrar por
+                                                Ubicación</button>
+                                        </div>
+                                        <div class="col-5 text-right">
+                                            <button class="btn btn-success" onclick="loadAgros(arrayToFilter)"> Ver
+                                                Todos</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="container">
+                                <div class="row d-flex justify-content-center text-cente" id="agronomias-container">
+
+                                </div><!-- /.row -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container -->
+
+        <!-- Modal Imagenes/Video-->
+        <div class="modal fade" id="imgModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Imagenes</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-block text-left" type="button"
+                                                    data-toggle="collapse" data-target="#collapseOne"
+                                                    aria-expanded="true" aria-controls="collapseOne">
+                                                    <i class="fa fa-eye"></i> Imagenes
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                            data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                <div class="container-fluid px-sm-1 py-5 mx-auto">
+                                                    <div class="row justify-content-center">
+                                                        <div class="d-flex">
+                                                            <div class="">
+                                                                <div class="d-flex flex-column thumbnails"
+                                                                    id="imgThums">
+
+                                                                </div>
+                                                                <div id="imgSrcs">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" id="video-section" hidden>
+                                        <div class="card-header" id="headingTwo">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-block text-left collapsed" type="button"
+                                                    data-toggle="collapse" data-target="#collapseTwo"
+                                                    aria-expanded="false" aria-controls="collapseTwo">
+                                                    <i class="fa fa-play"></i> Video
+                                                </button>
+                                            </h2>
+                                        </div>
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                            data-parent="#accordionExample">
+                                            <div class="card-body">
+                                                Aqui se insertara el video si corresponde
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-whatsapp">
+            <a href="https://api.whatsapp.com/send?phone=5199999999" target="_blank">
+                <img class="rounded-circle"
+                    src="https://rawcdn.githack.com/rafaelbotazini/floating-whatsapp/3d18b26d5c7d430a1ab0b664f8ca6b69014aed68/whatsapp.svg"
+                    height="75px" width="75px" alt="">
+            </a>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="container">
+            <p class="float-right"><a href="#">Ir al principio de pagina</a></p>
+            <p>© 2020 Agroganas · <a href="terminos-y-condiciones.html">Terminos y Condiciones</a></p>
+        </footer>
+    </main>
+
+    <style>
+        .dropdown-menu>a:hover,
+        .dropdown-menu>li>a:focus {
+            background-color: gray;
+        }
+
+        .scrollable-menu {
+            height: auto;
+            max-height: 400px;
+            overflow-x: hidden;
+        }
+
+        .dropdown-toggle::after {
+            transition: transform 0.15s linear;
+        }
+
+        .show.dropdown .dropdown-toggle::after {
+            transform: translateY(3px);
+        }
+
+        .dropdown-menu {
+            margin-top: 0;
+        }
+
+        .carousel {
+            height: 100%;
+        }
+
+        .carousel-item,
+        .carousel-inner,
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-item {
+            text-align: center;
+        }
+
+        #portfolio {
+            background: #356;
+        }
+    </style>
+
+    <style>
+        .btn-whatsapp {
+            display: block;
+            width: 70px;
+            height: 70px;
+            color: #fff;
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            border-radius: 50%;
+            line-height: 80px;
+            text-align: center;
+            z-index: 999;
+        }
+    </style>
+
+    <div id="hzImg"
+        style="border: 1px solid rgb(0, 0, 0); line-height: 0; overflow: hidden; padding: 2px; margin: 0px; position: absolute; z-index: 2147483647; border-radius: 3px; box-shadow: rgba(0, 0, 0, 0.33) 3px 3px 9px 5px; opacity: 1; top: 96px; left: -8px; background-color: rgb(0, 0, 0); cursor: pointer; pointer-events: none; display: none;">
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <style>
+        .dropdown-menu>a:hover,
+        .dropdown-menu>li>a:focus {
+            background-color: gray;
+        }
+
+        .scrollable-menu {
+            height: auto;
+            max-height: 400px;
+            overflow-x: hidden;
+        }
+
+        .dropdown-toggle::after {
+            transition: transform 0.15s linear;
+        }
+
+        .show.dropdown .dropdown-toggle::after {
+            transform: translateY(3px);
+        }
+
+        .dropdown-menu {
+            margin-top: 0;
+        }
+
+        .carousel {
+            height: 100%;
+        }
+
+        .carousel-item,
+        .carousel-inner,
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-item {
+            text-align: center;
+        }
+
+        #portfolio {
+            background: #356;
+        }
+    </style>
+
+    <script>
+        const $dropdown = $(".dropdown");
+        const $dropdownToggle = $(".dropdown-toggle");
+        const $dropdownMenu = $(".dropdown-menu");
+        const showClass = "show";
+
+        $(window).on("load resize", function () {
+            if (this.matchMedia("(min-width: 768px)").matches) {
+                $dropdown.hover(
+                    function () {
+                        const $this = $(this);
+                        $this.addClass(showClass);
+                        $this.find($dropdownToggle).attr("aria-expanded", "true");
+                        $this.find($dropdownMenu).addClass(showClass);
+                    },
+                    function () {
+                        const $this = $(this);
+                        $this.removeClass(showClass);
+                        $this.find($dropdownToggle).attr("aria-expanded", "false");
+                        $this.find($dropdownMenu).removeClass(showClass);
+                    }
+                );
+            } else {
+                $dropdown.off("mouseenter mouseleave");
+            }
+        });
+    </script>
+    <script type="text/javascript" src="agronomias.js"></script>
+
+    <script src="geoFilter.js"></script>
+</body>
+
+</html>

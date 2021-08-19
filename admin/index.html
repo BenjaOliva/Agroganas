@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Agroganás | Administración</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.css"
+        integrity="sha512-gOfBez3ehpchNxj4TfBZfX1MDLKLRif67tFJNLQSpF13lXM1t9ffMNCbZfZNBfcN2/SaWvOf+7CvIHtQ0Nci2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+    <!-- Favicons -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <meta name="msapplication-config"
+        content="https://getbootstrap.com//docs/4.4/assets/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#563d7c">
+
+    <link rel="stylesheet" href="https://rawgit.com/adrotec/knockout-file-bindings/master/knockout-file-bindings.css">
+
+    <link rel="stylesheet"
+        href="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/sass/ui-assets/components/_elements.scss">
+    <link rel="stylesheet" href="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/css/ui.css">
+    <link rel="stylesheet" href="https://bootstrap-ecommerce.com/bootstrap-ecommerce-html/css/responsive.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+        crossorigin="anonymous">
+    <style>
+        .filedrag.hover {
+            border-color: #28a745;
+            border-style: solid;
+            box-shadow: inset 0 3px 4px #888;
+        }
+
+        .filedrag.hover .drag-label {
+            color: #28a745;
+        }
+
+        .toggle.btn-lg {
+            min-width: 12rem;
+            min-height: 2.815rem;
+        }
+    </style>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+    <!-- Filepond stylesheet -->
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <style>
+        .bg-gradient-dark {
+            background-color: #343a40;
+            background-image: linear-gradient(180deg, #343a40 10%, #343a40 100%);
+            background-size: cover;
+        }
+    </style>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Agroganás</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" id="btnHome" href="#">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Inicio</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Datos
+            </div>
+
+            <!-- Nav Item - Publicaciones -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Publicaciones</span>
+                </a>
+                <div id="collapsePages" class="collapse sidebar-collapser" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item" id="btnPublicacionNew" type="button">Nueva Publicación</a>
+                        <a class="collapse-item" id="btnPublicacionEdit" type="button">Editar Publicación</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Agronomias -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages2"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Agronomias</span>
+                </a>
+                <div id="collapsePages2" class="collapse sidebar-collapser" aria-labelledby="headingPages"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Acciones:</h6>
+                        <a class="collapse-item" id="btnAgronomiaNew" type="button">Agregar Agronomia</a>
+                        <a class="collapse-item" id="btnAgronomiaEdit" type="button">Editar Agronomia</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- Fin de Sidebar -->
+
+        <!-- Content Section -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main  -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <img class="img-profile rounded-circle"
+                                    src="https://i.pinimg.com/originals/0c/3b/3a/0c3b3adb1a7530892e55ef36d3be6cb8.png">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal2">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Perfil
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Salir
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Home Container -->
+                <div class="container-fluid section-container" id="home" hidden>
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Bienvenido al Administrador!</h1>
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+                        <!-- Cantidad de Publicaciones -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Cantidad de Publicaciones</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="cant-publicaciones">
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cantidad de Agronomias -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Cantidad de Agronomias</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="cant-agronomias">
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Grafico de Publicaciones por categoria -->
+                        <div class="col-lg-6 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Cantidad de Publicaciones por
+                                        Categoria</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Grafico de Publicaciones por Agronomia -->
+                        <div class="col-lg-6 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Cantidad de Publicaciones por
+                                        Agronomia</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <canvas id="myPieChart2"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Home Container -->
+
+
+                <!-- ---CONTAINERS PUBLICACIONES--  -->
+
+                <!-- Publicaciones New Container -->
+                <div class="container-fluid section-container" id="publicacionesNew" hidden>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Crear Publicacion-->
+                        <div class="col-lg-12 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Publicaciones - Crear Nueva
+                                        Publicación</h6>
+                                </div>
+                                <div class="card-body">
+                                    <input type="file" class="my-pond" id="test" name="filepond" multiple />
+                                    <form id="myForm">
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Agronomia</label>
+                                            </div>
+                                            <select id="select-agronomia" class="custom-select" name="Agronomia"
+                                                required>
+                                                <option value=""> -- SIN AGRONOMIA --</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3" id="Vendedor">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"
+                                                    id="inputGroup-sizing-default">Vendedor</span>
+                                            </div>
+                                            <input type="text" id="Publicante" name="Publicante" class="form-control"
+                                                placeholder="Ingrese el Publicante...">
+                                        </div>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Nombre</span>
+                                            </div>
+                                            <input type="text" id="Nombre" name="Nombre" class="form-control"
+                                                placeholder="Ingrese el Nombre..." required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descripcion</span>
+                                            </div>
+                                            <textarea type="text" id="Descripcion" name="Descripcion"
+                                                class="form-control" placeholder="Ingrese la Descripcion..."
+                                                required></textarea>
+                                        </div>
+                                        <hr>
+                                        <center>
+                                            <div class="custom-control custom-checkbox">
+                                                <input width="200px" id="checkboxProps" type="checkbox" checked
+                                                    data-toggle="toggle" data-on="Props. Items" data-off="Props. Texto"
+                                                    data-onstyle="success" data-offstyle="danger" data-size="lg">
+                                            </div>
+                                            <br>
+                                            <div class="input-group mb-3" id="Items">
+                                                <span class="input-group-text" id="basic-addon1">Propiedades</span>
+                                                <input width="100%" type="text" id="Propiedades" data-role="tagsinput"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="input-group mb-3" id="Texto" hidden>
+                                                <span class="input-group-text">Describa las Props.</span>
+                                                <textarea type="text" id="PropiedadesTexto" class="form-control"
+                                                    placeholder="Describa las Propiedades..."></textarea>
+                                            </div>
+                                        </center>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Categoria</label>
+                                            </div>
+                                            <select data-live-search="true" id="Categoria" class="form-control selectpicker" id="inputGroupSelect01"
+                                                required>
+                                                <option value="Agroinsumos">Agroinsumos</option>
+                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Seguros">Seguros</option>
+                                                <option value="AgriculturaPresicion">Agricultura de Presición</option>
+                                                <option value="Insumos">Insumos Nutricion Animal</option>
+                                                <option value="NucleosCorrectoresSuplementos">Núcleos, Correctores y
+                                                    Suplementos
+                                                </option>
+                                                <option value="InstalacionesAgroganaderas">Instalaciones Agroganaderas
+                                                </option>
+                                                <option value="Forrajes">Forrajes</option>
+                                                <option value="InsumosVeterinarios">Insumos Veterinarios</option>
+                                                <option value="Instalaciones">Instalaciones</option>
+                                                <option value="Generadores">Generadores de Energia</option>
+                                                <option value="BalanzasBasculas">Balanzas y Basculas</option>
+                                                <option value="Tanques">Tanques</option>
+                                                <option value="CamposInmuebles">Campos e Inmuebles</option>
+                                                <option value="Herramientas">Herramientas</option>
+                                                <option value="HerramientasJardin">Herramientas de Jardin</option>
+                                                <option value="ArticulosRurales">Articulos Rurales y Herramientas
+                                                </option>
+                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="Herbicidas">Herbicidas</option>
+                                                <option value="Insecticidas">Insecticidas</option>
+                                                <option value="Fungicidas">Fungicidas</option>
+                                                <option value="Inoculantes">Inoculantes</option>
+                                                <option value="CuraSemillas">Curasemillas</option>
+                                                <option value="Coadyuvantes">Coadyuvantes</option>
+                                                <option value="Aceites">Aceites</option>
+                                                <option value="Acaricidas">Acaricidas</option>
+                                                <option value="Fitorreguladores">Fitorreguladores</option>
+                                                <option value="Nematicidas">Nematicidas</option>
+                                                <option value="SemillasAgrícolas">Semillas Agrícolas</option>
+                                                <option value="SemillasForrajeras">Semillas Forrajeras</option>
+                                                <option value="FertilizantesSólidos">Fertilizantes Sólidos</option>
+                                                <option value="FertilizantesLíquidos">Fertilizantes Líquidos</option>
+                                                <option value="FertilizantesFoliares">Fertilizantes Foliares</option>
+                                                <option value="Bolsas">Bolsas Silos</option>
+                                                <option value="Combustibles">Combustibles</option>
+                                                <option value="Repuestos">Repuestos</option>
+                                                <option value="Labranza">Labranza</option>
+                                                <option value="Tractores">Tractores</option>
+                                                <option value="Cosechadoras">Cosechadoras</option>
+                                                <option value="Sembradoras">Sembradoras</option>
+                                                <option value="Fumigadoras">Fumigadoras</option>
+                                                <option value="Tolvas">Tolvas</option>
+                                                <option value="Fertilizadoras">Fertilizadoras</option>
+                                                <option value="Acoplados">Acoplados</option>
+                                                <option value="Cabezales">Cabezales</option>
+                                                <option value="Vehículos">Vehículos</option>
+                                                <option value="SERVICIOS">SERVICIOS</option>
+                                                <option value="BANCOS">BANCOS</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Provincia</label>
+                                            </div>
+                                            <select class="form-control selectpicker" id="select-provincia"
+                                                data-live-search="true" onchange="cambiarLocalidades()">
+                                                <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
+                                                <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
+                                                <option data-tokens="Chaco" value="Chaco">Chaco</option>
+                                                <option data-tokens="Chubut" value="Chubut">Chubut</option>
+                                                <option data-tokens="Cordoba" value="Córdoba">Cordoba</option>
+                                                <option data-tokens="Corrientes" value="Corrientes">Corrientes</option>
+                                                <option data-tokens="Entre Rios" value="Entre Ríos">Entre Rios</option>
+                                                <option data-tokens="Formosa" value="Formosa">Formosa</option>
+                                                <option data-tokens="Jujuy" value="Jujuy">Jujuy</option>
+                                                <option data-tokens="La Pampa" value="La Pampa">La Pampa</option>
+                                                <option data-tokens="La Rioja" value="La Rioja">La Rioja</option>
+                                                <option data-tokens="Mendoza" value="Mendoza">Mendoza</option>
+                                                <option data-tokens="Misiones" value="Misiones">Misiones</option>
+                                                <option data-tokens="Neuquen" value="Neuquén">Neuquén</option>
+                                                <option data-tokens="Rio Negro" value="Río Negro">Rio Negro</option>
+                                                <option data-tokens="Salta" value="Salta">Salta</option>
+                                                <option data-tokens="San Juan" value="San Juan">San Juan</option>
+                                                <option data-tokens="San Luis" value="San Luis">San Luis</option>
+                                                <option data-tokens="Santa Cruz" value="Santa Cruz">Santa Cruz</option>
+                                                <option data-tokens="Santa Fe" value="Santa Fe">Santa Fe</option>
+                                                <option data-tokens="Santiago del Estero" value="Santiago del Estero">
+                                                    Sgo.
+                                                    del
+                                                    Estero</option>
+                                                <option data-tokens="Tierra del Fuego"
+                                                    value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">Tierra
+                                                    del Fuego
+                                                </option>
+                                                <option data-tokens="Tucuman" value="Tucumán">Tucumán</option>
+                                            </select>
+                                        </div>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Localidad</label>
+                                            </div>
+                                            <select class="form-control selectpicker" id="select-localidad"
+                                                data-live-search="true">
+                                            </select>
+                                        </div>
+                                        <div class="mb-3" hidden>
+                                            <input class="form-control" type="file" id="photos" multiple>
+                                        </div>
+
+                                        <center>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" id="checkbox1" type="checkbox" checked
+                                                            data-toggle="toggle" data-on="Destacado"
+                                                            data-off="No Destacado" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="col">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" id="checkbox2" type="checkbox" checked
+                                                            data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
+                                                            data-onstyle="success" data-offstyle="danger"
+                                                            data-size="lg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </center>
+                                        <hr>
+                                        <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal"><i
+                                                class="fa fa-remove"></i> Cancelar</button>
+                                        <button type="submit" id="submit" class="btn btn-success"><i
+                                                class="fa fa-check"></i>
+                                            Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.container-fluid -->
+
+                    </div>
+
+                    <!-- Page Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Oliva Benjamin - 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Page Footer -->
+
+                </div>
+                <!-- End of Publicaciones New Container -->
+
+                <!-- Publicaciones Edit Container -->
+                <div class="container-fluid section-container" id="publicacionesEdit" hidden>
+
+                    <!-- Filtro Row -->
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <!-- Categorias Card Filter -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Publicaciones - Editar</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="formSearchEdit">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
+                                            <select data-live-search="true" id="searchCat" class="form-control selectpicker" id="inputGroupSelect01"
+                                                required>
+                                                <option value="Agroinsumos">Agroinsumos</option>
+                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Seguros">Seguros</option>
+                                                <option value="AgriculturaPresicion">Agricultura de Presición</option>
+                                                <option value="Insumos">Insumos Nutricion Animal</option>
+                                                <option value="NucleosCorrectoresSuplementos">Núcleos, Correctores y
+                                                    Suplementos
+                                                </option>
+                                                <option value="InstalacionesAgroganaderas">Instalaciones Agroganaderas
+                                                </option>
+                                                <option value="Forrajes">Forrajes</option>
+                                                <option value="InsumosVeterinarios">Insumos Veterinarios</option>
+                                                <option value="Instalaciones">Instalaciones</option>
+                                                <option value="Generadores">Generadores de Energia</option>
+                                                <option value="BalanzasBasculas">Balanzas y Basculas</option>
+                                                <option value="Tanques">Tanques</option>
+                                                <option value="CamposInmuebles">Campos e Inmuebles</option>
+                                                <option value="Herramientas">Herramientas</option>
+                                                <option value="HerramientasJardin">Herramientas de Jardin</option>
+                                                <option value="ArticulosRurales">Articulos Rurales y Herramientas
+                                                </option>
+                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="Herbicidas">Herbicidas</option>
+                                                <option value="Insecticidas">Insecticidas</option>
+                                                <option value="Fungicidas">Fungicidas</option>
+                                                <option value="Inoculantes">Inoculantes</option>
+                                                <option value="CuraSemillas">Curasemillas</option>
+                                                <option value="Coadyuvantes">Coadyuvantes</option>
+                                                <option value="Aceites">Aceites</option>
+                                                <option value="Acaricidas">Acaricidas</option>
+                                                <option value="Fitorreguladores">Fitorreguladores</option>
+                                                <option value="Nematicidas">Nematicidas</option>
+                                                <option value="SemillasAgrícolas">Semillas Agrícolas</option>
+                                                <option value="SemillasForrajeras">Semillas Forrajeras</option>
+                                                <option value="FertilizantesSólidos">Fertilizantes Sólidos</option>
+                                                <option value="FertilizantesLíquidos">Fertilizantes Líquidos</option>
+                                                <option value="FertilizantesFoliares">Fertilizantes Foliares</option>
+                                                <option value="Bolsas">Bolsas Silos</option>
+                                                <option value="Combustibles">Combustibles</option>
+                                                <option value="Repuestos">Repuestos</option>
+                                                <option value="Labranza">Labranza</option>
+                                                <option value="Tractores">Tractores</option>
+                                                <option value="Cosechadoras">Cosechadoras</option>
+                                                <option value="Sembradoras">Sembradoras</option>
+                                                <option value="Fumigadoras">Fumigadoras</option>
+                                                <option value="Tolvas">Tolvas</option>
+                                                <option value="Fertilizadoras">Fertilizadoras</option>
+                                                <option value="Acoplados">Acoplados</option>
+                                                <option value="Cabezales">Cabezales</option>
+                                                <option value="Vehículos">Vehículos</option>
+                                                <option value="SERVICIOS">SERVICIOS</option>
+                                                <option value="BANCOS">BANCOS</option>
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="cancelCat" class="btn btn-secondary"
+                                        data-dismiss="modal">Cancelar</button>
+                                    <a type="submit" class="btn btn-primary text-white"
+                                        onclick="getSearchCat(document.getElementById('searchCat').value)"
+                                        data-target="#exampleModalToggle2" data-toggle="modal"
+                                        data-dismiss="modal">Buscar</a>
+                                </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Resultado de Busqueda</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg">
+                                            <div id="products-container">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Oliva Benjamin - 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Page Footer -->
+                </div>
+                <!-- End of Publicaciones Edit Container -->
+
+                <!-- ---CONTAINERS AGRONOMIAS--  -->
+
+                <!-- Agronomias New Container -->
+                <div class="container-fluid section-container" id="AgronomiasNew" hidden>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-lg-12 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Agronomias Virtuales - Agregar</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="form-agronomias">
+                                        <input type="file" class="my-pond2" id="test2" name="filepond2"
+                                            accept="image/*" />
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">Nombre</span>
+                                            </div>
+                                            <input type="text" id="NombreAgro" class="form-control"
+                                                placeholder="Ingrese el Nombre..." required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descripcion</span>
+                                            </div>
+                                            <textarea type="text" id="DescripcionAgro" class="form-control"
+                                                placeholder="Ingrese la Descripcion..." required></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Provincia</label>
+                                            </div>
+                                            <select class="form-control selectpicker" id="select-provincia2"
+                                                data-live-search="true" onchange="cambiarLocalidadesAgro()">
+                                                <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
+                                                <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
+                                                <option data-tokens="Chaco" value="Chaco">Chaco</option>
+                                                <option data-tokens="Chubut" value="Chubut">Chubut</option>
+                                                <option data-tokens="Cordoba" value="Córdoba">Cordoba</option>
+                                                <option data-tokens="Corrientes" value="Corrientes">Corrientes</option>
+                                                <option data-tokens="Entre Rios" value="Entre Ríos">Entre Rios</option>
+                                                <option data-tokens="Formosa" value="Formosa">Formosa</option>
+                                                <option data-tokens="Jujuy" value="Jujuy">Jujuy</option>
+                                                <option data-tokens="La Pampa" value="La Pampa">La Pampa</option>
+                                                <option data-tokens="La Rioja" value="La Rioja">La Rioja</option>
+                                                <option data-tokens="Mendoza" value="Mendoza">Mendoza</option>
+                                                <option data-tokens="Misiones" value="Misiones">Misiones</option>
+                                                <option data-tokens="Neuquen" value="Neuquén">Neuquén</option>
+                                                <option data-tokens="Rio Negro" value="Río Negro">Rio Negro</option>
+                                                <option data-tokens="Salta" value="Salta">Salta</option>
+                                                <option data-tokens="San Juan" value="San Juan">San Juan</option>
+                                                <option data-tokens="San Luis" value="San Luis">San Luis</option>
+                                                <option data-tokens="Santa Cruz" value="Santa Cruz">Santa Cruz</option>
+                                                <option data-tokens="Santa Fe" value="Santa Fe">Santa Fe</option>
+                                                <option data-tokens="Santiago del Estero" value="Santiago del Estero">
+                                                    Sgo.
+                                                    del
+                                                    Estero</option>
+                                                <option data-tokens="Tierra del Fuego"
+                                                    value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">Tierra
+                                                    del Fuego
+                                                </option>
+                                                <option data-tokens="Tucuman" value="Tucumán">Tucumán</option>
+                                            </select>
+                                        </div>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Localidad</label>
+                                            </div>
+                                            <select class="form-control selectpicker" id="select-localidad2"
+                                                data-live-search="true">
+                                            </select>
+                                        </div>
+                                        <hr>
+                                        <button type="button" id="cancel2" class="btn btn-danger"
+                                            data-dismiss="modal"><i class="fa fa-remove"></i> Cancelar</button>
+                                        <button type="submit" id="submit2" class="btn btn-success"><i
+                                                class="fa fa-check"></i>
+                                            Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- Page Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Oliva Benjamin - 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Page Footer -->
+                </div>
+                <!-- End of Agronomias New Container -->
+
+                <!-- Agronomias Edit Container -->
+                <div class="container-fluid section-container" id="AgronomiasEdit" hidden>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Estadisticas de casas por atributos - Alquileres-->
+                        <div class="col-lg-12 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Agronomias Virtuales - Editar</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row d-flex justify-content-center text-cente"
+                                            id="agronomias-edit-container">
+
+                                        </div><!-- /.row -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- Page Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Oliva Benjamin - 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Page Footer -->
+                </div>
+                <!-- End of Agronomias Edit Container -->
+            </div>
+        </div>
+    </div>
+
+    <!-- OTROS ELEMENTOS -->
+
+    <!-- Modal Editar Publicacion - Formulario -->
+    <div class="modal fade" id="modalPublicacionEdit" tabindex="-1" role="dialog" aria-labelledby="modalPublicacionEdit"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Editar Publicacion:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="container" id="spinnerLoading1" hidden>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <br>
+                        <center>
+                            <div>
+                                <p>Guardando...</p>
+                            </div>
+                        </center>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="accordion">
+                        <div class="card" id="image-section">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-centered collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                        <i class="fa fa-eye"></i> Imagenes
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="container-fluid px-sm-1 py-5 mx-auto">
+                                        <div class="row justify-content-center">
+                                            <div class="d-flex">
+                                                <div class="col">
+                                                    <button class="btn btn-success"> Agregar Imagenes
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button class="btn btn-danger"> Eliminar Imagenes
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" id="video-section">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-centered collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseVideo" aria-expanded="false"
+                                        aria-controls="collapseVideo">
+                                        <i class="fa fa-play"></i> Video
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseVideo" class="collapse" aria-labelledby="headingVideo"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="container-fluid px-sm-1 py-5 mx-auto">
+                                        <div class="row justify-content-center">
+                                            <div class="d-flex">
+                                                <div class="col">
+                                                    <button class="btn btn-success"> Agregar Video
+                                                    </button>
+                                                </div>
+                                                <div class="col">
+                                                    <button class="btn btn-danger"> Eliminar Video
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form id="editForm">
+                            <div class="card" id="info-section">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-block text-centered collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                            <i class="fa fa-info"></i> Informacion
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Agronomia</span>
+                                            </div>
+                                            <select id="select-agronomia-edit" class="custom-select"
+                                                name="AgronomiaEdit"></select>
+                                        </div>
+                                        <div class="input-group mb-3" id="VendedorEdit">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Vendedor</span>
+                                            </div>
+                                            <input type="text" name="PublicanteEdit" class="form-control"
+                                                placeholder="Ingrese el Vendedor...">
+                                        </div>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addonName">Nombre</span>
+                                            </div>
+                                            <input type="text" name="NombreEdit" aria-describedby="basic-addonName"
+                                                class="form-control" placeholder="Ingrese el Nombre..." required>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descripcion</span>
+                                            </div>
+                                            <textarea type="text" name="DescripcionEdit" class="form-control"
+                                                placeholder="Ingrese la Descripcion..." required></textarea>
+                                        </div>
+                                        <hr>
+                                        <center>
+                                            <div class="custom-control custom-checkbox">
+                                                <input width="200px" id="checkboxPropsEdit" type="checkbox" checked
+                                                    data-toggle="toggle" data-on="Props. Items" data-off="Props. Texto"
+                                                    data-onstyle="success" data-offstyle="danger" data-size="lg">
+                                            </div>
+                                            <br>
+                                            <div class="input-group mb-3" id="ItemsEdit">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Propiedades</span>
+                                                </div>
+                                                <input width="100%" type="text" id="PropiedadesEdit"
+                                                    data-role="tagsinput" class="form-control">
+                                            </div>
+                                            <div class="input-group mb-3" id="TextoEdit" hidden>
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Describa las
+                                                        Props.</span>
+                                                </div>
+                                                <textarea type="text" id="PropiedadesTextoEdit" class="form-control"
+                                                    placeholder="Describa las Propiedades..."></textarea>
+                                            </div>
+                                        </center>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Categoria</span>
+                                            </div>
+                                            <select data-live-search="true" id="CategoriaEdit" class="form-control selectpicker" required>
+                                                <option value="Agroinsumos">Agroinsumos</option>
+                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Seguros">Seguros</option>
+                                                <option value="AgriculturaPresicion">Agricultura de
+                                                    Presición</option>
+                                                <option value="Insumos">Insumos Nutricion Animal</option>
+                                                <option value="NucleosCorrectoresSuplementos">Núcleos,
+                                                    Correctores y Suplementos
+                                                </option>
+                                                <option value="InstalacionesAgroganaderas">Instalaciones
+                                                    Agroganaderas</option>
+                                                <option value="Forrajes">Forrajes</option>
+                                                <option value="InsumosVeterinarios">Insumos Veterinarios
+                                                </option>
+                                                <option value="Instalaciones">Instalaciones</option>
+                                                <option value="Generadores">Generadores de Energia</option>
+                                                <option value="BalanzasBasculas">Balanzas y Basculas
+                                                </option>
+                                                <option value="Tanques">Tanques</option>
+                                                <option value="CamposInmuebles">Campos e Inmuebles</option>
+                                                <option value="Herramientas">Herramientas</option>
+                                                <option value="HerramientasJardin">Herramientas de Jardin
+                                                </option>
+                                                <option value="ArticulosRurales">Articulos Rurales y
+                                                    Herramientas</option>
+                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="Herbicidas">Herbicidas</option>
+                                                <option value="Insecticidas">Insecticidas</option>
+                                                <option value="Fungicidas">Fungicidas</option>
+                                                <option value="Inoculantes">Inoculantes</option>
+                                                <option value="CuraSemillas">Curasemillas</option>
+                                                <option value="Coadyuvantes">Coadyuvantes</option>
+                                                <option value="Aceites">Aceites</option>
+                                                <option value="Acaricidas">Acaricidas</option>
+                                                <option value="Fitorreguladores">Fitorreguladores</option>
+                                                <option value="Nematicidas">Nematicidas</option>
+                                                <option value="SemillasAgrícolas">Semillas Agrícolas</option>
+                                                <option value="SemillasForrajeras">Semillas Forrajeras</option>
+                                                <option value="FertilizantesSólidos">Fertilizantes Sólidos</option>
+                                                <option value="FertilizantesLíquidos">Fertilizantes Líquidos</option>
+                                                <option value="FertilizantesFoliares">Fertilizantes Foliares</option>
+                                                <option value="Bolsas">Bolsas Silos</option>
+                                                <option value="Combustibles">Combustibles</option>
+                                                <option value="Repuestos">Repuestos</option>
+                                                <option value="Labranza">Labranza</option>
+                                                <option value="Tractores">Tractores</option>
+                                                <option value="Cosechadoras">Cosechadoras</option>
+                                                <option value="Sembradoras">Sembradoras</option>
+                                                <option value="Fumigadoras">Fumigadoras</option>
+                                                <option value="Tolvas">Tolvas</option>
+                                                <option value="Fertilizadoras">Fertilizadoras</option>
+                                                <option value="Acoplados">Acoplados</option>
+                                                <option value="Cabezales">Cabezales</option>
+                                                <option value="Vehículos">Vehículos</option>
+                                                <option value="SERVICIOS">SERVICIOS</option>
+                                                <option value="BANCOS">BANCOS</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Provincia</label>
+                                            </div>
+                                            <select class="form-control selectpicker" name="Provincia"
+                                                id="select-provincia4" data-live-search="true"
+                                                onchange="cambiarLocalidadesAgroEdit()">
+                                                <option data-tokens="Buenos Aires" value="Buenos Aires">
+                                                    Buenos Aires</option>
+                                                <option data-tokens="Catamarca" value="Catamarca">Catamarca
+                                                </option>
+                                                <option data-tokens="Chaco" value="Chaco">Chaco</option>
+                                                <option data-tokens="Chubut" value="Chubut">Chubut</option>
+                                                <option data-tokens="Cordoba" value="Córdoba">Córdoba
+                                                </option>
+                                                <option data-tokens="Corrientes" value="Corrientes">
+                                                    Corrientes</option>
+                                                <option data-tokens="Entre Rios" value="Entre Ríos">Entre
+                                                    Rios</option>
+                                                <option data-tokens="Formosa" value="Formosa">Formosa
+                                                </option>
+                                                <option data-tokens="Jujuy" value="Jujuy">Jujuy</option>
+                                                <option data-tokens="La Pampa" value="La Pampa">La Pampa
+                                                </option>
+                                                <option data-tokens="La Rioja" value="La Rioja">La Rioja
+                                                </option>
+                                                <option data-tokens="Mendoza" value="Mendoza">Mendoza
+                                                </option>
+                                                <option data-tokens="Misiones" value="Misiones">Misiones
+                                                </option>
+                                                <option data-tokens="Neuquen" value="Neuquén">Neuquén
+                                                </option>
+                                                <option data-tokens="Rio Negro" value="Río Negro">Rio Negro
+                                                </option>
+                                                <option data-tokens="Salta" value="Salta">Salta</option>
+                                                <option data-tokens="San Juan" value="San Juan">San Juan
+                                                </option>
+                                                <option data-tokens="San Luis" value="San Luis">San Luis
+                                                </option>
+                                                <option data-tokens="Santa Cruz" value="Santa Cruz">Santa
+                                                    Cruz</option>
+                                                <option data-tokens="Santa Fe" value="Santa Fe">Santa Fe
+                                                </option>
+                                                <option data-tokens="Santiago del Estero" value="Santiago del Estero">
+                                                    Sgo.
+                                                    del
+                                                    Estero</option>
+                                                <option data-tokens="Tierra del Fuego"
+                                                    value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">
+                                                    Tierra
+                                                    del Fuego
+                                                </option>
+                                                <option data-tokens="Tucuman" value="Tucumán">Tucumán
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Localidad</label>
+                                            </div>
+                                            <select class="form-control selectpicker" name="Localidad"
+                                                id="select-localidad4" data-live-search="true">
+                                            </select>
+                                        </div>
+                                        <center>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" id="checkbox1Edit" type="checkbox" checked
+                                                            data-toggle="toggle" data-on="Destacado"
+                                                            data-off="No Destacado" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg">
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" id="checkbox2Edit" type="checkbox" checked
+                                                            data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
+                                                            data-onstyle="success" data-offstyle="danger"
+                                                            data-size="lg">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="editFooter">
+                    <button type="button" id="cancelEdit" class="btn btn-danger" data-dismiss="modal"><i
+                            class="fa fa-remove"></i> Cancelar</button>
+                    <button type="submit" id="submitEdit" class="btn btn-success"><i class="fa fa-check"></i>
+                        Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Imagenes/Video-->
+    <div class="modal fade" id="imgModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Imagenes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button id="img-btn" class="btn btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                                aria-controls="collapseOne">
+                                                <i class="fa fa-eye"></i> Imagenes
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="container px-sm-1 py-5 mx-auto">
+                                                <div class="row justify-content-center">
+                                                    <div class="d-flex">
+                                                        <div class="">
+                                                            <div class="d-flex flex-column thumbnails" id="imgThums">
+
+                                                            </div>
+                                                            <div id="imgSrcs">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card" id="video-view">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-block text-left collapsed" type="button"
+                                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                                aria-controls="collapseTwo">
+                                                <i class="fa fa-play"></i> Video
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                        data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            Aqui se insertara el video si corresponde
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Agronomia - Formulario -->
+    <div class="modal fade" id="modalAgronomiaEdit" tabindex="-1" role="dialog" aria-labelledby="modalPublicacionEdit"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Editar Agronomia:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="container" id="spinnerLoading-agro" hidden>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <br>
+                        <center>
+                            <div>
+                                <p>Guardando...</p>
+                            </div>
+                        </center>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="accordion">
+                        <div class="card" id="image-section">
+                            <div class="card-header" id="headingOneAgro">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-centered collapsed" type="button"
+                                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
+                                        aria-controls="collapseOne">
+                                        <i class="fa fa-eye"></i> Imagenes
+                                    </button>
+                                </h2>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="container-fluid px-sm-1 py-5 mx-auto">
+                                        <div class="row justify-content-center">
+                                            <div class="d-flex">
+                                                <div class="col">
+                                                    <button class="btn btn-success"> Cambiar Logo
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form id="editFormAgro">
+                            <div class="card" id="info-section-agro">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-block text-centered collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                            <i class="fa fa-info"></i> Informacion
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addonName">Nombre</span>
+                                            </div>
+                                            <input type="text" aria-describedby="basic-addonName" class="form-control"
+                                                placeholder="Ingrese el Nombre..." name="Nombre" required>
+                                        </div>
+                                        <div class="input-group mb-3" hidden>
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addonName">ID</span>
+                                            </div>
+                                            <input type="text" aria-describedby="basic-addonName" class="form-control"
+                                                placeholder="Ingrese el Nombre..." name="ID">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Descripcion</span>
+                                            </div>
+                                            <textarea type="text" class="form-control"
+                                                placeholder="Ingrese la Descripcion..." name="Descripcion"
+                                                required></textarea>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Provincia</label>
+                                            </div>
+                                            <select class="form-control selectpicker" name="Provincia"
+                                                id="select-provincia3" data-live-search="true"
+                                                onchange="cambiarLocalidadesAgroEdit()">
+                                                <option data-tokens="Buenos Aires" value="Buenos Aires">
+                                                    Buenos Aires</option>
+                                                <option data-tokens="Catamarca" value="Catamarca">Catamarca
+                                                </option>
+                                                <option data-tokens="Chaco" value="Chaco">Chaco</option>
+                                                <option data-tokens="Chubut" value="Chubut">Chubut</option>
+                                                <option data-tokens="Cordoba" value="Córdoba">Córdoba
+                                                </option>
+                                                <option data-tokens="Corrientes" value="Corrientes">
+                                                    Corrientes</option>
+                                                <option data-tokens="Entre Rios" value="Entre Ríos">Entre
+                                                    Rios</option>
+                                                <option data-tokens="Formosa" value="Formosa">Formosa
+                                                </option>
+                                                <option data-tokens="Jujuy" value="Jujuy">Jujuy</option>
+                                                <option data-tokens="La Pampa" value="La Pampa">La Pampa
+                                                </option>
+                                                <option data-tokens="La Rioja" value="La Rioja">La Rioja
+                                                </option>
+                                                <option data-tokens="Mendoza" value="Mendoza">Mendoza
+                                                </option>
+                                                <option data-tokens="Misiones" value="Misiones">Misiones
+                                                </option>
+                                                <option data-tokens="Neuquen" value="Neuquén">Neuquén
+                                                </option>
+                                                <option data-tokens="Rio Negro" value="Río Negro">Rio Negro
+                                                </option>
+                                                <option data-tokens="Salta" value="Salta">Salta</option>
+                                                <option data-tokens="San Juan" value="San Juan">San Juan
+                                                </option>
+                                                <option data-tokens="San Luis" value="San Luis">San Luis
+                                                </option>
+                                                <option data-tokens="Santa Cruz" value="Santa Cruz">Santa
+                                                    Cruz</option>
+                                                <option data-tokens="Santa Fe" value="Santa Fe">Santa Fe
+                                                </option>
+                                                <option data-tokens="Santiago del Estero" value="Santiago del Estero">
+                                                    Sgo.
+                                                    del
+                                                    Estero</option>
+                                                <option data-tokens="Tierra del Fuego"
+                                                    value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">
+                                                    Tierra
+                                                    del Fuego
+                                                </option>
+                                                <option data-tokens="Tucuman" value="Tucumán">Tucumán
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <hr>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text"
+                                                    for="inputGroupSelect01">Localidad</label>
+                                            </div>
+                                            <select class="form-control selectpicker" name="Localidad"
+                                                id="select-localidad3" data-live-search="true">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="editFooter-agro">
+                    <button type="button" id="cancelEdit-agro" class="btn btn-danger" data-dismiss="modal"><i
+                            class="fa fa-remove"></i> Cancelar</button>
+                    <button type="submit" id="submitEdit-agro" class="btn btn-success"><i class="fa fa-check"></i>
+                        Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalLoading" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container" id="spinnerLoading1">
+                        <br>
+                        <br>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <br>
+                        <center>
+                            <div>
+                                <p>Guardando...</p>
+                            </div>
+                        </center>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .label {
+            display: inline;
+            padding: .2em .6em .3em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25em;
+        }
+
+        .label-info {
+            background-color: #5bc0de;
+        }
+
+        .toggle.btn-lg {
+            min-width: 200px;
+            min-height: 2.815rem;
+        }
+    </style>
+
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Ingresar al Administrador</h5>
+                </div>
+
+                <div class="modal-body">
+                    <form id="loginForm" autocomplete="on">
+                        <div class="form-box px-3">
+                            <div class="form-input">
+                                <label for="email_field">Email</label>
+                                <input type="email" class="form-control" name="email" placeholder="Email..."
+                                    tabindex="10" required id="email_field">
+                            </div>
+                            <br>
+                            <div class="form-input">
+                                <label for="password_field">Contraseña</label>
+                                <input type="password" class="form-control" name="password" placeholder="Contraseña..."
+                                    required id="password_field">
+                            </div>
+                            <hr>
+                            <div class="mb-3">
+                                <input type="submit" class="btn btn-success form-control text-uppercase"
+                                    value="Ingresar">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-secondary" href="https://agroganas.com/" data-dismiss="modal">Ir
+                        a Agroganás</a>
+                    <a type="button" type="button"
+                        href="https://wa.me/5493513390283?text=Hola%20Benja,%20tengo%20un%20problema%20con%20el%20administrador%20de%20Agroganás"
+                        class="btn btn-warning"><i class="fa fa-exclamation-triangle"></i> Necesito
+                        Ayuda</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">&iquestEsta seguro de qu&eacute desea
+                        salir?
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Presione salir para cerrar sesi&oacuten, o presione cancelar para
+                    seguir
+                    en
+                    su sesi&oacuten</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-primary" data-dismiss="modal"
+                        onclick="firebase.auth().signOut();">Salir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.1/firebase-storage.js"></script>
+
+    <!-- Custom scripts for all pages jquery libreria de js que permite hacer animaciones el boostrap tambien-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/js/sb-admin-2.js"
+        integrity="sha512-M82XdXhPLLSki+Ld1MsafNzOgHQB3txZr8+SQlGXSwn6veeqtYhPLbQeAfk9Y/Q9/gXcfa1jWT4YYUeoei6Uow=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+        integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+        crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+
+    <!-- plugin js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.1.0/knockout-min.js"></script>
+    <script src="https://rawgit.com/adrotec/knockout-file-bindings/master/knockout-file-bindings.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+    <!-- include FilePond library -->
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
+
+    <!-- include FilePond plugins -->
+    <script
+        src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+
+    <!-- include FilePond jQuery adapter -->
+    <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
+    <script src="geoFilter.js"></script>
+    <script src="ponds.js"></script>
+    <script src="main.js"></script>
+    <script src="tabs.js"></script>
+
+    <!-- include Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
+        integrity="sha512-asxKqQghC1oBShyhiBwA+YgotaSYKxGP1rcSYTDrB0U6DxwlJjU59B67U8+5/++uFjcuVM8Hh5cokLjZlhm3Vg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="charts.js"></script>
+    <script>
+        if ($(window).width() > 922) {
+            $('#accordionSidebar').removeClass('toggled')
+        }
+    </script>
+</body>
+
+</html>
