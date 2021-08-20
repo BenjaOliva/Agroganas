@@ -1,10 +1,10 @@
 ![Website](https://img.shields.io/website?up_message=online&url=https%3A%2F%2Fagroganas.com)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BenjaOliva/Agroganas?label=Ultimo%20Commit)
-<img style="width: 60px;" src="assets/logo-only-icon.png" align="right" />
+<img width="140px" src="assets/logo-only-icon.png" align="left" />
 
 # Agroganas
 
-Plataforma Web de Agroganas
+>Plataforma Web de Agroganas
 
 ## Descripcion
 
