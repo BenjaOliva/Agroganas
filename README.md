@@ -1,3 +1,7 @@
+![Website](https://img.shields.io/website?up_message=online&url=https%3A%2F%2Fagroganas.com)
+![GitHub last commit](https://img.shields.io/github/last-commit/BenjaOliva/Agroganas?label=Ultimo%20Commit)
+<img style="width: 60px;" src="assets/logo-only-icon.png" align="right" />
+
 # Agroganas
 
 Plataforma Web de Agroganas
@@ -35,21 +39,14 @@ La plataforma a su vez cuenta con una sección de administrador en donde solo lo
 * Firebase Firestore
 * Firebase Authentication
 
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
 ## Autor
 
 Desarrollador y Diseñador del proyecto
 
 Oliva Clariá, Benjamín  
- * Instagram: [@benjaaoliva](https://instagram.com/benjaaoliva/)
 * Linkedin: [https://www.linkedin.com/in/benjamin-oliva-clariá-953454181](https://www.linkedin.com/in/benjamin-oliva-clariá-953454181)
-
+* Instagram: [@benjaaoliva](https://instagram.com/benjaaoliva/)
+* ![Twitter Follow](https://img.shields.io/twitter/follow/benjaa_20?style=social)
 ## Historial de Versiones
 
 * 1.0
