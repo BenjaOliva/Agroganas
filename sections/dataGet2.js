@@ -42,7 +42,7 @@ const db = firebase.firestore();
 
 switch (categoria) {
     case 'Agroinsumos':
-        $("#first-title").html('Agroinsumos')
+        $("#first-title").html('Insumos Agricolas')
         break;
     case 'AgriculturaPresicion':
         $("#first-title").html('Agricultura de Presición')
