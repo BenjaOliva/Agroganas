@@ -60,8 +60,6 @@ async function initAll() {
         if (doc.exists) {
             datosAgro = doc.data();
             loadAgro(doc.data());
-            
-
         } else {
             // doc.data() will be undefined in this case
             alert('No existe la Agronomia!')
@@ -98,8 +96,10 @@ async function loadAgro(object) {
             });
 
             arrayOfertas = arrayToFilter.filter(function (el) {
-                return el.Destacado == "true" ||
-                    el.Oferta == "on";
+                return el.Destacado == "on" ||
+                    el.Oferta == "on" ||
+                    el.Destacado == "true" ||
+                    el.Oferta == "true";
             });
 
             result = arrayToFilter.map(a => a.Categoria);

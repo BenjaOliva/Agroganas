@@ -974,7 +974,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Categoria</span>
                                             </div>
-                                            <select data-live-search="true" id="CategoriaEdit" class="form-control selectpicker" required>
+                                            <select data-live-search="true" name="CategoriaEdit" id="CategoriaEdit" class="form-control selectpicker" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
                                                 <option value="Maquinaria">Maquinaria Agricola</option>
                                                 <option value="Seguros">Seguros</option>
@@ -1034,14 +1034,15 @@
                                                 <option value="BANCOS">BANCOS</option>
                                             </select>
                                         </div>
+                                        <hr>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text"
                                                     for="inputGroupSelect01">Provincia</label>
                                             </div>
                                             <select class="form-control selectpicker" name="Provincia"
-                                                id="select-provincia4" data-live-search="true"
-                                                onchange="cambiarLocalidadesAgroEdit()">
+                                                id="select-provincia-publicacionEdit" data-live-search="true"
+                                                onchange="cambiarLocalidadesPublicacionEdit()">
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">
                                                     Buenos Aires</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca
@@ -1091,7 +1092,6 @@
                                                 </option>
                                             </select>
                                         </div>
-                                        <hr>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text"
@@ -1105,7 +1105,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input width="200px" id="checkbox1Edit" type="checkbox" checked
+                                                        <input width="200px" name="Destacado" id="checkbox1Edit" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Destacado"
                                                             data-off="No Destacado" data-onstyle="success"
                                                             data-offstyle="danger" data-size="lg">
@@ -1113,7 +1113,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="custom-control custom-checkbox">
-                                                        <input width="200px" id="checkbox2Edit" type="checkbox" checked
+                                                        <input width="200px" name="Oferta" id="checkbox2Edit" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
                                                             data-onstyle="success" data-offstyle="danger"
                                                             data-size="lg">

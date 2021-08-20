@@ -225,6 +225,8 @@ var categoriaSearch;
 // Inserta las publicaciones en la Card de Respuesta
 async function getSearchCat(category) {
 
+    $('#modalLoading').modal('hide');
+
     productsContainer.innerHTML = '';
 
     categoriaSearch = category;
@@ -601,37 +603,31 @@ function modalMedia(productId) {
 
 }
 
+var idDocToEdit;
+
 // Obtiene datos de un documento en concreto
 function getOneProduct(idToSearch) {
-    console.log(idToSearch);
 
-    var docRef = db.collection("Productos").doc(String(idToSearch));
+    idDocToEdit = idToSearch;
 
-    docRef.get().then((doc) => {
-        if (doc.exists) {
-            datosGet = doc.data()
+    $('#select-agronomia-edit').empty()
+    var $options = $("#select-agronomia > option").clone();
+    $('#select-agronomia-edit').append($options);
 
-            $('#select-agronomia-edit').empty()
-            var $options = $("#select-agronomia > option").clone();
-            $('#select-agronomia-edit').append($options);
+    var docToEdit = arrayPublicaciones[arrayPublicaciones.findIndex(item => item.id === idDocToEdit)];
 
-            fillEditForm(doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No se encuentra el documento!");
-        }
-    }).catch((error) => {
-        console.log("Error obteniendo el documento:", error);
-    });
+    fillEditForm(docToEdit);
+
 }
+
+var tempData;
 
 // Completa el formulario para editar
 function fillEditForm(datos) {
     $('#modalPublicacionEdit').modal('show');
 
+    tempData = datos;
     var formPublicacion = document.forms['editForm'];
-
-    // Revisar como gestionar los datos contra el front en los toggles y 
 
     formPublicacion.elements['NombreEdit'].value = datos.Nombre;
     formPublicacion.elements['DescripcionEdit'].value = datos.Descripcion;
@@ -639,18 +635,25 @@ function fillEditForm(datos) {
     formPublicacion.elements['CategoriaEdit'].value = datos.Categoria;
     formPublicacion.elements['AgronomiaEdit'].value = datos.Agronomia;
 
+    formPublicacion.elements['PropiedadesEdit'].value = datos.Propiedades;
+
+    formPublicacion.elements['PropiedadesTextoEdit'].value = datos.PropiedadesTexto;
+
+    $('#CategoriaEdit').selectpicker('refresh');
+
     if (datos.PropiedadesTexto == '') {
         $('#checkboxPropsEdit').bootstrapToggle('on');
         document.getElementById('PropiedadesEdit').value = editItemsFill(datos.Propiedades.split(','));
     } else {
         $('#checkboxPropsEdit').bootstrapToggle('off');
-        document.getElementById('PropiedadesTextoEdit').value = datos.PropiedadesTexto;
     }
 
-    if (datos.Destacado == 'true') $('#checkbox1Edit').bootstrapToggle('on');
-    else $('#checkbox1Edit').bootstrapToggle('on');
+    formPublicacion.elements['PropiedadesEdit'].value = datos.Propiedades;
 
-    if (datos.Oferta == 'true') $('#checkbox2Edit').bootstrapToggle('on');
+    if (datos.Destacado == 'true' || datos.Destacado == 'on') $('#checkbox1Edit').bootstrapToggle('on');
+    else $('#checkbox1Edit').bootstrapToggle('off');
+
+    if (datos.Oferta == 'true' || datos.Oferta == 'on') $('#checkbox2Edit').bootstrapToggle('on');
     else $('#checkbox2Edit').bootstrapToggle('off');
 
     if (datos.Agronomia !== "") {
@@ -662,8 +665,13 @@ function fillEditForm(datos) {
         document.getElementById('VendedorEdit').removeAttribute("hidden");
     }
 
-    formPublicacion.elements['ZonaEdit'].value = datos.Zona;
+    $("#select-provincia-publicacionEdit").val(datos.Provincia);
+    $("#select-provincia-publicacionEdit").selectpicker('refresh');
 
+    cambiarLocalidadesPublicacionEdit();
+
+    $("#select-localidad4").val(datos.Localidad);
+    $("#select-localidad4").selectpicker('refresh');
 }
 
 // Agrega las props al form de editar
@@ -676,22 +684,65 @@ function editItemsFill(array) {
     }
 }
 
-async function updateAll() {
-    return new Promise(resolve => {
-        if (datosGet.Imagen.length == 0) {
-            alert('Debe cargar imagenes!')
-        } else {
-            for (let i = 0; i < archivos.files.length; i++) {
-                console.log(archivos.files[i].name);
-                updateDocImgs(archivos.files[i])
-            }
-        }
-        resolve('second')
-    })
-}
-
 formEdit.addEventListener('submit', async (e) => {
-    await updateAll()
+    $('#modalPublicacionEdit').modal('hide')
+    var publicacionForm = document.forms['editForm'];
+    $('#modalLoading').modal('show');
+
+    db.collection("Productos").doc(idDocToEdit).update({
+        Nombre: publicacionForm.elements['NombreEdit'].value,
+        Descripcion: publicacionForm.elements['DescripcionEdit'].value,
+        Categoria: publicacionForm.elements['CategoriaEdit'].value,
+        Propiedades: publicacionForm.elements['PropiedadesEdit'].value,
+        PropiedadesTexto: publicacionForm.elements['PropiedadesTextoEdit'].value,
+        Agronomia: publicacionForm.elements['AgronomiaEdit'].value,
+        Publicante: publicacionForm.elements['PublicanteEdit'].value,
+        Provincia: publicacionForm.elements['Provincia'].value,
+        Localidad: publicacionForm.elements['Localidad'].value,
+        Destacado: publicacionForm.elements['Destacado'].value,
+        Oferta: publicacionForm.elements['Oferta'].value
+    })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+        })
+        .then(() => {
+            var docToEdit = arrayPublicaciones[arrayPublicaciones.findIndex(item => item.id === idDocToEdit)];
+            docToEdit.Nombre = publicacionForm.elements['NombreEdit'].value;
+            docToEdit.Descripcion = publicacionForm.elements['DescripcionEdit'].value;
+            docToEdit.Categoria = publicacionForm.elements['CategoriaEdit'].value;
+            docToEdit.Propiedades = publicacionForm.elements['PropiedadesEdit'].value;
+            docToEdit.PropiedadesTexto = publicacionForm.elements['PropiedadesTextoEdit'].value;
+            docToEdit.Agronomia = publicacionForm.elements['AgronomiaEdit'].value;
+            docToEdit.Publicante = publicacionForm.elements['PublicanteEdit'].value;
+            docToEdit.Provincia = publicacionForm.elements['Provincia'].value;
+            docToEdit.Localidad = publicacionForm.elements['Localidad'].value;
+            docToEdit.Destacado = publicacionForm.elements['Destacado'].value;
+            docToEdit.Oferta = publicacionForm.elements['Oferta'].value;
+
+            getSearchCat(categoriaSearch);
+
+            setTimeout(() => {
+                $('#modalLoading').modal('hide');
+            }, 2000);
+        })
 });
 
 // -- AGREGAR Agronomia --
@@ -994,53 +1045,81 @@ document.getElementById('editFormAgro').addEventListener('submit', async (e) => 
 
         })
         .then(() => {
-            db.collection("Productos").where("Agronomia", "==", previousNameAgro).get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        doc.ref.update({
-                            Agronomia: agroForm.elements['Nombre'].value
+            if (agroForm.elements['Nombre'].value !== previousNameAgro) {
+                db.collection("Productos").where("Agronomia", "==", previousNameAgro).get()
+                    .then(function (querySnapshot) {
+                        querySnapshot.forEach(function (doc) {
+                            doc.ref.update({
+                                Agronomia: agroForm.elements['Nombre'].value
+                            });
                         });
+                    })
+                    .then(() => {
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "9000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["success"]("Los datos se Actualizaron de forma exitosa!", "Datos Guardados!")
+
+                        objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
+
+                        $("#select-agronomia option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
+
+                        AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
+                        AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
+                        AgronomiasVirtuales[objIndex].Provincia = agroForm.elements['Provincia'].value;
+                        AgronomiasVirtuales[objIndex].Localidad = agroForm.elements['Localidad'].value;
+
+                        loadAgros(AgronomiasVirtuales);
+
+                        var select = document.getElementById("select-agronomia");
+                        const opt = agroForm.elements['Nombre'].value;
+                        var el = document.createElement("option");
+                        el.text = opt;
+                        el.value = opt;
+
+                        select.add(el);
                     });
-                })
-                .then(() => {
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": true,
-                        "progressBar": true,
-                        "positionClass": "toast-top-center",
-                        "preventDuplicates": true,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "9000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    toastr["success"]("Los datos se Actualizaron de forma exitosa!", "Datos Guardados!")
+            } else {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "9000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr["success"]("Los datos se Actualizaron de forma exitosa!", "Datos Guardados!")
 
+                objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
 
-                    objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
+                AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
+                AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
+                AgronomiasVirtuales[objIndex].Provincia = agroForm.elements['Provincia'].value;
+                AgronomiasVirtuales[objIndex].Localidad = agroForm.elements['Localidad'].value;
 
-                    $("#select-agronomia option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
-
-                    AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
-                    AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
-                    AgronomiasVirtuales[objIndex].Provincia = agroForm.elements['Provincia'].value;
-                    AgronomiasVirtuales[objIndex].Localidad = agroForm.elements['Localidad'].value;
-
-                    loadAgros(AgronomiasVirtuales);
-
-                    var select = document.getElementById("select-agronomia");
-                    const opt = agroForm.elements['Nombre'].value;
-                    var el = document.createElement("option");
-                    el.text = opt;
-                    el.value = opt;
-
-                    select.add(el);
-                });
+                loadAgros(AgronomiasVirtuales);
+            }
         })
 })
 

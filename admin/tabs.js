@@ -29,11 +29,7 @@ btnAgronomiasEdit.addEventListener('click', function () {
    ============================================== 
 */
 $('#btnAdd').click(function () {
-    formLoading(1);
-});
-
-$('#submitEdit').click(function () {
-    formLoading(4);
+    $('#modalLoading').modal('show')
 });
 
 $("#checkboxProps").on('change', function () {
@@ -106,3 +102,34 @@ $("#PropiedadesEdit").on('change', function () {
     // console.log($("#PropiedadesEdit").val());
 })
 
+
+var timer;
+$('#modalLoading').on('show.bs.modal', function (e) {
+    timer = setTimeout(() => {
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "8500",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        toastr["warning"]("Parece que la operación tardo más de lo usual, verifique se haya concretado la tarea", "Advertencia!")
+
+        $('#modalLoading').modal('hide');
+    }, 14500);
+})
+
+$('#modalLoading').on('hide.bs.modal', function (e) {
+    clearTimeout(timer)
+})
