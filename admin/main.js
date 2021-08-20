@@ -645,7 +645,6 @@ async function fillEditForm(datos) {
     formPublicacion.elements['AgronomiaEdit'].value = datos.Agronomia;
 
     formPublicacion.elements['PropiedadesEdit'].value = datos.Propiedades;
-
     formPublicacion.elements['PropiedadesTextoEdit'].value = datos.PropiedadesTexto;
 
     $('#CategoriaEdit').selectpicker('refresh');
@@ -654,10 +653,12 @@ async function fillEditForm(datos) {
         $('#checkboxPropsEdit').bootstrapToggle('on');
         document.getElementById('PropiedadesEdit').value = editItemsFill(datos.Propiedades.split(','));
     } else {
+        formPublicacion.elements['PropiedadesTextoEdit'].value = datos.PropiedadesTexto;
         $('#checkboxPropsEdit').bootstrapToggle('off');
     }
 
     formPublicacion.elements['PropiedadesEdit'].value = datos.Propiedades;
+    document.getElementById('PropiedadesTextoEdit').value = datos.PropiedadesTexto;
 
     if (datos.Destacado == 'true' || datos.Destacado == 'on') $('#checkbox1Edit').bootstrapToggle('on');
     else $('#checkbox1Edit').bootstrapToggle('off');

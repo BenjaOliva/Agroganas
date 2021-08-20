@@ -965,7 +965,7 @@
                                                     <span class="input-group-text">Describa las
                                                         Props.</span>
                                                 </div>
-                                                <textarea type="text" id="PropiedadesTextoEdit" class="form-control"
+                                                <textarea type="text" id="PropiedadesTextoEdit" name="PropiedadesTextoEdit" class="form-control"
                                                     placeholder="Describa las Propiedades..."></textarea>
                                             </div>
                                         </center>
@@ -1042,7 +1042,7 @@
                                             </div>
                                             <select class="form-control selectpicker" name="Provincia"
                                                 id="select-provincia-publicacionEdit" data-live-search="true"
-                                                onchange="cambiarLocalidadesPublicacionEdit()">
+                                                onchange="cambiarLocalidadesPublicacionEdit()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">
                                                     Buenos Aires</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca
@@ -1098,7 +1098,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" name="Localidad"
-                                                id="select-localidad4" data-live-search="true">
+                                                id="select-localidad4" data-live-search="true" required>
                                             </select>
                                         </div>
                                         <center>
