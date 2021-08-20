@@ -438,7 +438,7 @@
                                                     for="inputGroupSelect01">Provincia</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-provincia"
-                                                data-live-search="true" onchange="cambiarLocalidades()">
+                                                data-live-search="true" onchange="cambiarLocalidades()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
                                                 <option data-tokens="Chaco" value="Chaco">Chaco</option>
@@ -477,7 +477,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-localidad"
-                                                data-live-search="true">
+                                                data-live-search="true" required>
                                             </select>
                                         </div>
                                         <div class="mb-3" hidden>
@@ -693,7 +693,7 @@
                                                     for="inputGroupSelect01">Provincia</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-provincia2"
-                                                data-live-search="true" onchange="cambiarLocalidadesAgro()">
+                                                data-live-search="true" onchange="cambiarLocalidadesAgro()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
                                                 <option data-tokens="Chaco" value="Chaco">Chaco</option>
@@ -732,7 +732,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-localidad2"
-                                                data-live-search="true">
+                                                data-live-search="true" required>
                                             </select>
                                         </div>
                                         <hr>
@@ -1314,7 +1314,7 @@
                                             </div>
                                             <select class="form-control selectpicker" name="Provincia"
                                                 id="select-provincia3" data-live-search="true"
-                                                onchange="cambiarLocalidadesAgroEdit()">
+                                                onchange="cambiarLocalidadesAgroEdit()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">
                                                     Buenos Aires</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca
@@ -1371,7 +1371,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" name="Localidad"
-                                                id="select-localidad3" data-live-search="true">
+                                                id="select-localidad3" data-live-search="true" required>
                                             </select>
                                         </div>
                                     </div>

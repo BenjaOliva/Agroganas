@@ -313,38 +313,27 @@ async function getSearchCat(category) {
 // -- DELETE Publicacion --
 
 // Elimina un documento por el ID y las imagenes enlazadas - Video pendiente
-function deleteByID(idToSearch) {
-    var docRef = db.collection("Productos").doc(idToSearch);
+async function deleteByID(idToSearch) {
 
-    docRef.get().then((doc) => {
+    var docToDelete = arrayPublicaciones[arrayPublicaciones.findIndex(item => item.id === idToSearch)];
 
-        array = doc.data().Imagen
+    for (let index = 0; index < docToDelete.Imagen.length; index++) {
+        const element = docToDelete.Imagen[index];
+        deleteImg(element);
+    }
 
-        for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            deleteImg(element);
-        }
-    })
-        .then(
-            deleteDocument(idToSearch)
-        )
-        .then(alert('Publicacion eliminada!'))
-        .catch((error) => {
-            console.log("Error getting document:", error);
-        });
-
-
+    deleteDocument(idToSearch)
 }
 
 // Borrar una imagen por su url 
-function deleteImg(element) {
+async function deleteImg(element) {
     var desertRef = firebase.storage().refFromURL(element);
 
-    desertRef.delete().then(function () {
-        // File deleted successfully
+    await desertRef.delete().then(function () {
+        return
     }).catch(function (error) {
         // Uh-oh, an error occurred!
-        console.log("Error al borrar imagen!", error);
+        console.error("Error al borrar imagen!", error);
     });
 }
 
@@ -354,9 +343,18 @@ function deleteDocument(idparam) {
     db.collection("Productos").doc(idparam).delete().then(() => {
         getSearchCat(categoriaSearch);
         console.log("Publicacion Borrada!");
+        alert('Publicacion Borrada!')
 
         // Disminuimos el contador de publicaciones
         document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) - 1
+
+        arrayPublicaciones = arrayPublicaciones.filter(function (obj) {
+            return obj.id !== idparam;
+        });
+
+        var result = arrayPublicaciones.map(a => a.Agronomia);
+        var result2 = arrayPublicaciones.map(a => a.Categoria);
+        updateTheCharts(doubleArray(result), doubleArray(result2))
 
     }).catch((error) => {
         alert('Error al borrar la publicacion!')
@@ -442,6 +440,8 @@ function uploadNewDocImgs(imageFile) {
     });
 }
 
+var test;
+
 // Add Registro - Firebase
 async function AddRegistro() {
 
@@ -459,7 +459,7 @@ async function AddRegistro() {
     var Agronomia = document.getElementById('select-agronomia').value;
 
     // Add a new document with a generated id.
-    await db.collection("Productos").doc().set({
+    await db.collection("Productos").add({
         Agronomia,
         Nombre,
         Descripcion,
@@ -473,33 +473,60 @@ async function AddRegistro() {
         Destacado,
         Oferta
     })
-        .then(() => {
-            console.log('%c Registro Guardado ! ', ' color: #bada55');
+        .then((doc) => {
+            if (doc) {
+                test = doc;
+                console.log('%c Registro Guardado ! ', ' color: #bada55');
 
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": true,
-                "progressBar": true,
-                "positionClass": "toast-top-center",
-                "preventDuplicates": true,
-                "onclick": function () { window.open("https://agroganas.com/") },
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "9000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": true,
+                    "onclick": function () { window.open("https://agroganas.com/") },
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "9000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr["success"]("Los datos se cargaron de forma exitosa! Click aqui para ir a la pagina", "Datos Cargados!")
+                $("#Propiedades").tagsinput('removeAll');
+                $('#modalLoading').modal('hide')
+
+                document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) + 1
+
+                form.reset();
+
+                var newPublicacion = {
+                    id: doc.id,
+                    Agronomia,
+                    Nombre,
+                    Descripcion,
+                    Imagen,
+                    Provincia,
+                    Localidad,
+                    Categoria,
+                    Destacado,
+                    Oferta,
+                    Publicante,
+                    Propiedades,
+                    PropiedadesTexto
+                };
+                arrayPublicaciones.push(newPublicacion);
+
+                var result = arrayPublicaciones.map(a => a.Agronomia);
+                var result2 = arrayPublicaciones.map(a => a.Categoria);
+                updateTheCharts(doubleArray(result), doubleArray(result2))
+            } else {
+                console.log("No hay referencia a la agronomia");
+                $('#modalLoading').modal('hide')
             }
-            toastr["success"]("Los datos se cargaron de forma exitosa! Click aqui para ir a la pagina", "Datos Cargados!")
-            $("#Propiedades").tagsinput('removeAll');
-            $('#modalLoading').modal('hide')
-
-            document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) + 1
-
-            form.reset();
         })
         .then(urlsToSave = [])
         .catch((error) => {
@@ -747,6 +774,10 @@ formEdit.addEventListener('submit', async (e) => {
             docToEdit.Destacado = publicacionForm.elements['Destacado'].value;
             docToEdit.Oferta = publicacionForm.elements['Oferta'].value;
 
+            var result = arrayPublicaciones.map(a => a.Agronomia);
+            var result2 = arrayPublicaciones.map(a => a.Categoria);
+            updateTheCharts(doubleArray(result), doubleArray(result2))
+
             getSearchCat(categoriaSearch);
 
             setTimeout(() => {
@@ -862,7 +893,7 @@ async function AddAgronomia(imageUrl) {
                 el.value = opt;
 
                 select.add(el);
-            }else{
+            } else {
                 console.log("No hay referencia a la agronomia");
                 $('#modalLoading').modal('hide')
             }
