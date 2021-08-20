@@ -539,6 +539,15 @@ activities.addEventListener('change', (e) => {
 
 });
 
+document.getElementById('select-agronomia-edit').addEventListener('change', (e) => {
+    if (e.target.value !== '') {
+        $('#VendedorEdit').attr('hidden', true);
+        $('#PublicanteEdit').val('');
+    } else {
+        $('#VendedorEdit').attr('hidden', false);
+        $('#PublicanteEdit').val('');
+    }
+});
 
 // -- EDIT Publicacion --
 
@@ -623,7 +632,7 @@ function getOneProduct(idToSearch) {
 var tempData;
 
 // Completa el formulario para editar
-function fillEditForm(datos) {
+async function fillEditForm(datos) {
     $('#modalPublicacionEdit').modal('show');
 
     tempData = datos;
@@ -668,7 +677,7 @@ function fillEditForm(datos) {
     $("#select-provincia-publicacionEdit").val(datos.Provincia);
     $("#select-provincia-publicacionEdit").selectpicker('refresh');
 
-    cambiarLocalidadesPublicacionEdit();
+    await cambiarLocalidadesPublicacionEdit();
 
     $("#select-localidad4").val(datos.Localidad);
     $("#select-localidad4").selectpicker('refresh');

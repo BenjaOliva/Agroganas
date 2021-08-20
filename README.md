@@ -43,6 +43,10 @@ La plataforma a su vez cuenta con una sección de administrador en donde solo lo
 
 * Firebase Rules: Se definieron las reglas para que solo un usuario designado, al estar logueado pueda cargar archivos y documentos unicamente. La lectura esta abierta al publico.
 
+### Diseño de la plataforma
+
+* El diseño de la plataforma esta adaptado a Desktop, Tablet y mobile (responsive)
+
 ## Autor
 
 Desarrollador y Diseñador del proyecto
