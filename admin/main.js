@@ -768,10 +768,10 @@ async function uploadAgronomia() {
         if (fileAgronomia.length == 0) {
             alert('Debe cargar un Logo para la Agronomia!')
         } else {
+            $('#modalLoading').modal('show')
             for (let i = 0; i < fileAgronomia.length; i++) {
                 console.log(fileAgronomia[i].filename);
                 uploadNewAgroImgs(fileAgronomia[i].file)
-                $('#modalLoading').modal('show')
             }
         }
     })
@@ -794,6 +794,7 @@ function uploadNewAgroImgs(imageFile) {
                 console.log(percentage);
             },
             function error(err) {
+                $('#modalLoading').modal('hide')
                 console.error("Error adding document: ", err);
                 toastr.options = {
                     "closeButton": true,
@@ -847,18 +848,23 @@ async function AddAgronomia(imageUrl) {
         Localidad
     })
         .then(docReference => {
-            var newAgroToPush = { id: docReference.id, Nombre, Descripcion, Logo, Provincia, Localidad };
-            AgronomiasVirtuales.push(newAgroToPush);
-            loadAgros(AgronomiasVirtuales);
+            if (docReference) {
+                var newAgroToPush = { id: docReference.id, Nombre, Descripcion, Logo, Provincia, Localidad };
+                AgronomiasVirtuales.push(newAgroToPush);
+                loadAgros(AgronomiasVirtuales);
 
-            //Agregamos la Agronomia como opcion para Asignar una Publicacion a la misma
-            var select = document.getElementById("select-agronomia");
-            const opt = Nombre;
-            var el = document.createElement("option");
-            el.text = opt;
-            el.value = opt;
+                //Agregamos la Agronomia como opcion para Asignar una Publicacion a la misma
+                var select = document.getElementById("select-agronomia");
+                const opt = Nombre;
+                var el = document.createElement("option");
+                el.text = opt;
+                el.value = opt;
 
-            select.add(el);
+                select.add(el);
+            }else{
+                console.log("No hay referencia a la agronomia");
+                $('#modalLoading').modal('hide')
+            }
         })
         .then(() => {
             $('#modalLoading').modal('hide')

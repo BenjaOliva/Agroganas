@@ -41,7 +41,7 @@ La plataforma a su vez cuenta con una sección de administrador en donde solo lo
 
 ### Seguridad de la plataforma
 
-* Firebase Rules: Se definieron las reglas para que solo un usuario designado, al estar logueado pueda cargar archivos y documentos unicamente. La lectura esta abierta al publico.
+* Firebase Rules: Se definieron las reglas para que solo un usuario designado, al estar logueado, pueda cargar archivos y documentos unicamente. La lectura esta abierta al publico.
 
 ### Diseño de la plataforma
 
@@ -55,12 +55,17 @@ Oliva Clariá, Benjamín
 * Linkedin: [https://www.linkedin.com/in/benjamin-oliva-clariá-953454181](https://www.linkedin.com/in/benjamin-oliva-clariá-953454181)
 * Instagram: [@benjaaoliva](https://instagram.com/benjaaoliva/)
 * ![Twitter Follow](https://img.shields.io/twitter/follow/benjaa_20?style=social)
+
 ## Historial de Versiones
 
 * 1.0
     * Publicacion del Proyecto en GitHub
 
-## Creditos de Uso e Inspiraciones
+## Etapa del Desarrollo
+
+* El proyecto se encuentra funcional, se estan terminando algunos detalles y funciones menos relevantes para el cliente que solicito la Plataforma
+
+## Créditos de Uso e Inspiraciones
 
 Diseños y Templates utilizados e inspiraciones para el diseño y funciones.
 * [SB-Admin-2](https://startbootstrap.com/theme/sb-admin-2)
