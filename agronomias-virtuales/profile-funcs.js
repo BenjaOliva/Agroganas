@@ -60,6 +60,8 @@ async function initAll() {
         if (doc.exists) {
             datosAgro = doc.data();
             loadAgro(doc.data());
+            
+
         } else {
             // doc.data() will be undefined in this case
             alert('No existe la Agronomia!')
@@ -114,6 +116,7 @@ async function loadAgro(object) {
                     jQuery(this).remove();
                 }
             });
+            $("#CategoriaProd").prepend("<option selected='selected' disabled='disabled'>- ELEGIR UNA CATEGORIA -</option>");
             $('#CategoriaProd').selectpicker('refresh');
             $('#Categoria').selectpicker('refresh');
         })
