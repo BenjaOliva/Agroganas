@@ -98,6 +98,22 @@ $("#checkbox2Edit").on('change', function () {
     }
 });
 
+$("#checkboxPrincipal").on('change', function () {
+    if ($(this).is(':checked')) {
+        $(this).attr('value', 'true');
+    } else {
+        $(this).attr('value', '');
+    }
+});
+
+$("#checkboxPrincipalEdit").on('change', function () {
+    if ($(this).is(':checked')) {
+        $(this).attr('value', true);
+    } else {
+        $(this).attr('value', '');
+    }
+});
+
 $("#PropiedadesEdit").on('change', function () {
     // console.log($("#PropiedadesEdit").val());
 })

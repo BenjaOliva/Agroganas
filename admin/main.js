@@ -457,6 +457,7 @@ async function AddRegistro() {
     var Destacado = document.getElementById('checkbox1').value;
     var Oferta = document.getElementById('checkbox2').value;
     var Agronomia = document.getElementById('select-agronomia').value;
+    var Principal = Boolean($('#checkboxPrincipal').val())
 
     // Add a new document with a generated id.
     await db.collection("Productos").add({
@@ -471,7 +472,8 @@ async function AddRegistro() {
         Provincia,
         Localidad,
         Destacado,
-        Oferta
+        Oferta,
+        Principal
     })
         .then((doc) => {
             if (doc) {
@@ -502,6 +504,9 @@ async function AddRegistro() {
                 document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) + 1
 
                 form.reset();
+                $('#checkboxPrincipal').bootstrapToggle('off');
+                $('#checkbox1').bootstrapToggle('off');
+                $('#checkbox2').bootstrapToggle('off');
 
                 var newPublicacion = {
                     id: doc.id,
@@ -514,6 +519,7 @@ async function AddRegistro() {
                     Categoria,
                     Destacado,
                     Oferta,
+                    Principal,
                     Publicante,
                     Propiedades,
                     PropiedadesTexto
@@ -693,6 +699,12 @@ async function fillEditForm(datos) {
     if (datos.Oferta == 'true' || datos.Oferta == 'on') $('#checkbox2Edit').bootstrapToggle('on');
     else $('#checkbox2Edit').bootstrapToggle('off');
 
+    if (datos.Principal) {
+        $('#checkboxPrincipalEdit').bootstrapToggle('on');
+    } else {
+        $('#checkboxPrincipalEdit').bootstrapToggle('off');
+    }
+
     if (datos.Agronomia !== "") {
         document.getElementById('VendedorEdit').setAttribute("hidden", "true")
         formPublicacion.elements['PublicanteEdit'].removeAttribute("required");
@@ -737,7 +749,9 @@ formEdit.addEventListener('submit', async (e) => {
         Provincia: publicacionForm.elements['Provincia'].value,
         Localidad: publicacionForm.elements['Localidad'].value,
         Destacado: publicacionForm.elements['Destacado'].value,
-        Oferta: publicacionForm.elements['Oferta'].value
+        Oferta: publicacionForm.elements['Oferta'].value,
+        Principal: Boolean($('#checkboxPrincipalEdit').val())
+
     })
         .catch((error) => {
             console.error("Error adding document: ", error);
@@ -773,6 +787,7 @@ formEdit.addEventListener('submit', async (e) => {
             docToEdit.Localidad = publicacionForm.elements['Localidad'].value;
             docToEdit.Destacado = publicacionForm.elements['Destacado'].value;
             docToEdit.Oferta = publicacionForm.elements['Oferta'].value;
+            docToEdit.Principal = Boolean($('#checkboxPrincipalEdit').val());
 
             var result = arrayPublicaciones.map(a => a.Agronomia);
             var result2 = arrayPublicaciones.map(a => a.Categoria);

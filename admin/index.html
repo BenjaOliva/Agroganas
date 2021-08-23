@@ -375,12 +375,12 @@
                                                 <label class="input-group-text"
                                                     for="inputGroupSelect01">Categoria</label>
                                             </div>
-                                            <select data-live-search="true" id="Categoria" class="form-control selectpicker" id="inputGroupSelect01"
-                                                required>
+                                            <select data-live-search="true" id="Categoria"
+                                                class="form-control selectpicker" id="inputGroupSelect01" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
-                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Maquinaria">Maquinaria Agrícola</option>
                                                 <option value="Seguros">Seguros</option>
-                                                <option value="AgriculturaPresicion">Agricultura de Presición</option>
+                                                <option value="AgriculturaPresicion">Agricultura de Precisión</option>
                                                 <option value="Insumos">Insumos Nutricion Animal</option>
                                                 <option value="NucleosCorrectoresSuplementos">Núcleos, Correctores y
                                                     Suplementos
@@ -487,20 +487,32 @@
                                         <center>
                                             <div class="row">
                                                 <div class="col">
+                                                    <p>Es una publicacion destacada?</p>
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" id="checkbox1" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Destacado"
                                                             data-off="No Destacado" data-onstyle="success"
-                                                            data-offstyle="danger" data-size="lg">
+                                                            data-offstyle="danger" data-size="lg" value="true">
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div class="col">
+                                                    <p>Esta en Oferta?</p>
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" id="checkbox2" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
                                                             data-onstyle="success" data-offstyle="danger"
-                                                            data-size="lg">
+                                                            data-size="lg" value="true"> 
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col">
+                                                    <p>Mostrar en pantalla Principal?</p>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" name="Principal" id="checkboxPrincipal"
+                                                            type="checkbox" data-toggle="toggle"
+                                                            data-on="Mostrar" data-off="No Mostrar" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -547,12 +559,12 @@
                                     <form id="formSearchEdit">
                                         <div class="input-group mb-3">
                                             <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
-                                            <select data-live-search="true" id="searchCat" class="form-control selectpicker" id="inputGroupSelect01"
-                                                required>
+                                            <select data-live-search="true" id="searchCat"
+                                                class="form-control selectpicker" id="inputGroupSelect01" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
-                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Maquinaria">Maquinaria Agrícola</option>
                                                 <option value="Seguros">Seguros</option>
-                                                <option value="AgriculturaPresicion">Agricultura de Presición</option>
+                                                <option value="AgriculturaPresicion">Agricultura de Precisión</option>
                                                 <option value="Insumos">Insumos Nutricion Animal</option>
                                                 <option value="NucleosCorrectoresSuplementos">Núcleos, Correctores y
                                                     Suplementos
@@ -927,8 +939,8 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Vendedor</span>
                                             </div>
-                                            <input type="text" id="PublicanteEdit" name="PublicanteEdit" class="form-control"
-                                                placeholder="Ingrese el Vendedor...">
+                                            <input type="text" id="PublicanteEdit" name="PublicanteEdit"
+                                                class="form-control" placeholder="Ingrese el Vendedor...">
                                         </div>
                                         <hr>
                                         <div class="input-group mb-3">
@@ -965,7 +977,8 @@
                                                     <span class="input-group-text">Describa las
                                                         Props.</span>
                                                 </div>
-                                                <textarea type="text" id="PropiedadesTextoEdit" name="PropiedadesTextoEdit" class="form-control"
+                                                <textarea type="text" id="PropiedadesTextoEdit"
+                                                    name="PropiedadesTextoEdit" class="form-control"
                                                     placeholder="Describa las Propiedades..."></textarea>
                                             </div>
                                         </center>
@@ -974,13 +987,14 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Categoria</span>
                                             </div>
-                                            <select data-live-search="true" name="CategoriaEdit" id="CategoriaEdit" class="form-control selectpicker" required>
+                                            <select data-live-search="true" name="CategoriaEdit" id="CategoriaEdit"
+                                                class="form-control selectpicker" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
-                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Maquinaria">Maquinaria Agrícola</option>
                                                 <option value="Seguros">Seguros</option>
                                                 <option value="AgriculturaPresicion">Agricultura de
-                                                    Presición</option>
-                                                <option value="Insumos">Insumos Nutricion Animal</option>
+                                                    Precisión</option>
+                                                <option value="Insumos">Insumos Nutrición Animal</option>
                                                 <option value="NucleosCorrectoresSuplementos">Núcleos,
                                                     Correctores y Suplementos
                                                 </option>
@@ -990,7 +1004,7 @@
                                                 <option value="InsumosVeterinarios">Insumos Veterinarios
                                                 </option>
                                                 <option value="Instalaciones">Instalaciones</option>
-                                                <option value="Generadores">Generadores de Energia</option>
+                                                <option value="Generadores">Generadores de Energía</option>
                                                 <option value="BalanzasBasculas">Balanzas y Basculas
                                                 </option>
                                                 <option value="Tanques">Tanques</option>
@@ -998,10 +1012,9 @@
                                                 <option value="Herramientas">Herramientas</option>
                                                 <option value="HerramientasJardin">Herramientas de Jardin
                                                 </option>
-                                                <option value="ArticulosRurales">Articulos Rurales y
+                                                <option value="ArticulosRurales">Artículos Rurales y
                                                     Herramientas</option>
-                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
-                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="OleoHidraulica">Oleo Hidráulica</option>
                                                 <option value="Herbicidas">Herbicidas</option>
                                                 <option value="Insecticidas">Insecticidas</option>
                                                 <option value="Fungicidas">Fungicidas</option>
@@ -1104,19 +1117,32 @@
                                         <center>
                                             <div class="row">
                                                 <div class="col">
+                                                    <p>Es una publicacion destacada?</p>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input width="200px" name="Destacado" id="checkbox1Edit" type="checkbox" checked
-                                                            data-toggle="toggle" data-on="Destacado"
-                                                            data-off="No Destacado" data-onstyle="success"
-                                                            data-offstyle="danger" data-size="lg">
+                                                        <input width="200px" name="Destacado" id="checkbox1Edit"
+                                                            type="checkbox" checked data-toggle="toggle"
+                                                            data-on="Destacado" data-off="No Destacado"
+                                                            data-onstyle="success" data-offstyle="danger"
+                                                            data-size="lg" value="true">
                                                     </div>
                                                 </div>
                                                 <div class="col">
+                                                    <p>Esta en Oferta?</p>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input width="200px" name="Oferta" id="checkbox2Edit" type="checkbox" checked
-                                                            data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
-                                                            data-onstyle="success" data-offstyle="danger"
-                                                            data-size="lg">
+                                                        <input width="200px" name="Oferta" id="checkbox2Edit"
+                                                            type="checkbox" checked data-toggle="toggle"
+                                                            data-on="Oferta" data-off="No Oferta" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg" value="true">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col">
+                                                    <p>Mostrar en pantalla Principal?</p>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" name="Principal" id="checkboxPrincipalEdit"
+                                                            type="checkbox" data-toggle="toggle"
+                                                            data-on="Mostrar" data-off="No Mostrar" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg" value="">
                                                     </div>
                                                 </div>
                                             </div>
