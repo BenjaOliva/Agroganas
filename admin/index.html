@@ -501,8 +501,8 @@
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" id="checkbox2" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
-                                                            data-onstyle="success" data-offstyle="danger"
-                                                            data-size="lg" value="true"> 
+                                                            data-onstyle="success" data-offstyle="danger" data-size="lg"
+                                                            value="true">
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -510,8 +510,8 @@
                                                     <p>Mostrar en pantalla Principal?</p>
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" name="Principal" id="checkboxPrincipal"
-                                                            type="checkbox" data-toggle="toggle"
-                                                            data-on="Mostrar" data-off="No Mostrar" data-onstyle="success"
+                                                            type="checkbox" data-toggle="toggle" data-on="Mostrar"
+                                                            data-off="No Mostrar" data-onstyle="success"
                                                             data-offstyle="danger" data-size="lg" value="">
                                                     </div>
                                                 </div>
@@ -616,12 +616,19 @@
                                                 <option value="BANCOS">BANCOS</option>
                                             </select>
                                         </div>
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Agronomia</label>
+                                            <select data-live-search="true" id="select-agronomia-search"
+                                                class="form-control selectpicker" required>
+                                                <option value=""> -- TODAS --</option>
+                                            </select>
+                                        </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="button" id="cancelCat" class="btn btn-secondary"
                                         data-dismiss="modal">Cancelar</button>
                                     <a type="submit" class="btn btn-primary text-white"
-                                        onclick="getSearchCat(document.getElementById('searchCat').value)"
+                                        onclick="getSearchCat(document.getElementById('searchCat').value, $('#select-agronomia-search').val())"
                                         data-target="#exampleModalToggle2" data-toggle="modal"
                                         data-dismiss="modal">Buscar</a>
                                 </div>
@@ -1122,8 +1129,8 @@
                                                         <input width="200px" name="Destacado" id="checkbox1Edit"
                                                             type="checkbox" checked data-toggle="toggle"
                                                             data-on="Destacado" data-off="No Destacado"
-                                                            data-onstyle="success" data-offstyle="danger"
-                                                            data-size="lg" value="true">
+                                                            data-onstyle="success" data-offstyle="danger" data-size="lg"
+                                                            value="true">
                                                     </div>
                                                 </div>
                                                 <div class="col">
@@ -1140,8 +1147,8 @@
                                                     <p>Mostrar en pantalla Principal?</p>
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" name="Principal" id="checkboxPrincipalEdit"
-                                                            type="checkbox" data-toggle="toggle"
-                                                            data-on="Mostrar" data-off="No Mostrar" data-onstyle="success"
+                                                            type="checkbox" data-toggle="toggle" data-on="Mostrar"
+                                                            data-off="No Mostrar" data-onstyle="success"
                                                             data-offstyle="danger" data-size="lg" value="">
                                                     </div>
                                                 </div>

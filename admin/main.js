@@ -34,6 +34,8 @@ var imgSrcs = document.getElementById('imgSrcs');
 var formEdit = document.getElementById("editForm");
 var form = document.getElementById("myForm");
 
+var agroSelectSearch = document.getElementById("select-agronomia-search");
+
 // Box Imagenes
 const archivos = document.getElementById("photo");
 
@@ -142,6 +144,8 @@ function initAdmin() {
                 el.value = opt;
 
                 select.add(el);
+                agroSelectSearch.add(el);
+                $('#select-agronomia-search').selectpicker('refresh');
             }
 
             loadAgros(AgronomiasVirtuales);
@@ -223,7 +227,7 @@ function Publicante(dataSet) {
 var categoriaSearch;
 
 // Inserta las publicaciones en la Card de Respuesta
-async function getSearchCat(category) {
+async function getSearchCat(category, agro) {
 
     $('#modalLoading').modal('hide');
 
@@ -231,7 +235,11 @@ async function getSearchCat(category) {
 
     categoriaSearch = category;
 
-    const querySnapshot = await db.collection("Productos").where("Categoria", "==", categoriaSearch).get();
+    if (Boolean(agro)) {
+        var querySnapshot = await db.collection("Productos").where("Categoria", "==", categoriaSearch).where("Agronomia", "==", agro).get();
+    } else {
+        var querySnapshot = await db.collection("Productos").where("Categoria", "==", categoriaSearch).get();
+    }
 
     if (querySnapshot.docs.length == 0) {
         productsContainer.innerHTML = `
@@ -268,11 +276,11 @@ async function getSearchCat(category) {
                 `+ Publicante(doc.data().Publicante) + `
       </center>
         <div class="">
+        <center>
             ${Destac}
             ${Ofer}
             <img onclick="OpenInNewTabWinBrowser('${imgArray}')" id="imageresource" style="margin-top: 31px;" src="${doc.data().Imagen}" class="img-fluid" alt="Responsive image">
             <hr>
-            <center>
                 <button type="button" onclick="modalMedia('${doc.id}')" class="btn btn-primary" data-toggle="modal" data-target="#imgModal">
                     Ver más Imagenes
                 </button>
@@ -581,6 +589,30 @@ document.getElementById('select-agronomia-edit').addEventListener('change', (e) 
         $('#PublicanteEdit').val('');
     }
 });
+
+agroSelectSearch.addEventListener('change', (e) => {
+    const agro = e.target.value;
+
+    if (Boolean(agro)) {
+        var arrayTemp = arrayPublicaciones.filter(function (obj) {
+            return obj.Agronomia == agro;
+        });
+
+        var temporal = doubleArray(arrayTemp.map(a => a.Categoria))
+
+        $("#searchCat option").hide();
+
+        temporal[0].forEach(element => {
+            $("#searchCat option[value=" + element + "]").show();
+        });
+        $("#searchCat").val($('#searchCat option[style=""]:first').val());
+        $('#searchCat').selectpicker('refresh');
+    } else {
+        $("#searchCat option").show();
+        $("#searchCat").val($('#searchCat option[style=""]:first').val());
+        $('#searchCat').selectpicker('refresh');
+    }
+})
 
 // -- EDIT Publicacion --
 
