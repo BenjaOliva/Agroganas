@@ -230,7 +230,7 @@ function modalMedia(productId) {
             console.log('No hay video');
         }
 
-        $(".tb").hover(function () {
+        $(".tb").click(function () {
 
             $(".tb").removeClass("tb-active");
             $(this).addClass("tb-active");

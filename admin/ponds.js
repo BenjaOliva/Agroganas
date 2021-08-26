@@ -12,12 +12,14 @@ $(function () {
 
     $('.my-pond').filepond('imagePreviewMaxHeight', 82);
 
-    // Set allowMultiple property to true
-    $('.my-pond').filepond('allowMultiple', true);
-
     $('.my-pond').filepond({allowFileTypeValidation: true});
     $('.my-pond').filepond({acceptedFileTypes: ['image/*']});
 
+    $('.my-pond').filepond({labelIdle: 'Arrastre las iamgenes o <span class="filepond--label-action"> Busquelas aqui </span>'});
+
+    // Set allowMultiple property to true
+    $('.my-pond').filepond('allowMultiple', true);
+    
     $('.my-pond').on('FilePond:addfile', function (e) {
         filesPublicacion = $('.my-pond').filepond('getFiles');
     });
@@ -31,13 +33,29 @@ $(function () {
     $('.my-pond2').filepond({allowFileTypeValidation: true});
     $('.my-pond2').filepond({acceptedFileTypes: ['image/*']});
 
-
-
     // Set allowMultiple property to true
     $('.my-pond2').filepond('allowMultiple', false);
 
     $('.my-pond2').on('FilePond:addfile', function (e) {
         fileAgronomia = $('.my-pond2').filepond('getFiles');
+    });
+
+    //Pond imagenes Edit Publicacion
+    $('.my-pond-edit').filepond();
+    $('.my-pond-edit').filepond('allowImagePreview', true);
+
+    $('.my-pond-edit').filepond('imagePreviewMaxHeight', 82);
+
+    $('.my-pond-edit').filepond({allowFileTypeValidation: true});
+    $('.my-pond-edit').filepond({dropValidation: true});
+    $('.my-pond-edit').filepond({acceptedFileTypes: ['image/*']});
+
+    $('.my-pond-edit').filepond({labelIdle: 'Arrastre las iamgenes o <span class="filepond--label-action"> Busquelas aqui </span>'});
+
+    $('.my-pond-edit').filepond('allowMultiple', true);
+
+    $('.my-pond-edit').on('FilePond:addfile', function (e) {
+        filesPublicacion = $('.my-pond-edit').filepond('getFiles');
     });
 
 });

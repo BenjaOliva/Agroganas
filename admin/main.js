@@ -144,6 +144,14 @@ function initAdmin() {
                 el.value = opt;
 
                 select.add(el);
+            }
+
+            for (let i = 0; i < array.length; i++) {
+                const opt = array[i].Nombre;
+                var el = document.createElement("option");
+                el.text = opt;
+                el.value = opt;
+
                 agroSelectSearch.add(el);
                 $('#select-agronomia-search').selectpicker('refresh');
             }
@@ -391,10 +399,9 @@ async function uploadAll() {
         resolve('second')
     })
 }
-
+var validar = 0;
 // Image uploader - Firebase
 function uploadNewDocImgs(imageFile) {
-    var validar = 0;
     $('#modalLoading').modal('show')
 
     return new Promise(function (resolve, reject) {
@@ -439,7 +446,7 @@ function uploadNewDocImgs(imageFile) {
                         console.log('%c Imagenes subidas con exito! Guardando registro... ', ' color: #bada55');
                         $('.my-pond').filepond('removeFiles');
                         filesPublicacion = []
-
+                        validar = 0;
                         AddRegistro();
                     }
                 });
@@ -569,7 +576,6 @@ async function AddRegistro() {
 const activities = document.getElementById('select-agronomia');
 
 activities.addEventListener('change', (e) => {
-
     if (e.target.value !== '') {
         $('#Vendedor').attr('hidden', true);
         $('#Publicante').val('');
@@ -577,7 +583,6 @@ activities.addEventListener('change', (e) => {
         $('#Vendedor').attr('hidden', false);
         $('#Publicante').val('');
     }
-
 });
 
 document.getElementById('select-agronomia-edit').addEventListener('change', (e) => {
@@ -616,65 +621,96 @@ agroSelectSearch.addEventListener('change', (e) => {
 
 // -- EDIT Publicacion --
 
+function imgPublicacionEdit(action) {
+    $('#modalNewImages').modal('show');
+    $('.my-pond-edit').filepond('removeFiles');
+
+    document.getElementById('modal-images-title').innerHTML = 'Cargar Nuevas Imagenes';
+
+    switch (action) {
+        case true:
+            $("#btnNewImgs").attr("onclick", "addNewImagesPublicacion(filesPublicacion)");
+            break;
+        case false:
+            $("#btnNewImgs").attr("onclick", "if (window.confirm('ADVERTENCIA: Se borrarán las imagenes anteriores y se usaran éstas en su lugar, esta acciónn no es reversible, esta seguro de continuar?')){replaceImagesPublicacion(filesPublicacion)}");
+
+            break;
+        default:
+            break;
+    }
+
+}
+
+// Funcion para agregar imagenes
+function addNewImagesPublicacion(array) {
+    if (array.length < 1) {
+        alert('Debe Cargar Imagenes!')
+    } else {
+        console.log('Imagenes a agregar: ', array);
+    }
+}
+
+// Funcion para eleiminar las imagenes y cargar Nuevas
+function replaceImagesPublicacion(array) {
+    if (array.length < 1) {
+        alert('Debe Cargar Imagenes!')
+    } else {
+        console.log('Nuevas Imagenes: ', array);
+
+        arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen
+
+    }
+}
+
+
 
 // Muestra imagenes y Muestra el apartado video si corresponde
 function modalMedia(productId) {
     $('#img-btn').attr('aria-expanded', 'true');
-    var docRef = db.collection("Productos").doc(String(productId));
+    var docRef = arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === productId)]
 
     imgSrcs.innerHTML = '';
     imgThums.innerHTML = '';
 
     var id = 0;
+    docRef.Imagen.forEach(element => {
+        id++
+        if (id == 1) {
+            var temp = 'tb-active'
+            var temp2 = 'active'
 
-    docRef.get().then((doc) => {
-        doc.data().Imagen.forEach(element => {
-            console.log(element);
-            id++
-            if (id == 1) {
-                var temp = 'tb-active'
-                var temp2 = 'active'
+        } else {
+            var temp = '';
+            var temp2 = '';
+        }
 
-            } else {
-                var temp = '';
-                var temp2 = '';
-            }
-
-            imgThums.innerHTML += `
+        imgThums.innerHTML += `
             <div id="f`+ id + `" class="tb ` + temp + `"> <img class="thumbnail-img fit-image"
             src="`+ element + `"> </div>
             `
-            imgSrcs.innerHTML += `
-            <fieldset id="f`+ id + `1" class="` + temp2 + `">
+        imgSrcs.innerHTML += `
+            <fieldset id="f`+ id + `1" class="mediaImg ` + temp2 + `">
                 <div class="product-pic"> <img class="pic0" src="`+ element + `"> </div>
             </fieldset>
             `
-        });
+    });
 
-        if (doc.data().Video != undefined) {
-            $('#video-view').attr('hidden', false);
-        } else {
-            $('#video-view').attr('hidden', true);
-        }
+    if (docRef.Video != undefined) {
+        $('#video-view').attr('hidden', false);
+    } else {
+        $('#video-view').attr('hidden', true);
+    }
 
-        $(".tb").hover(function () {
+    $(".tb").click(function () {
 
-            $(".tb").removeClass("tb-active");
-            $(this).addClass("tb-active");
+        $(".tb").removeClass("tb-active");
+        $(this).addClass("tb-active");
+        next_fs = $(this).attr('id');
+        next_fs = "#" + next_fs + "1";
 
-            //current_fs = $(".active");
-
-            next_fs = $(this).attr('id');
-            next_fs = "#" + next_fs + "1";
-
-            $("fieldset").removeClass("active");
-            $(next_fs).addClass("active");
-        });
-    })
-        .catch((error) => {
-            console.log("Error obteniendo el documento:", error);
-        });
-
+        $(".mediaImg").removeClass("active");
+        $(next_fs).addClass("active");
+    });
 }
 
 var idDocToEdit;
@@ -825,8 +861,12 @@ formEdit.addEventListener('submit', async (e) => {
             var result2 = arrayPublicaciones.map(a => a.Categoria);
             updateTheCharts(doubleArray(result), doubleArray(result2))
 
-            getSearchCat(categoriaSearch);
-
+            if (Boolean($('#select-agronomia-search').val())) {
+                getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+            } else {
+                getSearchCat(categoriaSearch)
+            }
+            
             setTimeout(() => {
                 $('#modalLoading').modal('hide');
             }, 2000);
@@ -1243,24 +1283,18 @@ var colorsCat = [];
 var colorsAgros = [];
 
 function updateTheCharts(arrays, arrays2) {
-
     tempo = arrays;
-
-    console.log('Arrays de Categorias', arrays2);
-
     colorsCat = [];
+    colorsAgros = [];
+    var index = arrays[0].indexOf("");
 
     for (let i = 0; i < arrays2[1].length; i++) {
         colorsCat.push('#' + Math.floor(Math.random() * 16777215).toString(16));
     }
 
-    colorsAgros = [];
-
     for (let i = 0; i < arrays[1].length; i++) {
         colorsAgros.push('#' + Math.floor(Math.random() * 16777215).toString(16));
     }
-
-    var index = arrays[0].indexOf("");
 
     if (index !== -1) {
         arrays[0][index] = "Particular";
