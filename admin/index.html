@@ -876,12 +876,12 @@
                                         <div class="row justify-content-center">
                                             <div class="d-flex">
                                                 <div class="col">
-                                                    <button class="btn btn-success" onclick="imgPublicacionEdit(true)">
+                                                    <button class="btn btn-success" onclick="imgPublicacionEdit(true); $('#modalPublicacionEdit').modal('hide');">
                                                         Agregar Imagenes
                                                     </button>
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-danger" onclick="imgPublicacionEdit(false)">
+                                                    <button class="btn btn-danger" onclick="imgPublicacionEdit(false); $('#modalPublicacionEdit').modal('hide');">
                                                         Eliminar Imagenes
                                                     </button>
                                                 </div>
@@ -1297,7 +1297,7 @@
                                         <div class="row justify-content-center">
                                             <div class="d-flex">
                                                 <div class="col">
-                                                    <button class="btn btn-success"> Cambiar Logo
+                                                    <button class="btn btn-success" onclick="imgPublicacionEdit('logo')"> Cambiar Logo
                                                     </button>
                                                 </div>
                                             </div>
@@ -1455,6 +1455,7 @@
         </div>
     </div>
 
+    <!-- Modal Images and Logo uploader -->
     <div class="modal fade" id="modalNewImages" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -1466,7 +1467,7 @@
                     <input type="file" class="my-pond-edit" id="test-editImg" accept="image/*" multiple />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="$('.my-pond-edit').filepond('removeFiles');">Cancelar</button>
+                    <button type="button" id="cancel-image-upload" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="btnNewImgs">Guardar</button>
                 </div>
             </div>

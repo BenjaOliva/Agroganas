@@ -287,7 +287,7 @@ async function getSearchCat(category, agro) {
         <center>
             ${Destac}
             ${Ofer}
-            <img onclick="OpenInNewTabWinBrowser('${imgArray}')" id="imageresource" style="margin-top: 31px;" src="${doc.data().Imagen}" class="img-fluid" alt="Responsive image">
+            <img onclick="OpenInNewTabWinBrowser('${imgArray}')" id="imageresource" style="margin-top: 31px;" src="${doc.data().Imagen[0]}" class="img-fluid" alt="Responsive image">
             <hr>
                 <button type="button" onclick="modalMedia('${doc.id}')" class="btn btn-primary" data-toggle="modal" data-target="#imgModal">
                     Ver más Imagenes
@@ -357,8 +357,12 @@ async function deleteImg(element) {
 function deleteDocument(idparam) {
     // DELETE siempre da true aunque no exista el id, en caso de ser necesario, checkear existencia y despues borrar
     db.collection("Productos").doc(idparam).delete().then(() => {
-        getSearchCat(categoriaSearch);
-        console.log("Publicacion Borrada!");
+        if (Boolean($('#select-agronomia-search').val())) {
+            getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+        } else {
+            getSearchCat(categoriaSearch)
+        }
+
         alert('Publicacion Borrada!')
 
         // Disminuimos el contador de publicaciones
@@ -624,21 +628,28 @@ agroSelectSearch.addEventListener('change', (e) => {
 function imgPublicacionEdit(action) {
     $('#modalNewImages').modal('show');
     $('.my-pond-edit').filepond('removeFiles');
-
+    $('.my-pond-edit').filepond('allowMultiple', true);
     document.getElementById('modal-images-title').innerHTML = 'Cargar Nuevas Imagenes';
-
+    $('#cancel-image-upload').attr("onclick", "$('.my-pond-edit').filepond('removeFiles'); $('#modalPublicacionEdit').modal('show');");
     switch (action) {
         case true:
             $("#btnNewImgs").attr("onclick", "addNewImagesPublicacion(filesPublicacion)");
             break;
         case false:
             $("#btnNewImgs").attr("onclick", "if (window.confirm('ADVERTENCIA: Se borrarán las imagenes anteriores y se usaran éstas en su lugar, esta acciónn no es reversible, esta seguro de continuar?')){replaceImagesPublicacion(filesPublicacion)}");
+            break;
+        case "logo":
+            $('.my-pond-edit').filepond('allowMultiple', false);
+            document.getElementById('modal-images-title').innerHTML = 'Cargar Nuevo Logo';
+            $('#modalAgronomiaEdit').modal('hide');
+            $("#btnNewImgs").attr("onclick", "changeLogoAgro(filesPublicacion)");
+            $('#cancel-image-upload').attr("onclick", "$('.my-pond-edit').filepond('removeFiles'); $('#modalAgronomiaEdit').modal('show');");
 
             break;
         default:
+            alert('Opcion no soportada!')
             break;
     }
-
 }
 
 // Funcion para agregar imagenes
@@ -647,22 +658,307 @@ function addNewImagesPublicacion(array) {
         alert('Debe Cargar Imagenes!')
     } else {
         console.log('Imagenes a agregar: ', array);
+        $('#modalLoading').modal('show')
+        $('#modalNewImages').modal('hide');
+        newImageUploader(array, 'add')
     }
 }
 
-// Funcion para eleiminar las imagenes y cargar Nuevas
+// Funcion para eliminar las imagenes y cargar Nuevas
 function replaceImagesPublicacion(array) {
     if (array.length < 1) {
         alert('Debe Cargar Imagenes!')
     } else {
         console.log('Nuevas Imagenes: ', array);
-
-        arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen
-
+        $('#modalLoading').modal('show')
+        $('#modalNewImages').modal('hide');
+        newImageUploader(array, 'replace')
     }
 }
 
+// Funcion para eliminar las imagenes y cargar Nuevas
+function changeLogoAgro(array) {
+    if (array.length < 1) {
+        alert('Debe Cargar Imagenes!')
+    } else {
+        console.log('Nuevo Logo: ', array);
+        $('#modalLoading').modal('show')
+        $('#modalNewImages').modal('hide');
+        newImageUploader(array, 'logo')
+    }
+}
 
+// Funcion de carga de imagenes
+function newImageUploader(array, action) {
+    var validador = 0;
+
+    switch (action) {
+        case 'add':
+            array.forEach((element) => {
+                var task = storage.ref().child('image/' + element.file.name + '-' + (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)).put(element.file);
+                task.on('state_changed',
+                    function progress(snapshot) {
+                        var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100.0;
+                        console.log(percentage);
+                    },
+                    function error(err) {
+                        console.error("Error adding document: ", err);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+                    },
+                    function complete() {
+                        task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            urlsToSave.push(downloadURL);
+                            validador++;
+
+                            if (validador == array.length) {
+                                console.log(urlsToSave);
+                                console.log('%c Imagenes nuevas subidas con exito! Agregando al registro... ', ' color: #bada55');
+                                $('.my-pond-edit').filepond('removeFiles');
+                                filesPublicacion = [];
+                                validador = 0;
+
+                                urlsToSave.forEach((element) => {
+                                    arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen.push(element)
+                                })
+
+                                urlsToSave = [];
+                                
+                                db.collection("Productos")
+                                    .doc(idDocToEdit)
+                                    .update({
+                                        "Imagen": arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen
+                                    })
+                                    .then(() => {
+                                        toastr.options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "newestOnTop": false,
+                                            "progressBar": true,
+                                            "positionClass": "toast-top-center",
+                                            "preventDuplicates": true,
+                                            "onclick": null,
+                                            "showDuration": "300",
+                                            "hideDuration": "1000",
+                                            "timeOut": "5000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        }
+                                        toastr["success"]("Se agregarpn las nuevas imagenes a la publicacion.", "Imagenes Agregadas!")
+
+                                        $('#modalLoading').modal('hide')
+
+                                        if (Boolean($('#select-agronomia-search').val())) {
+                                            getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+                                        } else {
+                                            getSearchCat(categoriaSearch)
+                                        }
+                                    })
+                                    
+                            }
+                        });
+                    }
+                );
+            })
+            break;
+        case 'replace':
+            array.forEach((element) => {
+                var task = storage.ref().child('image/' + element.file.name + '-' + (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)).put(element.file);
+                task.on('state_changed',
+                    function progress(snapshot) {
+                        var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100.0;
+                        console.log(percentage);
+                    },
+                    function error(err) {
+                        console.error("Error adding document: ", err);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+                    },
+                    function complete() {
+                        task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            urlsToSave.push(downloadURL);
+                            validador++;
+
+                            if (validador == array.length) {
+                                console.log(urlsToSave);
+                                console.log('%c Imagenes nuevas subidas con exito! Editando al registro... ', ' color: #bada55');
+                                $('.my-pond-edit').filepond('removeFiles');
+                                filesPublicacion = [];
+                                validador = 0;
+
+                                arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen.forEach((element) =>{
+                                    deleteImg(element);
+                                })
+
+                                arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen = [];
+
+                                urlsToSave.forEach((element) => {
+                                    arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen.push(element)
+                                })
+
+                                urlsToSave = [];
+                                
+                                db.collection("Productos")
+                                    .doc(idDocToEdit)
+                                    .update({
+                                        "Imagen": arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen
+                                    })
+                                    .then(() => {
+                                        toastr.options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "newestOnTop": false,
+                                            "progressBar": true,
+                                            "positionClass": "toast-top-center",
+                                            "preventDuplicates": true,
+                                            "onclick": null,
+                                            "showDuration": "300",
+                                            "hideDuration": "1000",
+                                            "timeOut": "5000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        }
+                                        toastr["success"]("Se cargaron las nuevas imagenes para la publicacion.", "Imagenes Reemplazadas!")
+
+                                        $('#modalLoading').modal('hide')
+
+                                        if (Boolean($('#select-agronomia-search').val())) {
+                                            getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+                                        } else {
+                                            getSearchCat(categoriaSearch)
+                                        }
+                                    })
+                            }
+                        });
+                    }
+                );
+            })
+            break;
+        case 'logo':
+            array.forEach((element) => {
+                var task = storage.ref().child('agronomias-logos/' + element.file.name + '-' + (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)).put(element.file);
+                task.on('state_changed',
+                    function progress(snapshot) {
+                        var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100.0;
+                        console.log(percentage);
+                    },
+                    function error(err) {
+                        console.error("Error adding document: ", err);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+                    },
+                    function complete() {
+                        task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            urlsToSave.push(downloadURL);
+                            validador++;
+
+                            if (validador == array.length) {
+                                console.log(urlsToSave);
+                                console.log('%c Logo subido con exito! Editando la Agronomia... ', ' color: #bada55');
+                                $('.my-pond-edit').filepond('removeFiles');
+                                filesPublicacion = [];
+                                validador = 0;
+
+                                deleteImg(AgronomiasVirtuales[AgronomiasVirtuales.findIndex(a => a.id === idAgroToEdit)].Logo)
+
+                                AgronomiasVirtuales[AgronomiasVirtuales.findIndex(a => a.id === idAgroToEdit)].Logo = urlsToSave[0];
+
+                                urlsToSave = [];
+                                
+                                db.collection("Agronomias")
+                                    .doc(idAgroToEdit)
+                                    .update({
+                                        "Logo": AgronomiasVirtuales[AgronomiasVirtuales.findIndex(a => a.id === idAgroToEdit)].Logo
+                                    })
+                                    .then(() => {
+                                        toastr.options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "newestOnTop": false,
+                                            "progressBar": true,
+                                            "positionClass": "toast-top-center",
+                                            "preventDuplicates": true,
+                                            "onclick": null,
+                                            "showDuration": "300",
+                                            "hideDuration": "1000",
+                                            "timeOut": "5000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        }
+                                        toastr["success"]("Se cargo el nuevo Logo de la agronomia.", "Logo Reemplazado!")
+
+                                        $('#modalLoading').modal('hide')
+
+                                        loadAgros(AgronomiasVirtuales)
+                                    })
+                            }
+                        });
+                    }
+                );
+            })
+            break;
+        default:
+            console.log('Opción no soportada!');
+            break;
+    }
+}
 
 // Muestra imagenes y Muestra el apartado video si corresponde
 function modalMedia(productId) {
@@ -866,7 +1162,7 @@ formEdit.addEventListener('submit', async (e) => {
             } else {
                 getSearchCat(categoriaSearch)
             }
-            
+
             setTimeout(() => {
                 $('#modalLoading').modal('hide');
             }, 2000);
@@ -1114,11 +1410,15 @@ function deleteAgroByID(agroId, agroNombre) {
 
 var previousNameAgro;
 
+var idAgroToEdit;
+
 // Modal Edit Agronomia
 async function editAgronomia(agroId) {
     $('#modalAgronomiaEdit').modal('show')
     var agroForm = document.forms['editFormAgro'];
     const object = AgronomiasVirtuales.find(AgronomiasVirtuales => AgronomiasVirtuales.id == agroId);
+
+    idAgroToEdit = agroId;
 
     previousNameAgro = object.Nombre;
 

@@ -12,10 +12,10 @@ $(function () {
 
     $('.my-pond').filepond('imagePreviewMaxHeight', 82);
 
-    $('.my-pond').filepond({allowFileTypeValidation: true});
+    $('.my-pond').filepond('allowFileTypeValidation', true);
     $('.my-pond').filepond({acceptedFileTypes: ['image/*']});
 
-    $('.my-pond').filepond({labelIdle: 'Arrastre las iamgenes o <span class="filepond--label-action"> Busquelas aqui </span>'});
+    $('.my-pond').filepond('labelIdle', 'Arrastre las iamgenes o <span class="filepond--label-action"> Busquelas aqui </span>');
 
     // Set allowMultiple property to true
     $('.my-pond').filepond('allowMultiple', true);
@@ -30,9 +30,9 @@ $(function () {
 
     $('.my-pond2').filepond('imagePreviewMaxHeight', 82);
 
-    $('.my-pond2').filepond({allowFileTypeValidation: true});
+    $('.my-pond2').filepond('allowFileTypeValidation', true);
     $('.my-pond2').filepond({acceptedFileTypes: ['image/*']});
-
+    $('.my-pond2').filepond('labelIdle', 'Arrastre el Logo o <span class="filepond--label-action"> Busquelo aqui </span>');
     // Set allowMultiple property to true
     $('.my-pond2').filepond('allowMultiple', false);
 
@@ -46,12 +46,10 @@ $(function () {
 
     $('.my-pond-edit').filepond('imagePreviewMaxHeight', 82);
 
-    $('.my-pond-edit').filepond({allowFileTypeValidation: true});
-    $('.my-pond-edit').filepond({dropValidation: true});
+    $('.my-pond-edit').filepond('allowFileTypeValidation', true);
+    $('.my-pond-edit').filepond('dropValidation', true);
     $('.my-pond-edit').filepond({acceptedFileTypes: ['image/*']});
-
-    $('.my-pond-edit').filepond({labelIdle: 'Arrastre las iamgenes o <span class="filepond--label-action"> Busquelas aqui </span>'});
-
+    $('.my-pond-edit').filepond('labelIdle', 'Arrastre las iamgenes o <span class="filepond--label-action"> Busquelas aqui </span>');
     $('.my-pond-edit').filepond('allowMultiple', true);
 
     $('.my-pond-edit').on('FilePond:addfile', function (e) {
