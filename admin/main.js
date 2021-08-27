@@ -1510,6 +1510,7 @@ document.getElementById('editFormAgro').addEventListener('submit', async (e) => 
                         objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
 
                         $("#select-agronomia option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
+                        $("#select-agronomia-search option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
 
                         AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
                         AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
@@ -1519,12 +1520,15 @@ document.getElementById('editFormAgro').addEventListener('submit', async (e) => 
                         loadAgros(AgronomiasVirtuales);
 
                         var select = document.getElementById("select-agronomia");
+                        var selectSearch = document.getElementById("select-agronomia-search");
                         const opt = agroForm.elements['Nombre'].value;
                         var el = document.createElement("option");
                         el.text = opt;
                         el.value = opt;
 
                         select.add(el);
+                        selectSearch.add(el);
+                        $('#select-agronomia-search').selectpicker('refresh');
                     });
             } else {
                 toastr.options = {
