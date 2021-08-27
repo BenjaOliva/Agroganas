@@ -224,9 +224,9 @@ function setPropiedades(PropiedadesRecibidas, PropiedadesText) {
 }
 
 // Agrega la vista del Vendedor a la card de la publicacion
-function Publicante(dataSet) {
-    if (dataSet == null) {
-        return '';
+function Publicante(dataSet, agroData) {
+    if (dataSet == '') {
+        return '<b> Agronomia: ' + agroData + '</b>';
     } else {
         return '<b> Vendedor: ' + dataSet + '</b>';
     }
@@ -281,7 +281,7 @@ async function getSearchCat(category, agro) {
     <hr>
 
     <center>
-                `+ Publicante(doc.data().Publicante) + `
+                `+ Publicante(doc.data().Publicante, doc.data().Agronomia) + `
       </center>
         <div class="">
         <center>
