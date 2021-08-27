@@ -14,7 +14,7 @@ Las empresas cuentan con la posibilidad de tener un espacio dentro de la platafo
 
 La plataforma a su vez cuenta con una sección de administrador en donde solo los usuarios designados pueden crear, modificar o borrar publicaciones y Agronomias Virtuales.
 
-### Flujos de la Plataforma
+## Flujos de la Plataforma
 
 * Flujo de utilizacion y acceso para un cliente en la plataforma
 ![alt text](assets/Flujo-Cliente.png)
@@ -64,6 +64,17 @@ Oliva Clariá, Benjamín
 ## Etapa del Desarrollo
 
 * El proyecto se encuentra funcional, se estan terminando algunos detalles y funciones menos relevantes para el cliente que solicito la Plataforma
+
+## Herramientas de desarrollo
+
+* Visual Studio Code
+    * Extensiones:
+        * [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
+        * [Bookmarks](https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks)
+        * [Firebase Explorer](https://marketplace.visualstudio.com/items?itemName=jsayol.firebase-explorer)
+        * Otras extensiones de formateo de codigo...
+* Navegador Brave
+* GitHub Desktop App
 
 ## Créditos de Uso e Inspiraciones
 
