@@ -101,6 +101,30 @@ async function cambiarLocalidadesAgroEdit() {
 
 }
 
+async function cambiarLocalidadesPublicacionEdit() {
+    var itemSelectorOption = $('#select-localidad4 option');
+    itemSelectorOption.remove();
+    var provincia = document.getElementById('select-provincia-publicacionEdit').value;
+
+    array = await getLocalidades(datos, provincia);
+
+    select = document.getElementById('select-localidad4');
+
+    array.forEach(element => {
+
+        optionText = element.nombre;
+        optionValue = element.nombre;
+
+        $('#select-localidad4').append(`<option value="${optionValue}">
+                                   ${optionText}
+                              </option>`);
+    });
+    $('#select-localidad4').selectpicker('refresh');
+
+}
+
 cambiarLocalidades();
 cambiarLocalidadesAgro();
 cambiarLocalidadesAgroEdit();
+cambiarLocalidadesPublicacionEdit();
+

@@ -159,11 +159,19 @@
         <ol class="carousel-indicators">
           <li data-target="#carousel" data-slide-to="0" class="active"></li>
           <li data-target="#carousel" data-slide-to="1"></li>
+          <li data-target="#carousel" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
           <div class="carousel-item active">
             <img src="assets/sliderPrueba2.jpg" alt="responsive image" class="d-block img-fluid" data-toggle="modal"
               data-target="#modalPresentacion">
+          </div>
+          <!-- /.carousel-item -->
+          <div class="carousel-item ">
+
+            <img src="assets/agronomias-banner.jpeg" alt="responsive image" class="d-block img-fluid"
+              onclick="window.location.href = '/agronomias-virtuales'">
+
           </div>
           <!-- /.carousel-item -->
           <div class="carousel-item ">
@@ -274,7 +282,7 @@
               onclick="window.location.href = '../sections/index.html?cat=Agroinsumos'">
             <title></title>
             <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em"></text>
-            <h2>Agroinsumos</h2>
+            <h2>Insumos Agricolas</h2>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" style="margin-bottom: 30px;">
             <img class="bd-placeholder-img rounded-circle" width="140" height="140"
@@ -295,69 +303,8 @@
       </center>
 
       <hr>
-      <div class="container">
+      <div class="container" id="container-publicaciones">
 
-        <div class="row">
-          <div class="col-lg">
-            <div class="card shadow p-3 bg-light mb-5 rounded">
-              <div class="card-body">
-                <div id="products-container">
-                  <article class="card card-product-list">
-                    <div class="row no-gutters">
-                      <aside class="col-md-3">
-                        <br>
-                        <hr>
-
-                        <center>
-                          <b> Vendedor: NFM Agrosoluciones</b>
-                        </center>
-                        <div class="">
-
-
-                          <img onclick="OpenInNewTabWinBrowser('../../assets/products/PILOTO-AUTOPILOT.jpg')"
-                            id="imageresource" style="margin-top: 31px;"
-                            src="../../assets/products/PILOTO-AUTOPILOT.jpg" class="img-fluid" alt="Responsive image">
-                        </div>
-                      </aside> <!-- col.// -->
-                      <div class="col-md-6">
-                        <div class="info-main">
-                          <p class="h5 title">Piloto Automático</p>
-                          <hr>
-                          <div>
-                            <pre
-                              class="card-text">              <h5>Propiedades:</h5><br>Fácil instalación<br>Traslado sencillo<br>Compatibilidad<br></pre>
-                          </div>
-                          <hr>
-                          <p>El piloto automático EZ-Pilot™ de Trimble ofrece alta precisión a un precio económico. El
-                            EZ-Pilot gira el volante por usted con un motor eléctrico compacto y usa la guía por GPS de
-                            las pantallas de Trimble para mantener el vehículo en línea y mejorar la eficiencia. El
-                            sistema EZ-Pilot es versátil e ideal tanto para aplicaciones agrícolas de cultivos de baja
-                            precisión como para aplicaciones agrícolas de cultivos en surco de alta precisión.
-
-                            NFM agrosoluciones</p>
-                        </div> <!-- info-main.// -->
-                      </div> <!-- col.// -->
-                      <aside class="col-sm-3">
-                        <div class="info-aside">
-                          <div class="price-wrap">
-
-                          </div> <!-- info-price-detail // -->
-                          <!-- <p class="text-success">Disponible</p> -->
-                          <br>
-                          <p>
-                            <a href="https://form.jotform.com/210891397728670?productoA=Piloto Automático"
-                              class="btn btn-primary btn-block">Consultar</a>
-                          </p>
-                        </div> <!-- info-aside.// -->
-                      </aside> <!-- col.// -->
-                    </div> <!-- row.// -->
-                  </article>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <hr>
@@ -573,6 +520,17 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"></script>
 
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
+
+
+  <script src="main.js"></script>
   <script>
     ! function ($) {
       $(function () {

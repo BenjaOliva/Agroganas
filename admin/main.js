@@ -34,6 +34,8 @@ var imgSrcs = document.getElementById('imgSrcs');
 var formEdit = document.getElementById("editForm");
 var form = document.getElementById("myForm");
 
+var agroSelectSearch = document.getElementById("select-agronomia-search");
+
 // Box Imagenes
 const archivos = document.getElementById("photo");
 
@@ -144,6 +146,16 @@ function initAdmin() {
                 select.add(el);
             }
 
+            for (let i = 0; i < array.length; i++) {
+                const opt = array[i].Nombre;
+                var el = document.createElement("option");
+                el.text = opt;
+                el.value = opt;
+
+                agroSelectSearch.add(el);
+                $('#select-agronomia-search').selectpicker('refresh');
+            }
+
             loadAgros(AgronomiasVirtuales);
 
         })
@@ -212,9 +224,9 @@ function setPropiedades(PropiedadesRecibidas, PropiedadesText) {
 }
 
 // Agrega la vista del Vendedor a la card de la publicacion
-function Publicante(dataSet) {
-    if (dataSet == null) {
-        return '';
+function Publicante(dataSet, agroData) {
+    if (dataSet == '') {
+        return '<b> Agronomia: ' + agroData + '</b>';
     } else {
         return '<b> Vendedor: ' + dataSet + '</b>';
     }
@@ -223,13 +235,19 @@ function Publicante(dataSet) {
 var categoriaSearch;
 
 // Inserta las publicaciones en la Card de Respuesta
-async function getSearchCat(category) {
+async function getSearchCat(category, agro) {
+
+    $('#modalLoading').modal('hide');
 
     productsContainer.innerHTML = '';
 
     categoriaSearch = category;
 
-    const querySnapshot = await db.collection("Productos").where("Categoria", "==", categoriaSearch).get();
+    if (Boolean(agro)) {
+        var querySnapshot = await db.collection("Productos").where("Categoria", "==", categoriaSearch).where("Agronomia", "==", agro).get();
+    } else {
+        var querySnapshot = await db.collection("Productos").where("Categoria", "==", categoriaSearch).get();
+    }
 
     if (querySnapshot.docs.length == 0) {
         productsContainer.innerHTML = `
@@ -263,14 +281,14 @@ async function getSearchCat(category) {
     <hr>
 
     <center>
-                `+ Publicante(doc.data().Publicante) + `
+                `+ Publicante(doc.data().Publicante, doc.data().Agronomia) + `
       </center>
         <div class="">
+        <center>
             ${Destac}
             ${Ofer}
-            <img onclick="OpenInNewTabWinBrowser('${imgArray}')" id="imageresource" style="margin-top: 31px;" src="${doc.data().Imagen}" class="img-fluid" alt="Responsive image">
+            <img onclick="OpenInNewTabWinBrowser('${imgArray}')" id="imageresource" style="margin-top: 31px;" src="${doc.data().Imagen[0]}" class="img-fluid" alt="Responsive image">
             <hr>
-            <center>
                 <button type="button" onclick="modalMedia('${doc.id}')" class="btn btn-primary" data-toggle="modal" data-target="#imgModal">
                     Ver más Imagenes
                 </button>
@@ -311,38 +329,27 @@ async function getSearchCat(category) {
 // -- DELETE Publicacion --
 
 // Elimina un documento por el ID y las imagenes enlazadas - Video pendiente
-function deleteByID(idToSearch) {
-    var docRef = db.collection("Productos").doc(idToSearch);
+async function deleteByID(idToSearch) {
 
-    docRef.get().then((doc) => {
+    var docToDelete = arrayPublicaciones[arrayPublicaciones.findIndex(item => item.id === idToSearch)];
 
-        array = doc.data().Imagen
+    for (let index = 0; index < docToDelete.Imagen.length; index++) {
+        const element = docToDelete.Imagen[index];
+        deleteImg(element);
+    }
 
-        for (let index = 0; index < array.length; index++) {
-            const element = array[index];
-            deleteImg(element);
-        }
-    })
-        .then(
-            deleteDocument(idToSearch)
-        )
-        .then(alert('Publicacion eliminada!'))
-        .catch((error) => {
-            console.log("Error getting document:", error);
-        });
-
-
+    deleteDocument(idToSearch)
 }
 
 // Borrar una imagen por su url 
-function deleteImg(element) {
+async function deleteImg(element) {
     var desertRef = firebase.storage().refFromURL(element);
 
-    desertRef.delete().then(function () {
-        // File deleted successfully
+    await desertRef.delete().then(function () {
+        return
     }).catch(function (error) {
         // Uh-oh, an error occurred!
-        console.log("Error al borrar imagen!", error);
+        console.error("Error al borrar imagen!", error);
     });
 }
 
@@ -350,11 +357,24 @@ function deleteImg(element) {
 function deleteDocument(idparam) {
     // DELETE siempre da true aunque no exista el id, en caso de ser necesario, checkear existencia y despues borrar
     db.collection("Productos").doc(idparam).delete().then(() => {
-        getSearchCat(categoriaSearch);
-        console.log("Publicacion Borrada!");
+        if (Boolean($('#select-agronomia-search').val())) {
+            getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+        } else {
+            getSearchCat(categoriaSearch)
+        }
+
+        alert('Publicacion Borrada!')
 
         // Disminuimos el contador de publicaciones
         document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) - 1
+
+        arrayPublicaciones = arrayPublicaciones.filter(function (obj) {
+            return obj.id !== idparam;
+        });
+
+        var result = arrayPublicaciones.map(a => a.Agronomia);
+        var result2 = arrayPublicaciones.map(a => a.Categoria);
+        updateTheCharts(doubleArray(result), doubleArray(result2))
 
     }).catch((error) => {
         alert('Error al borrar la publicacion!')
@@ -383,10 +403,9 @@ async function uploadAll() {
         resolve('second')
     })
 }
-
+var validar = 0;
 // Image uploader - Firebase
 function uploadNewDocImgs(imageFile) {
-    var validar = 0;
     $('#modalLoading').modal('show')
 
     return new Promise(function (resolve, reject) {
@@ -431,7 +450,7 @@ function uploadNewDocImgs(imageFile) {
                         console.log('%c Imagenes subidas con exito! Guardando registro... ', ' color: #bada55');
                         $('.my-pond').filepond('removeFiles');
                         filesPublicacion = []
-
+                        validar = 0;
                         AddRegistro();
                     }
                 });
@@ -439,6 +458,8 @@ function uploadNewDocImgs(imageFile) {
         );
     });
 }
+
+var test;
 
 // Add Registro - Firebase
 async function AddRegistro() {
@@ -455,9 +476,10 @@ async function AddRegistro() {
     var Destacado = document.getElementById('checkbox1').value;
     var Oferta = document.getElementById('checkbox2').value;
     var Agronomia = document.getElementById('select-agronomia').value;
+    var Principal = Boolean($('#checkboxPrincipal').val())
 
     // Add a new document with a generated id.
-    await db.collection("Productos").doc().set({
+    await db.collection("Productos").add({
         Agronomia,
         Nombre,
         Descripcion,
@@ -469,35 +491,67 @@ async function AddRegistro() {
         Provincia,
         Localidad,
         Destacado,
-        Oferta
+        Oferta,
+        Principal
     })
-        .then(() => {
-            console.log('%c Registro Guardado ! ', ' color: #bada55');
+        .then((doc) => {
+            if (doc) {
+                test = doc;
+                console.log('%c Registro Guardado ! ', ' color: #bada55');
 
-            toastr.options = {
-                "closeButton": true,
-                "debug": false,
-                "newestOnTop": true,
-                "progressBar": true,
-                "positionClass": "toast-top-center",
-                "preventDuplicates": true,
-                "onclick": function () { window.open("https://agroganas.com/") },
-                "showDuration": "300",
-                "hideDuration": "1000",
-                "timeOut": "9000",
-                "extendedTimeOut": "1000",
-                "showEasing": "swing",
-                "hideEasing": "linear",
-                "showMethod": "fadeIn",
-                "hideMethod": "fadeOut"
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": true,
+                    "onclick": function () { window.open("https://agroganas.com/") },
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "9000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr["success"]("Los datos se cargaron de forma exitosa! Click aqui para ir a la pagina", "Datos Cargados!")
+                $("#Propiedades").tagsinput('removeAll');
+                $('#modalLoading').modal('hide')
+
+                document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) + 1
+
+                form.reset();
+                $('#checkboxPrincipal').bootstrapToggle('off');
+                $('#checkbox1').bootstrapToggle('off');
+                $('#checkbox2').bootstrapToggle('off');
+
+                var newPublicacion = {
+                    id: doc.id,
+                    Agronomia,
+                    Nombre,
+                    Descripcion,
+                    Imagen,
+                    Provincia,
+                    Localidad,
+                    Categoria,
+                    Destacado,
+                    Oferta,
+                    Principal,
+                    Publicante,
+                    Propiedades,
+                    PropiedadesTexto
+                };
+                arrayPublicaciones.push(newPublicacion);
+
+                var result = arrayPublicaciones.map(a => a.Agronomia);
+                var result2 = arrayPublicaciones.map(a => a.Categoria);
+                updateTheCharts(doubleArray(result), doubleArray(result2))
+            } else {
+                console.log("No hay referencia a la agronomia");
+                $('#modalLoading').modal('hide')
             }
-            toastr["success"]("Los datos se cargaron de forma exitosa! Click aqui para ir a la pagina", "Datos Cargados!")
-            $("#Propiedades").tagsinput('removeAll');
-            $('#modalLoading').modal('hide')
-
-            document.getElementById('cant-publicaciones').innerHTML = parseInt(document.getElementById('cant-publicaciones').innerHTML) + 1
-
-            form.reset();
         })
         .then(urlsToSave = [])
         .catch((error) => {
@@ -526,7 +580,6 @@ async function AddRegistro() {
 const activities = document.getElementById('select-agronomia');
 
 activities.addEventListener('change', (e) => {
-
     if (e.target.value !== '') {
         $('#Vendedor').attr('hidden', true);
         $('#Publicante').val('');
@@ -534,104 +587,453 @@ activities.addEventListener('change', (e) => {
         $('#Vendedor').attr('hidden', false);
         $('#Publicante').val('');
     }
-
 });
 
+document.getElementById('select-agronomia-edit').addEventListener('change', (e) => {
+    if (e.target.value !== '') {
+        $('#VendedorEdit').attr('hidden', true);
+        $('#PublicanteEdit').val('');
+    } else {
+        $('#VendedorEdit').attr('hidden', false);
+        $('#PublicanteEdit').val('');
+    }
+});
+
+agroSelectSearch.addEventListener('change', (e) => {
+    const agro = e.target.value;
+
+    if (Boolean(agro)) {
+        var arrayTemp = arrayPublicaciones.filter(function (obj) {
+            return obj.Agronomia == agro;
+        });
+
+        var temporal = doubleArray(arrayTemp.map(a => a.Categoria))
+
+        $("#searchCat option").hide();
+
+        temporal[0].forEach(element => {
+            $("#searchCat option[value=" + element + "]").show();
+        });
+        $("#searchCat").val($('#searchCat option[style=""]:first').val());
+        $('#searchCat').selectpicker('refresh');
+    } else {
+        $("#searchCat option").show();
+        $("#searchCat").val($('#searchCat option[style=""]:first').val());
+        $('#searchCat').selectpicker('refresh');
+    }
+})
 
 // -- EDIT Publicacion --
 
+function imgPublicacionEdit(action) {
+    $('#modalNewImages').modal('show');
+    $('.my-pond-edit').filepond('removeFiles');
+    $('.my-pond-edit').filepond('allowMultiple', true);
+    document.getElementById('modal-images-title').innerHTML = 'Cargar Nuevas Imagenes';
+    $('#cancel-image-upload').attr("onclick", "$('.my-pond-edit').filepond('removeFiles'); $('#modalPublicacionEdit').modal('show');");
+    switch (action) {
+        case true:
+            $("#btnNewImgs").attr("onclick", "addNewImagesPublicacion(filesPublicacion)");
+            break;
+        case false:
+            $("#btnNewImgs").attr("onclick", "if (window.confirm('ADVERTENCIA: Se borrarán las imagenes anteriores y se usaran éstas en su lugar, esta acciónn no es reversible, esta seguro de continuar?')){replaceImagesPublicacion(filesPublicacion)}");
+            break;
+        case "logo":
+            $('.my-pond-edit').filepond('allowMultiple', false);
+            document.getElementById('modal-images-title').innerHTML = 'Cargar Nuevo Logo';
+            $('#modalAgronomiaEdit').modal('hide');
+            $("#btnNewImgs").attr("onclick", "changeLogoAgro(filesPublicacion)");
+            $('#cancel-image-upload').attr("onclick", "$('.my-pond-edit').filepond('removeFiles'); $('#modalAgronomiaEdit').modal('show');");
+
+            break;
+        default:
+            alert('Opcion no soportada!')
+            break;
+    }
+}
+
+// Funcion para agregar imagenes
+function addNewImagesPublicacion(array) {
+    if (array.length < 1) {
+        alert('Debe Cargar Imagenes!')
+    } else {
+        console.log('Imagenes a agregar: ', array);
+        $('#modalLoading').modal('show')
+        $('#modalNewImages').modal('hide');
+        newImageUploader(array, 'add')
+    }
+}
+
+// Funcion para eliminar las imagenes y cargar Nuevas
+function replaceImagesPublicacion(array) {
+    if (array.length < 1) {
+        alert('Debe Cargar Imagenes!')
+    } else {
+        console.log('Nuevas Imagenes: ', array);
+        $('#modalLoading').modal('show')
+        $('#modalNewImages').modal('hide');
+        newImageUploader(array, 'replace')
+    }
+}
+
+// Funcion para eliminar las imagenes y cargar Nuevas
+function changeLogoAgro(array) {
+    if (array.length < 1) {
+        alert('Debe Cargar Imagenes!')
+    } else {
+        console.log('Nuevo Logo: ', array);
+        $('#modalLoading').modal('show')
+        $('#modalNewImages').modal('hide');
+        newImageUploader(array, 'logo')
+    }
+}
+
+// Funcion de carga de imagenes
+function newImageUploader(array, action) {
+    var validador = 0;
+
+    switch (action) {
+        case 'add':
+            array.forEach((element) => {
+                var task = storage.ref().child('image/' + element.file.name + '-' + (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)).put(element.file);
+                task.on('state_changed',
+                    function progress(snapshot) {
+                        var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100.0;
+                        console.log(percentage);
+                    },
+                    function error(err) {
+                        console.error("Error adding document: ", err);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+                    },
+                    function complete() {
+                        task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            urlsToSave.push(downloadURL);
+                            validador++;
+
+                            if (validador == array.length) {
+                                console.log(urlsToSave);
+                                console.log('%c Imagenes nuevas subidas con exito! Agregando al registro... ', ' color: #bada55');
+                                $('.my-pond-edit').filepond('removeFiles');
+                                filesPublicacion = [];
+                                validador = 0;
+
+                                urlsToSave.forEach((element) => {
+                                    arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen.push(element)
+                                })
+
+                                urlsToSave = [];
+                                
+                                db.collection("Productos")
+                                    .doc(idDocToEdit)
+                                    .update({
+                                        "Imagen": arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen
+                                    })
+                                    .then(() => {
+                                        toastr.options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "newestOnTop": false,
+                                            "progressBar": true,
+                                            "positionClass": "toast-top-center",
+                                            "preventDuplicates": true,
+                                            "onclick": null,
+                                            "showDuration": "300",
+                                            "hideDuration": "1000",
+                                            "timeOut": "5000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        }
+                                        toastr["success"]("Se agregarpn las nuevas imagenes a la publicacion.", "Imagenes Agregadas!")
+
+                                        $('#modalLoading').modal('hide')
+
+                                        if (Boolean($('#select-agronomia-search').val())) {
+                                            getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+                                        } else {
+                                            getSearchCat(categoriaSearch)
+                                        }
+                                    })
+                                    
+                            }
+                        });
+                    }
+                );
+            })
+            break;
+        case 'replace':
+            array.forEach((element) => {
+                var task = storage.ref().child('image/' + element.file.name + '-' + (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)).put(element.file);
+                task.on('state_changed',
+                    function progress(snapshot) {
+                        var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100.0;
+                        console.log(percentage);
+                    },
+                    function error(err) {
+                        console.error("Error adding document: ", err);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+                    },
+                    function complete() {
+                        task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            urlsToSave.push(downloadURL);
+                            validador++;
+
+                            if (validador == array.length) {
+                                console.log(urlsToSave);
+                                console.log('%c Imagenes nuevas subidas con exito! Editando al registro... ', ' color: #bada55');
+                                $('.my-pond-edit').filepond('removeFiles');
+                                filesPublicacion = [];
+                                validador = 0;
+
+                                arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen.forEach((element) =>{
+                                    deleteImg(element);
+                                })
+
+                                arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen = [];
+
+                                urlsToSave.forEach((element) => {
+                                    arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen.push(element)
+                                })
+
+                                urlsToSave = [];
+                                
+                                db.collection("Productos")
+                                    .doc(idDocToEdit)
+                                    .update({
+                                        "Imagen": arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === idDocToEdit)].Imagen
+                                    })
+                                    .then(() => {
+                                        toastr.options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "newestOnTop": false,
+                                            "progressBar": true,
+                                            "positionClass": "toast-top-center",
+                                            "preventDuplicates": true,
+                                            "onclick": null,
+                                            "showDuration": "300",
+                                            "hideDuration": "1000",
+                                            "timeOut": "5000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        }
+                                        toastr["success"]("Se cargaron las nuevas imagenes para la publicacion.", "Imagenes Reemplazadas!")
+
+                                        $('#modalLoading').modal('hide')
+
+                                        if (Boolean($('#select-agronomia-search').val())) {
+                                            getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+                                        } else {
+                                            getSearchCat(categoriaSearch)
+                                        }
+                                    })
+                            }
+                        });
+                    }
+                );
+            })
+            break;
+        case 'logo':
+            array.forEach((element) => {
+                var task = storage.ref().child('agronomias-logos/' + element.file.name + '-' + (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)).put(element.file);
+                task.on('state_changed',
+                    function progress(snapshot) {
+                        var percentage = snapshot.bytesTransferred / snapshot.totalBytes * 100.0;
+                        console.log(percentage);
+                    },
+                    function error(err) {
+                        console.error("Error adding document: ", err);
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+                    },
+                    function complete() {
+                        task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            urlsToSave.push(downloadURL);
+                            validador++;
+
+                            if (validador == array.length) {
+                                console.log(urlsToSave);
+                                console.log('%c Logo subido con exito! Editando la Agronomia... ', ' color: #bada55');
+                                $('.my-pond-edit').filepond('removeFiles');
+                                filesPublicacion = [];
+                                validador = 0;
+
+                                deleteImg(AgronomiasVirtuales[AgronomiasVirtuales.findIndex(a => a.id === idAgroToEdit)].Logo)
+
+                                AgronomiasVirtuales[AgronomiasVirtuales.findIndex(a => a.id === idAgroToEdit)].Logo = urlsToSave[0];
+
+                                urlsToSave = [];
+                                
+                                db.collection("Agronomias")
+                                    .doc(idAgroToEdit)
+                                    .update({
+                                        "Logo": AgronomiasVirtuales[AgronomiasVirtuales.findIndex(a => a.id === idAgroToEdit)].Logo
+                                    })
+                                    .then(() => {
+                                        toastr.options = {
+                                            "closeButton": true,
+                                            "debug": false,
+                                            "newestOnTop": false,
+                                            "progressBar": true,
+                                            "positionClass": "toast-top-center",
+                                            "preventDuplicates": true,
+                                            "onclick": null,
+                                            "showDuration": "300",
+                                            "hideDuration": "1000",
+                                            "timeOut": "5000",
+                                            "extendedTimeOut": "1000",
+                                            "showEasing": "swing",
+                                            "hideEasing": "linear",
+                                            "showMethod": "fadeIn",
+                                            "hideMethod": "fadeOut"
+                                        }
+                                        toastr["success"]("Se cargo el nuevo Logo de la agronomia.", "Logo Reemplazado!")
+
+                                        $('#modalLoading').modal('hide')
+
+                                        loadAgros(AgronomiasVirtuales)
+                                    })
+                            }
+                        });
+                    }
+                );
+            })
+            break;
+        default:
+            console.log('Opción no soportada!');
+            break;
+    }
+}
 
 // Muestra imagenes y Muestra el apartado video si corresponde
 function modalMedia(productId) {
     $('#img-btn').attr('aria-expanded', 'true');
-    var docRef = db.collection("Productos").doc(String(productId));
+    var docRef = arrayPublicaciones[arrayPublicaciones.findIndex(a => a.id === productId)]
 
     imgSrcs.innerHTML = '';
     imgThums.innerHTML = '';
 
     var id = 0;
+    docRef.Imagen.forEach(element => {
+        id++
+        if (id == 1) {
+            var temp = 'tb-active'
+            var temp2 = 'active'
 
-    docRef.get().then((doc) => {
-        doc.data().Imagen.forEach(element => {
-            console.log(element);
-            id++
-            if (id == 1) {
-                var temp = 'tb-active'
-                var temp2 = 'active'
+        } else {
+            var temp = '';
+            var temp2 = '';
+        }
 
-            } else {
-                var temp = '';
-                var temp2 = '';
-            }
-
-            imgThums.innerHTML += `
+        imgThums.innerHTML += `
             <div id="f`+ id + `" class="tb ` + temp + `"> <img class="thumbnail-img fit-image"
             src="`+ element + `"> </div>
             `
-            imgSrcs.innerHTML += `
-            <fieldset id="f`+ id + `1" class="` + temp2 + `">
+        imgSrcs.innerHTML += `
+            <fieldset id="f`+ id + `1" class="mediaImg ` + temp2 + `">
                 <div class="product-pic"> <img class="pic0" src="`+ element + `"> </div>
             </fieldset>
             `
-        });
+    });
 
-        if (doc.data().Video != undefined) {
-            $('#video-view').attr('hidden', false);
-        } else {
-            $('#video-view').attr('hidden', true);
-        }
+    if (docRef.Video != undefined) {
+        $('#video-view').attr('hidden', false);
+    } else {
+        $('#video-view').attr('hidden', true);
+    }
 
-        $(".tb").hover(function () {
+    $(".tb").click(function () {
 
-            $(".tb").removeClass("tb-active");
-            $(this).addClass("tb-active");
+        $(".tb").removeClass("tb-active");
+        $(this).addClass("tb-active");
+        next_fs = $(this).attr('id');
+        next_fs = "#" + next_fs + "1";
 
-            //current_fs = $(".active");
-
-            next_fs = $(this).attr('id');
-            next_fs = "#" + next_fs + "1";
-
-            $("fieldset").removeClass("active");
-            $(next_fs).addClass("active");
-        });
-    })
-        .catch((error) => {
-            console.log("Error obteniendo el documento:", error);
-        });
-
-}
-
-// Obtiene datos de un documento en concreto
-function getOneProduct(idToSearch) {
-    console.log(idToSearch);
-
-    var docRef = db.collection("Productos").doc(String(idToSearch));
-
-    docRef.get().then((doc) => {
-        if (doc.exists) {
-            datosGet = doc.data()
-
-            $('#select-agronomia-edit').empty()
-            var $options = $("#select-agronomia > option").clone();
-            $('#select-agronomia-edit').append($options);
-
-            fillEditForm(doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No se encuentra el documento!");
-        }
-    }).catch((error) => {
-        console.log("Error obteniendo el documento:", error);
+        $(".mediaImg").removeClass("active");
+        $(next_fs).addClass("active");
     });
 }
 
+var idDocToEdit;
+
+// Obtiene datos de un documento en concreto
+function getOneProduct(idToSearch) {
+
+    idDocToEdit = idToSearch;
+
+    $('#select-agronomia-edit').empty()
+    var $options = $("#select-agronomia > option").clone();
+    $('#select-agronomia-edit').append($options);
+
+    var docToEdit = arrayPublicaciones[arrayPublicaciones.findIndex(item => item.id === idDocToEdit)];
+
+    fillEditForm(docToEdit);
+
+}
+
+var tempData;
+
 // Completa el formulario para editar
-function fillEditForm(datos) {
+async function fillEditForm(datos) {
     $('#modalPublicacionEdit').modal('show');
 
+    tempData = datos;
     var formPublicacion = document.forms['editForm'];
-
-    // Revisar como gestionar los datos contra el front en los toggles y 
 
     formPublicacion.elements['NombreEdit'].value = datos.Nombre;
     formPublicacion.elements['DescripcionEdit'].value = datos.Descripcion;
@@ -639,19 +1041,33 @@ function fillEditForm(datos) {
     formPublicacion.elements['CategoriaEdit'].value = datos.Categoria;
     formPublicacion.elements['AgronomiaEdit'].value = datos.Agronomia;
 
+    formPublicacion.elements['PropiedadesEdit'].value = datos.Propiedades;
+    formPublicacion.elements['PropiedadesTextoEdit'].value = datos.PropiedadesTexto;
+
+    $('#CategoriaEdit').selectpicker('refresh');
+
     if (datos.PropiedadesTexto == '') {
         $('#checkboxPropsEdit').bootstrapToggle('on');
         document.getElementById('PropiedadesEdit').value = editItemsFill(datos.Propiedades.split(','));
     } else {
+        formPublicacion.elements['PropiedadesTextoEdit'].value = datos.PropiedadesTexto;
         $('#checkboxPropsEdit').bootstrapToggle('off');
-        document.getElementById('PropiedadesTextoEdit').value = datos.PropiedadesTexto;
     }
 
-    if (datos.Destacado == 'true') $('#checkbox1Edit').bootstrapToggle('on');
-    else $('#checkbox1Edit').bootstrapToggle('on');
+    formPublicacion.elements['PropiedadesEdit'].value = datos.Propiedades;
+    document.getElementById('PropiedadesTextoEdit').value = datos.PropiedadesTexto;
 
-    if (datos.Oferta == 'true') $('#checkbox2Edit').bootstrapToggle('on');
+    if (datos.Destacado == 'true' || datos.Destacado == 'on') $('#checkbox1Edit').bootstrapToggle('on');
+    else $('#checkbox1Edit').bootstrapToggle('off');
+
+    if (datos.Oferta == 'true' || datos.Oferta == 'on') $('#checkbox2Edit').bootstrapToggle('on');
     else $('#checkbox2Edit').bootstrapToggle('off');
+
+    if (datos.Principal) {
+        $('#checkboxPrincipalEdit').bootstrapToggle('on');
+    } else {
+        $('#checkboxPrincipalEdit').bootstrapToggle('off');
+    }
 
     if (datos.Agronomia !== "") {
         document.getElementById('VendedorEdit').setAttribute("hidden", "true")
@@ -662,8 +1078,13 @@ function fillEditForm(datos) {
         document.getElementById('VendedorEdit').removeAttribute("hidden");
     }
 
-    formPublicacion.elements['ZonaEdit'].value = datos.Zona;
+    $("#select-provincia-publicacionEdit").val(datos.Provincia);
+    $("#select-provincia-publicacionEdit").selectpicker('refresh');
 
+    await cambiarLocalidadesPublicacionEdit();
+
+    $("#select-localidad4").val(datos.Localidad);
+    $("#select-localidad4").selectpicker('refresh');
 }
 
 // Agrega las props al form de editar
@@ -676,22 +1097,76 @@ function editItemsFill(array) {
     }
 }
 
-async function updateAll() {
-    return new Promise(resolve => {
-        if (datosGet.Imagen.length == 0) {
-            alert('Debe cargar imagenes!')
-        } else {
-            for (let i = 0; i < archivos.files.length; i++) {
-                console.log(archivos.files[i].name);
-                updateDocImgs(archivos.files[i])
-            }
-        }
-        resolve('second')
-    })
-}
-
 formEdit.addEventListener('submit', async (e) => {
-    await updateAll()
+    $('#modalPublicacionEdit').modal('hide')
+    var publicacionForm = document.forms['editForm'];
+    $('#modalLoading').modal('show');
+
+    db.collection("Productos").doc(idDocToEdit).update({
+        Nombre: publicacionForm.elements['NombreEdit'].value,
+        Descripcion: publicacionForm.elements['DescripcionEdit'].value,
+        Categoria: publicacionForm.elements['CategoriaEdit'].value,
+        Propiedades: publicacionForm.elements['PropiedadesEdit'].value,
+        PropiedadesTexto: publicacionForm.elements['PropiedadesTextoEdit'].value,
+        Agronomia: publicacionForm.elements['AgronomiaEdit'].value,
+        Publicante: publicacionForm.elements['PublicanteEdit'].value,
+        Provincia: publicacionForm.elements['Provincia'].value,
+        Localidad: publicacionForm.elements['Localidad'].value,
+        Destacado: publicacionForm.elements['Destacado'].value,
+        Oferta: publicacionForm.elements['Oferta'].value,
+        Principal: Boolean($('#checkboxPrincipalEdit').val())
+
+    })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["error"]("El error puede deberse a un problema de permisos en Firebase con su Usuario.", "Error en la Carga!")
+        })
+        .then(() => {
+            var docToEdit = arrayPublicaciones[arrayPublicaciones.findIndex(item => item.id === idDocToEdit)];
+            docToEdit.Nombre = publicacionForm.elements['NombreEdit'].value;
+            docToEdit.Descripcion = publicacionForm.elements['DescripcionEdit'].value;
+            docToEdit.Categoria = publicacionForm.elements['CategoriaEdit'].value;
+            docToEdit.Propiedades = publicacionForm.elements['PropiedadesEdit'].value;
+            docToEdit.PropiedadesTexto = publicacionForm.elements['PropiedadesTextoEdit'].value;
+            docToEdit.Agronomia = publicacionForm.elements['AgronomiaEdit'].value;
+            docToEdit.Publicante = publicacionForm.elements['PublicanteEdit'].value;
+            docToEdit.Provincia = publicacionForm.elements['Provincia'].value;
+            docToEdit.Localidad = publicacionForm.elements['Localidad'].value;
+            docToEdit.Destacado = publicacionForm.elements['Destacado'].value;
+            docToEdit.Oferta = publicacionForm.elements['Oferta'].value;
+            docToEdit.Principal = Boolean($('#checkboxPrincipalEdit').val());
+
+            var result = arrayPublicaciones.map(a => a.Agronomia);
+            var result2 = arrayPublicaciones.map(a => a.Categoria);
+            updateTheCharts(doubleArray(result), doubleArray(result2))
+
+            if (Boolean($('#select-agronomia-search').val())) {
+                getSearchCat(categoriaSearch, $('#select-agronomia-search').val());
+            } else {
+                getSearchCat(categoriaSearch)
+            }
+
+            setTimeout(() => {
+                $('#modalLoading').modal('hide');
+            }, 2000);
+        })
 });
 
 // -- AGREGAR Agronomia --
@@ -708,10 +1183,10 @@ async function uploadAgronomia() {
         if (fileAgronomia.length == 0) {
             alert('Debe cargar un Logo para la Agronomia!')
         } else {
+            $('#modalLoading').modal('show')
             for (let i = 0; i < fileAgronomia.length; i++) {
                 console.log(fileAgronomia[i].filename);
                 uploadNewAgroImgs(fileAgronomia[i].file)
-                $('#modalLoading').modal('show')
             }
         }
     })
@@ -734,6 +1209,7 @@ function uploadNewAgroImgs(imageFile) {
                 console.log(percentage);
             },
             function error(err) {
+                $('#modalLoading').modal('hide')
                 console.error("Error adding document: ", err);
                 toastr.options = {
                     "closeButton": true,
@@ -787,18 +1263,23 @@ async function AddAgronomia(imageUrl) {
         Localidad
     })
         .then(docReference => {
-            var newAgroToPush = { id: docReference.id, Nombre, Descripcion, Logo, Provincia, Localidad };
-            AgronomiasVirtuales.push(newAgroToPush);
-            loadAgros(AgronomiasVirtuales);
+            if (docReference) {
+                var newAgroToPush = { id: docReference.id, Nombre, Descripcion, Logo, Provincia, Localidad };
+                AgronomiasVirtuales.push(newAgroToPush);
+                loadAgros(AgronomiasVirtuales);
 
-            //Agregamos la Agronomia como opcion para Asignar una Publicacion a la misma
-            var select = document.getElementById("select-agronomia");
-            const opt = Nombre;
-            var el = document.createElement("option");
-            el.text = opt;
-            el.value = opt;
+                //Agregamos la Agronomia como opcion para Asignar una Publicacion a la misma
+                var select = document.getElementById("select-agronomia");
+                const opt = Nombre;
+                var el = document.createElement("option");
+                el.text = opt;
+                el.value = opt;
 
-            select.add(el);
+                select.add(el);
+            } else {
+                console.log("No hay referencia a la agronomia");
+                $('#modalLoading').modal('hide')
+            }
         })
         .then(() => {
             $('#modalLoading').modal('hide')
@@ -929,11 +1410,15 @@ function deleteAgroByID(agroId, agroNombre) {
 
 var previousNameAgro;
 
+var idAgroToEdit;
+
 // Modal Edit Agronomia
 async function editAgronomia(agroId) {
     $('#modalAgronomiaEdit').modal('show')
     var agroForm = document.forms['editFormAgro'];
     const object = AgronomiasVirtuales.find(AgronomiasVirtuales => AgronomiasVirtuales.id == agroId);
+
+    idAgroToEdit = agroId;
 
     previousNameAgro = object.Nombre;
 
@@ -994,53 +1479,85 @@ document.getElementById('editFormAgro').addEventListener('submit', async (e) => 
 
         })
         .then(() => {
-            db.collection("Productos").where("Agronomia", "==", previousNameAgro).get()
-                .then(function (querySnapshot) {
-                    querySnapshot.forEach(function (doc) {
-                        doc.ref.update({
-                            Agronomia: agroForm.elements['Nombre'].value
+            if (agroForm.elements['Nombre'].value !== previousNameAgro) {
+                db.collection("Productos").where("Agronomia", "==", previousNameAgro).get()
+                    .then(function (querySnapshot) {
+                        querySnapshot.forEach(function (doc) {
+                            doc.ref.update({
+                                Agronomia: agroForm.elements['Nombre'].value
+                            });
                         });
+                    })
+                    .then(() => {
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "9000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr["success"]("Los datos se Actualizaron de forma exitosa!", "Datos Guardados!")
+
+                        objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
+
+                        $("#select-agronomia option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
+                        $("#select-agronomia-search option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
+
+                        AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
+                        AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
+                        AgronomiasVirtuales[objIndex].Provincia = agroForm.elements['Provincia'].value;
+                        AgronomiasVirtuales[objIndex].Localidad = agroForm.elements['Localidad'].value;
+
+                        loadAgros(AgronomiasVirtuales);
+
+                        var select = document.getElementById("select-agronomia");
+                        var selectSearch = document.getElementById("select-agronomia-search");
+                        const opt = agroForm.elements['Nombre'].value;
+                        var el = document.createElement("option");
+                        el.text = opt;
+                        el.value = opt;
+
+                        select.add(el);
+                        selectSearch.add(el);
+                        $('#select-agronomia-search').selectpicker('refresh');
                     });
-                })
-                .then(() => {
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": true,
-                        "progressBar": true,
-                        "positionClass": "toast-top-center",
-                        "preventDuplicates": true,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "9000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    }
-                    toastr["success"]("Los datos se Actualizaron de forma exitosa!", "Datos Guardados!")
+            } else {
+                toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-center",
+                    "preventDuplicates": true,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "9000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                }
+                toastr["success"]("Los datos se Actualizaron de forma exitosa!", "Datos Guardados!")
 
+                objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
 
-                    objIndex = AgronomiasVirtuales.findIndex((obj => obj.id == agroId));
+                AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
+                AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
+                AgronomiasVirtuales[objIndex].Provincia = agroForm.elements['Provincia'].value;
+                AgronomiasVirtuales[objIndex].Localidad = agroForm.elements['Localidad'].value;
 
-                    $("#select-agronomia option[value='" + AgronomiasVirtuales[objIndex].Nombre + "']").remove();
-
-                    AgronomiasVirtuales[objIndex].Nombre = agroForm.elements['Nombre'].value;
-                    AgronomiasVirtuales[objIndex].Descripcion = agroForm.elements['Descripcion'].value;
-                    AgronomiasVirtuales[objIndex].Provincia = agroForm.elements['Provincia'].value;
-                    AgronomiasVirtuales[objIndex].Localidad = agroForm.elements['Localidad'].value;
-
-                    loadAgros(AgronomiasVirtuales);
-
-                    var select = document.getElementById("select-agronomia");
-                    const opt = agroForm.elements['Nombre'].value;
-                    var el = document.createElement("option");
-                    el.text = opt;
-                    el.value = opt;
-
-                    select.add(el);
-                });
+                loadAgros(AgronomiasVirtuales);
+            }
         })
 })
 
@@ -1070,24 +1587,18 @@ var colorsCat = [];
 var colorsAgros = [];
 
 function updateTheCharts(arrays, arrays2) {
-
     tempo = arrays;
-
-    console.log('Arrays de Categorias', arrays2);
-
     colorsCat = [];
+    colorsAgros = [];
+    var index = arrays[0].indexOf("");
 
     for (let i = 0; i < arrays2[1].length; i++) {
         colorsCat.push('#' + Math.floor(Math.random() * 16777215).toString(16));
     }
 
-    colorsAgros = [];
-
     for (let i = 0; i < arrays[1].length; i++) {
         colorsAgros.push('#' + Math.floor(Math.random() * 16777215).toString(16));
     }
-
-    var index = arrays[0].indexOf("");
 
     if (index !== -1) {
         arrays[0][index] = "Particular";

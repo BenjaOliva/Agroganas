@@ -161,3 +161,11 @@
       width: 242px;
     }
   }
+
+  .mediaImg.active {
+    display: block !important
+}
+
+.mediaImg {
+    display: none
+}

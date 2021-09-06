@@ -42,7 +42,7 @@ const db = firebase.firestore();
 
 switch (categoria) {
     case 'Agroinsumos':
-        $("#first-title").html('Agroinsumos')
+        $("#first-title").html('Insumos Agricolas')
         break;
     case 'AgriculturaPresicion':
         $("#first-title").html('Agricultura de Presición')
@@ -230,7 +230,7 @@ function modalMedia(productId) {
             console.log('No hay video');
         }
 
-        $(".tb").hover(function () {
+        $(".tb").click(function () {
 
             $(".tb").removeClass("tb-active");
             $(this).addClass("tb-active");

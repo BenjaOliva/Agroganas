@@ -96,8 +96,10 @@ async function loadAgro(object) {
             });
 
             arrayOfertas = arrayToFilter.filter(function (el) {
-                return el.Destacado == "true" ||
-                    el.Oferta == "on";
+                return el.Destacado == "on" ||
+                    el.Oferta == "on" ||
+                    el.Destacado == "true" ||
+                    el.Oferta == "true";
             });
 
             result = arrayToFilter.map(a => a.Categoria);
@@ -114,6 +116,7 @@ async function loadAgro(object) {
                     jQuery(this).remove();
                 }
             });
+            $("#CategoriaProd").prepend("<option selected='selected' disabled='disabled'>- ELEGIR UNA CATEGORIA -</option>");
             $('#CategoriaProd').selectpicker('refresh');
             $('#Categoria').selectpicker('refresh');
         })

@@ -375,12 +375,12 @@
                                                 <label class="input-group-text"
                                                     for="inputGroupSelect01">Categoria</label>
                                             </div>
-                                            <select data-live-search="true" id="Categoria" class="form-control selectpicker" id="inputGroupSelect01"
-                                                required>
+                                            <select data-live-search="true" id="Categoria"
+                                                class="form-control selectpicker" id="inputGroupSelect01" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
-                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Maquinaria">Maquinaria Agrícola</option>
                                                 <option value="Seguros">Seguros</option>
-                                                <option value="AgriculturaPresicion">Agricultura de Presición</option>
+                                                <option value="AgriculturaPresicion">Agricultura de Precisión</option>
                                                 <option value="Insumos">Insumos Nutricion Animal</option>
                                                 <option value="NucleosCorrectoresSuplementos">Núcleos, Correctores y
                                                     Suplementos
@@ -438,7 +438,7 @@
                                                     for="inputGroupSelect01">Provincia</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-provincia"
-                                                data-live-search="true" onchange="cambiarLocalidades()">
+                                                data-live-search="true" onchange="cambiarLocalidades()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
                                                 <option data-tokens="Chaco" value="Chaco">Chaco</option>
@@ -477,7 +477,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-localidad"
-                                                data-live-search="true">
+                                                data-live-search="true" required>
                                             </select>
                                         </div>
                                         <div class="mb-3" hidden>
@@ -487,20 +487,32 @@
                                         <center>
                                             <div class="row">
                                                 <div class="col">
+                                                    <p>Es una publicacion destacada?</p>
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" id="checkbox1" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Destacado"
                                                             data-off="No Destacado" data-onstyle="success"
-                                                            data-offstyle="danger" data-size="lg">
+                                                            data-offstyle="danger" data-size="lg" value="true">
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div class="col">
+                                                    <p>Esta en Oferta?</p>
                                                     <div class="custom-control custom-checkbox">
                                                         <input width="200px" id="checkbox2" type="checkbox" checked
                                                             data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
-                                                            data-onstyle="success" data-offstyle="danger"
-                                                            data-size="lg">
+                                                            data-onstyle="success" data-offstyle="danger" data-size="lg"
+                                                            value="true">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col">
+                                                    <p>Mostrar en pantalla Principal?</p>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" name="Principal" id="checkboxPrincipal"
+                                                            type="checkbox" data-toggle="toggle" data-on="Mostrar"
+                                                            data-off="No Mostrar" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -547,12 +559,12 @@
                                     <form id="formSearchEdit">
                                         <div class="input-group mb-3">
                                             <label class="input-group-text" for="inputGroupSelect01">Categoria</label>
-                                            <select data-live-search="true" id="searchCat" class="form-control selectpicker" id="inputGroupSelect01"
-                                                required>
+                                            <select data-live-search="true" id="searchCat"
+                                                class="form-control selectpicker" id="inputGroupSelect01" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
-                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Maquinaria">Maquinaria Agrícola</option>
                                                 <option value="Seguros">Seguros</option>
-                                                <option value="AgriculturaPresicion">Agricultura de Presición</option>
+                                                <option value="AgriculturaPresicion">Agricultura de Precisión</option>
                                                 <option value="Insumos">Insumos Nutricion Animal</option>
                                                 <option value="NucleosCorrectoresSuplementos">Núcleos, Correctores y
                                                     Suplementos
@@ -604,12 +616,19 @@
                                                 <option value="BANCOS">BANCOS</option>
                                             </select>
                                         </div>
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Agronomia</label>
+                                            <select data-live-search="true" id="select-agronomia-search"
+                                                class="form-control selectpicker" required>
+                                                <option value=""> -- TODAS --</option>
+                                            </select>
+                                        </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="button" id="cancelCat" class="btn btn-secondary"
                                         data-dismiss="modal">Cancelar</button>
                                     <a type="submit" class="btn btn-primary text-white"
-                                        onclick="getSearchCat(document.getElementById('searchCat').value)"
+                                        onclick="getSearchCat(document.getElementById('searchCat').value, $('#select-agronomia-search').val())"
                                         data-target="#exampleModalToggle2" data-toggle="modal"
                                         data-dismiss="modal">Buscar</a>
                                 </div>
@@ -693,7 +712,7 @@
                                                     for="inputGroupSelect01">Provincia</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-provincia2"
-                                                data-live-search="true" onchange="cambiarLocalidadesAgro()">
+                                                data-live-search="true" onchange="cambiarLocalidadesAgro()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">Bs. As.</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca</option>
                                                 <option data-tokens="Chaco" value="Chaco">Chaco</option>
@@ -732,7 +751,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" id="select-localidad2"
-                                                data-live-search="true">
+                                                data-live-search="true" required>
                                             </select>
                                         </div>
                                         <hr>
@@ -857,11 +876,13 @@
                                         <div class="row justify-content-center">
                                             <div class="d-flex">
                                                 <div class="col">
-                                                    <button class="btn btn-success"> Agregar Imagenes
+                                                    <button class="btn btn-success" onclick="imgPublicacionEdit(true); $('#modalPublicacionEdit').modal('hide');">
+                                                        Agregar Imagenes
                                                     </button>
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-danger"> Eliminar Imagenes
+                                                    <button class="btn btn-danger" onclick="imgPublicacionEdit(false); $('#modalPublicacionEdit').modal('hide');">
+                                                        Eliminar Imagenes
                                                     </button>
                                                 </div>
                                             </div>
@@ -927,8 +948,8 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Vendedor</span>
                                             </div>
-                                            <input type="text" name="PublicanteEdit" class="form-control"
-                                                placeholder="Ingrese el Vendedor...">
+                                            <input type="text" id="PublicanteEdit" name="PublicanteEdit"
+                                                class="form-control" placeholder="Ingrese el Vendedor...">
                                         </div>
                                         <hr>
                                         <div class="input-group mb-3">
@@ -965,7 +986,8 @@
                                                     <span class="input-group-text">Describa las
                                                         Props.</span>
                                                 </div>
-                                                <textarea type="text" id="PropiedadesTextoEdit" class="form-control"
+                                                <textarea type="text" id="PropiedadesTextoEdit"
+                                                    name="PropiedadesTextoEdit" class="form-control"
                                                     placeholder="Describa las Propiedades..."></textarea>
                                             </div>
                                         </center>
@@ -974,13 +996,14 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Categoria</span>
                                             </div>
-                                            <select data-live-search="true" id="CategoriaEdit" class="form-control selectpicker" required>
+                                            <select data-live-search="true" name="CategoriaEdit" id="CategoriaEdit"
+                                                class="form-control selectpicker" required>
                                                 <option value="Agroinsumos">Agroinsumos</option>
-                                                <option value="Maquinaria">Maquinaria Agricola</option>
+                                                <option value="Maquinaria">Maquinaria Agrícola</option>
                                                 <option value="Seguros">Seguros</option>
                                                 <option value="AgriculturaPresicion">Agricultura de
-                                                    Presición</option>
-                                                <option value="Insumos">Insumos Nutricion Animal</option>
+                                                    Precisión</option>
+                                                <option value="Insumos">Insumos Nutrición Animal</option>
                                                 <option value="NucleosCorrectoresSuplementos">Núcleos,
                                                     Correctores y Suplementos
                                                 </option>
@@ -990,7 +1013,7 @@
                                                 <option value="InsumosVeterinarios">Insumos Veterinarios
                                                 </option>
                                                 <option value="Instalaciones">Instalaciones</option>
-                                                <option value="Generadores">Generadores de Energia</option>
+                                                <option value="Generadores">Generadores de Energía</option>
                                                 <option value="BalanzasBasculas">Balanzas y Basculas
                                                 </option>
                                                 <option value="Tanques">Tanques</option>
@@ -998,10 +1021,9 @@
                                                 <option value="Herramientas">Herramientas</option>
                                                 <option value="HerramientasJardin">Herramientas de Jardin
                                                 </option>
-                                                <option value="ArticulosRurales">Articulos Rurales y
+                                                <option value="ArticulosRurales">Artículos Rurales y
                                                     Herramientas</option>
-                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
-                                                <option value="OleoHidraulica">Oleo Hidraulica</option>
+                                                <option value="OleoHidraulica">Oleo Hidráulica</option>
                                                 <option value="Herbicidas">Herbicidas</option>
                                                 <option value="Insecticidas">Insecticidas</option>
                                                 <option value="Fungicidas">Fungicidas</option>
@@ -1034,14 +1056,15 @@
                                                 <option value="BANCOS">BANCOS</option>
                                             </select>
                                         </div>
+                                        <hr>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text"
                                                     for="inputGroupSelect01">Provincia</label>
                                             </div>
                                             <select class="form-control selectpicker" name="Provincia"
-                                                id="select-provincia4" data-live-search="true"
-                                                onchange="cambiarLocalidadesAgroEdit()">
+                                                id="select-provincia-publicacionEdit" data-live-search="true"
+                                                onchange="cambiarLocalidadesPublicacionEdit()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">
                                                     Buenos Aires</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca
@@ -1091,32 +1114,44 @@
                                                 </option>
                                             </select>
                                         </div>
-                                        <hr>
                                         <div class="input-group mb-3">
                                             <div class="input-group-prepend">
                                                 <label class="input-group-text"
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" name="Localidad"
-                                                id="select-localidad4" data-live-search="true">
+                                                id="select-localidad4" data-live-search="true" required>
                                             </select>
                                         </div>
                                         <center>
                                             <div class="row">
                                                 <div class="col">
+                                                    <p>Es una publicacion destacada?</p>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input width="200px" id="checkbox1Edit" type="checkbox" checked
-                                                            data-toggle="toggle" data-on="Destacado"
-                                                            data-off="No Destacado" data-onstyle="success"
-                                                            data-offstyle="danger" data-size="lg">
+                                                        <input width="200px" name="Destacado" id="checkbox1Edit"
+                                                            type="checkbox" checked data-toggle="toggle"
+                                                            data-on="Destacado" data-off="No Destacado"
+                                                            data-onstyle="success" data-offstyle="danger" data-size="lg"
+                                                            value="true">
                                                     </div>
                                                 </div>
                                                 <div class="col">
+                                                    <p>Esta en Oferta?</p>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input width="200px" id="checkbox2Edit" type="checkbox" checked
-                                                            data-toggle="toggle" data-on="Oferta" data-off="No Oferta"
-                                                            data-onstyle="success" data-offstyle="danger"
-                                                            data-size="lg">
+                                                        <input width="200px" name="Oferta" id="checkbox2Edit"
+                                                            type="checkbox" checked data-toggle="toggle"
+                                                            data-on="Oferta" data-off="No Oferta" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg" value="true">
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="col">
+                                                    <p>Mostrar en pantalla Principal?</p>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input width="200px" name="Principal" id="checkboxPrincipalEdit"
+                                                            type="checkbox" data-toggle="toggle" data-on="Mostrar"
+                                                            data-off="No Mostrar" data-onstyle="success"
+                                                            data-offstyle="danger" data-size="lg" value="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1262,7 +1297,7 @@
                                         <div class="row justify-content-center">
                                             <div class="d-flex">
                                                 <div class="col">
-                                                    <button class="btn btn-success"> Cambiar Logo
+                                                    <button class="btn btn-success" onclick="imgPublicacionEdit('logo')"> Cambiar Logo
                                                     </button>
                                                 </div>
                                             </div>
@@ -1314,7 +1349,7 @@
                                             </div>
                                             <select class="form-control selectpicker" name="Provincia"
                                                 id="select-provincia3" data-live-search="true"
-                                                onchange="cambiarLocalidadesAgroEdit()">
+                                                onchange="cambiarLocalidadesAgroEdit()" required>
                                                 <option data-tokens="Buenos Aires" value="Buenos Aires">
                                                     Buenos Aires</option>
                                                 <option data-tokens="Catamarca" value="Catamarca">Catamarca
@@ -1371,7 +1406,7 @@
                                                     for="inputGroupSelect01">Localidad</label>
                                             </div>
                                             <select class="form-control selectpicker" name="Localidad"
-                                                id="select-localidad3" data-live-search="true">
+                                                id="select-localidad3" data-live-search="true" required>
                                             </select>
                                         </div>
                                     </div>
@@ -1390,6 +1425,7 @@
         </div>
     </div>
 
+    <!-- Modal Loading -->
     <div class="modal fade" id="modalLoading" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -1414,6 +1450,25 @@
                         <br>
                         <br>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Images and Logo uploader -->
+    <div class="modal fade" id="modalNewImages" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-images-title"></h5>
+                  </div>
+                <div class="modal-body">
+                    <input type="file" class="my-pond-edit" id="test-editImg" accept="image/*" multiple />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancel-image-upload" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btnNewImgs">Guardar</button>
                 </div>
             </div>
         </div>
@@ -1560,10 +1615,10 @@
 
     <!-- include FilePond jQuery adapter -->
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
-    <script src="geoFilter.js"></script>
-    <script src="ponds.js"></script>
-    <script src="main.js"></script>
-    <script src="tabs.js"></script>
+    <script src="geoFilter.js?version=1"></script>
+    <script src="ponds.js?version=1"></script>
+    <script src="main.js?version=1"></script>
+    <script src="tabs.js?version=1"></script>
 
     <!-- include Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"
