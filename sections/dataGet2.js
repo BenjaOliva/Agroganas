@@ -102,6 +102,14 @@ function Publicante(dataSet, dataAgro) {
 function loadProducts(array) {
     productsContainer.innerHTML = "";
 
+    const getAnunciante = (vendedor, agronomia) => {
+        if (Boolean(vendedor)) {
+            return vendedor;
+        } else {
+            return agronomia
+        }
+    }
+
     if (array.length > 0) {
         array.forEach(doc => {
 
@@ -161,7 +169,7 @@ function loadProducts(array) {
                 <br>
                 <p>
                 <a href="producto.html?id=${doc.id}" class="btn btn-primary btn-block">Ver Detalles</a>
-                <a href="https://form.jotform.com/210891397728670?productoA=${doc.Nombre}" class="btn btn-success btn-block">Consultar</a>
+                <a target="_blank" href="https://form.jotform.com/210891397728670?productoA=${doc.Nombre}&anunciante=${getAnunciante(doc.Publicante, doc.Agronomia)}" class="btn btn-success btn-block">Consultar</a>
                 </p>
             </div> <!-- info-aside.// -->
         </aside> <!-- col.// -->
