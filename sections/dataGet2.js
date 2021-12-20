@@ -264,10 +264,18 @@ function getOneProduct(idToSearch) {
 
     var docRef = db.collection("Productos").doc(String(idToSearch));
 
-    docRef.get().then((doc) => {
+    docRef.get().then(async (doc) => {
         if (doc.exists) {
+            const getAnunciante = (vendedor, agronomia) => {
+                if (Boolean(vendedor)) {
+                    return vendedor;
+                } else {
+                    return agronomia
+                }
+            }
+
             datosGet = doc.data()
-            console.table(datosGet);
+            //console.table(datosGet);
 
             $('#detail-card').attr('hidden', false);
 
@@ -278,11 +286,11 @@ function getOneProduct(idToSearch) {
             document.getElementById('detail-description').innerHTML = datosGet.Descripcion;
             document.getElementById('detail-category').innerHTML = datosGet.Categoria;
             document.getElementById('detail-publicante').innerHTML = datosGet.Publicante;
-            document.getElementById('detail-consultar').href = 'https://form.jotform.com/210891397728670?productoA=' + datosGet.Nombre;
             
             document.getElementById('detail-propiedades').innerHTML = setPropiedades(datosGet.Propiedades,datosGet.PropiedadesTexto);
 
             document.getElementById('detail-ubicacion').innerHTML =  `<p><i class="fa fa-map-marker" aria-hidden="true"></i>  `+ datosGet.Provincia +`, `+ datosGet.Localidad +`</p> `;
+            document.getElementById('detail-consultar').href = 'https://form.jotform.com/210891397728670?productoA=' + datosGet.Nombre + '&anunciante=' + getAnunciante(datosGet.Publicante, datosGet.Agronomia);
 
         } else {
             // doc.data() will be undefined in this case
