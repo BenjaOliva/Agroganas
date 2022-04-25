@@ -163,10 +163,10 @@
           <li data-target="#carousel" data-slide-to="1"></li>
           <li data-target="#carousel" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner" role="listbox" style="cursor: pointer;">
           <div class="carousel-item active">
             <img src="assets/nuevoSlider2.jpg" alt="responsive image" class="d-block img-fluid" data-toggle="modal"
-              data-target="#modalPresentacion">
+              data-target="#modalGeneric" data-info="Presentacion">
           </div>
           <!-- /.carousel-item -->
           <div class="carousel-item ">
@@ -196,6 +196,27 @@
       </div>
     </div>
 
+    <!-- Modal Generico - Slides -->
+    <div class="modal fade " id="modalGeneric" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="genericTitle"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="genericBody">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Modal Presentacion -->
     <div class="modal fade " id="modalPresentacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -220,7 +241,8 @@
               <ul class="list-group">
                 <li class="list-group-item">CONOCIMIENTO DE OFERTAS; DISPONIBILIDAD DE PRODUCTOS Y OPORTUNIDADES DE
                   NEGOCIO</li>
-                <li class="list-group-item">SATISFACER Opiniones y Sugerencias TÉCNICAS Y PRÁCTICAS SOBRE LOS PRODUCTOS QUE
+                <li class="list-group-item">SATISFACER Opiniones y Sugerencias TÉCNICAS Y PRÁCTICAS SOBRE LOS PRODUCTOS
+                  QUE
                   AUSPICIAN LAS EMPRESAS</li>
                 <li class="list-group-item">PLANIFICAR CAMPAÑAS</li>
                 <li class="list-group-item">SORTEOS GRATIS PARA LOS PRODUCTORES</li>
@@ -283,16 +305,18 @@
         <!-- Three columns of text below the carousel -->
         <div class="row">
           <div class="col-lg" style="margin-bottom: 30px;">
-            <img style="object-fit: cover; border-radius: 50%;" class="bd-placeholder-img" width="140px" height="140px" src="assets/Agroinsumos.jpg"
-              preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"
+            <img style="object-fit: cover; border-radius: 50%;" class="bd-placeholder-img" width="140px" height="140px"
+              src="assets/Agroinsumos.jpg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
+              aria-label="Placeholder: 140x140"
               onclick="window.location.href = '../sections/index.html?cat=Agroinsumos'">
             <title></title>
             <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em"></text>
             <h2>Insumos Agrícolas</h2>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg" style="margin-bottom: 30px;">
-            <img style="object-fit: cover; border-radius: 50%;" class="bd-placeholder-img" width="140px" height="140px" src="assets/foto agronom virt.png"
-              preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"
+            <img style="object-fit: cover; border-radius: 50%;" class="bd-placeholder-img" width="140px" height="140px"
+              src="assets/foto agronom virt.png" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
+              aria-label="Placeholder: 140x140"
               onclick="window.location.href = '../../agronomias-virtuales/index.html'">
             <title></title>
             <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em"></text>
@@ -307,8 +331,9 @@
             <h2>Maquinaria Agrícola</h2>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg" style="margin-bottom: 30px;">
-            <img style="object-fit: cover; border-radius: 50%;" class="bd-placeholder-img" width="140" height="140" src="assets/Campos.jpg"
-              preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"
+            <img style="object-fit: cover; border-radius: 50%;" class="bd-placeholder-img" width="140" height="140"
+              src="assets/Campos.jpg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"
+              aria-label="Placeholder: 140x140"
               onclick="window.location.href = '../sections/index.html?cat=CamposInmuebles'">
             <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em"></text>
             <h2>Campos e Inmuebles</h2>
@@ -543,7 +568,6 @@
 
   <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-firestore.js"></script>
-
 
   <script src="main.js"></script>
   <script>

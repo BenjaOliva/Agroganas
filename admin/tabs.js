@@ -4,6 +4,11 @@ btnHome.addEventListener('click', function () {
     vistaHome();
 })
 
+// Sidebar - Slides
+btnSlides.addEventListener('click', function () {
+    vistaSlides();
+})
+
 // Sidebar - Publicaciones New
 btnPublicacionNew.addEventListener('click', function () {
     vistaPublicaciones("new");

@@ -65,6 +65,13 @@
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.10/css/froala_editor.min.css"
+        integrity="sha512-nAJK2yafVBW/IqrSgLaNgFeISsusduUoQ8WTNDvHwdnThbiGoP3Myc4fq0Z0bGS8ZowxzGLafmPtHwTp2T5qRQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.10/css/froala_style.min.css"
+        integrity="sha512-L3yvXrTvF5EpDin2T+UjfcfTCOj2GLoMiyJTfTE2IISm9dxoH6u08QwfkmTTgeVPDJXNrXqYOcUZNvs7lk2HKg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body id="page-top">
@@ -139,6 +146,16 @@
                         <a class="collapse-item" id="btnAgronomiaEdit" type="button">Editar Agronomia</a>
                     </div>
                 </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Nav Item - Slides -->
+            <li class="nav-item">
+                <a class="nav-link" id="btnSlides" style="cursor: pointer;">
+                    <i class="fas fa-fw fa-image"></i>
+                    <span>Slides</span></a>
             </li>
 
             <!-- Divider -->
@@ -821,6 +838,86 @@
                     <!-- End of Page Footer -->
                 </div>
                 <!-- End of Agronomias Edit Container -->
+
+                <!-- Slides Edit Container -->
+                <div class="container-fluid section-container" id="slidesEdit" hidden>
+
+                    <!-- Modal Edit Slide-->
+                    <div class="modal fade" id="editSlideModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <form id="editSlideForm">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Editar Slide</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Titulo del Slide</label>
+                                            <input type="text" class="form-control" id="title" name="title"
+                                                placeholder="Escriba un titulo para la slide..." required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">
+                                                Texto del Slide
+                                            </label>
+                                            <textarea
+                                                id="update-froala"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar Slide</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Estadisticas de casas por atributos - Alquileres-->
+                        <div class="col-lg-12 mb-4">
+
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Slides - Fotos de Inicio</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <button onclick="editSlide()" class="btn btn-warning">Editar
+                                                Slide</button>
+                                        </div>
+                                        <div class="row d-flex justify-content-center" id="slides-list">
+
+                                        </div><!-- /.row -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!-- /.container-fluid -->
+                    <!-- Page Footer -->
+                    <footer class="sticky-footer bg-white">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Oliva Benjamin - 2021</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Page Footer -->
+                </div>
+                <!-- End of Agronomias Edit Container -->
             </div>
         </div>
     </div>
@@ -876,12 +973,14 @@
                                         <div class="row justify-content-center">
                                             <div class="d-flex">
                                                 <div class="col">
-                                                    <button class="btn btn-success" onclick="imgPublicacionEdit(true); $('#modalPublicacionEdit').modal('hide');">
+                                                    <button class="btn btn-success"
+                                                        onclick="imgPublicacionEdit(true); $('#modalPublicacionEdit').modal('hide');">
                                                         Agregar Imagenes
                                                     </button>
                                                 </div>
                                                 <div class="col">
-                                                    <button class="btn btn-danger" onclick="imgPublicacionEdit(false); $('#modalPublicacionEdit').modal('hide');">
+                                                    <button class="btn btn-danger"
+                                                        onclick="imgPublicacionEdit(false); $('#modalPublicacionEdit').modal('hide');">
                                                         Eliminar Imagenes
                                                     </button>
                                                 </div>
@@ -1297,7 +1396,8 @@
                                         <div class="row justify-content-center">
                                             <div class="d-flex">
                                                 <div class="col">
-                                                    <button class="btn btn-success" onclick="imgPublicacionEdit('logo')"> Cambiar Logo
+                                                    <button class="btn btn-success"
+                                                        onclick="imgPublicacionEdit('logo')"> Cambiar Logo
                                                     </button>
                                                 </div>
                                             </div>
@@ -1462,12 +1562,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modal-images-title"></h5>
-                  </div>
+                </div>
                 <div class="modal-body">
                     <input type="file" class="my-pond-edit" id="test-editImg" accept="image/*" multiple />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="cancel-image-upload" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="cancel-image-upload" class="btn btn-danger"
+                        data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="btnNewImgs">Guardar</button>
                 </div>
             </div>
@@ -1629,6 +1730,13 @@
         if ($(window).width() > 922) {
             $('#accordionSidebar').removeClass('toggled')
         }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.10/js/froala_editor.min.js"
+        integrity="sha512-M21u/bhNAlYd5NOd271FkyJrmFxRGOA492Y0g0T8d+5u7iGrAo6uTrBzxD3vV1HKMyTyYYehio3O+7LDvYHDYA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/font_size.min.js"></script>
+    <script>
+        var editorUpdate = new FroalaEditor('textarea#update-froala')
     </script>
 </body>
 
