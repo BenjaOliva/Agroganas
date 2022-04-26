@@ -95,7 +95,7 @@ function Publicante(dataSet, dataAgro) {
     if (dataSet == '') {
         return '<a href="../agronomias-virtuales/profile.html?agr=' + dataAgro +'" type="button" class="btn btn-sm btn-outline-dark"> Ver más de ' + dataAgro + ' </a>';
     } else {
-        return '<b> Vendedor: ' + dataSet + '</b>';
+        return '<b> Anunciante: ' + dataSet + '</b>';
     }
 }
 

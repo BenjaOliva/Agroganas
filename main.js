@@ -55,7 +55,7 @@ function Publicante(dataSet, dataAgro) {
       " </a>"
     );
   } else {
-    return "<b> Vendedor: " + dataSet + "</b>";
+    return "<b> Anunciante: " + dataSet + "</b>";
   }
 }
 
@@ -157,7 +157,7 @@ $("#modalGeneric").on("show.bs.modal", function (event) {
   var modal = $(this);
   const modalData = slides.find((doc) => doc.id === slideRef);
   console.log(modalData);
-  if (modalData.showLogo === true) {
+  if (modalData?.showLogo === true) {
     modal.find("#logo-section").attr("hidden", false);
   } else {
     modal.find("#logo-section").attr("hidden", true);

@@ -343,10 +343,10 @@
                                                 <option value=""> -- SIN AGRONOMIA --</option>
                                             </select>
                                         </div>
-                                        <div class="input-group mb-3" id="Vendedor">
+                                        <div class="input-group mb-3" id="Anunciante">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"
-                                                    id="inputGroup-sizing-default">Vendedor</span>
+                                                    id="inputGroup-sizing-default">Anunciante</span>
                                             </div>
                                             <input type="text" id="Publicante" name="Publicante" class="form-control"
                                                 placeholder="Ingrese el Publicante...">
@@ -888,8 +888,7 @@
                                             <label for="exampleFormControlTextarea1">
                                                 Texto del Slide
                                             </label>
-                                            <textarea
-                                                id="update-froala"></textarea>
+                                            <textarea id="update-froala"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -1065,10 +1064,10 @@
                                         </div>
                                         <div class="input-group mb-3" id="VendedorEdit">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text">Vendedor</span>
+                                                <span class="input-group-text">Anunciante</span>
                                             </div>
                                             <input type="text" id="PublicanteEdit" name="PublicanteEdit"
-                                                class="form-control" placeholder="Ingrese el Vendedor...">
+                                                class="form-control" placeholder="Ingrese el Anunciante...">
                                         </div>
                                         <hr>
                                         <div class="input-group mb-3">
@@ -1756,7 +1755,9 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/font_size.min.js"></script>
     <script>
-        var editorUpdate = new FroalaEditor('textarea#update-froala')
+        var editorUpdate = new FroalaEditor('textarea#update-froala', {
+            attribution: false
+        });
     </script>
 </body>
 

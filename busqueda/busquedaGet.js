@@ -106,7 +106,7 @@ function showTheData() {
         <hr>
     
         <center>
-          <b> Vendedor: ${docsArray[i].Publicante}</b>
+          <b> Anunciante: ${docsArray[i].Publicante}</b>
           </center>
             <div class="">
                 ${Destac}

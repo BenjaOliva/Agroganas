@@ -380,7 +380,7 @@ function Publicante(dataSet) {
     if (dataSet == null) {
         return '';
     } else {
-        return '<b> Vendedor: ' + dataSet + '</b>';
+        return '<b> Anunciante: ' + dataSet + '</b>';
     }
 }
 

@@ -325,12 +325,12 @@ function setPropiedades(PropiedadesRecibidas, PropiedadesText) {
   }
 }
 
-// Agrega la vista del Vendedor a la card de la publicacion
+// Agrega la vista del Anunciante a la card de la publicacion
 function Publicante(dataSet, agroData) {
   if (dataSet == "") {
     return "<b> Agronomia: " + agroData + "</b>";
   } else {
-    return "<b> Vendedor: " + dataSet + "</b>";
+    return "<b> Anunciante: " + dataSet + "</b>";
   }
 }
 
@@ -739,10 +739,10 @@ const activities = document.getElementById("select-agronomia");
 
 activities.addEventListener("change", (e) => {
   if (e.target.value !== "") {
-    $("#Vendedor").attr("hidden", true);
+    $("#Anunciante").attr("hidden", true);
     $("#Publicante").val("");
   } else {
-    $("#Vendedor").attr("hidden", false);
+    $("#Anunciante").attr("hidden", false);
     $("#Publicante").val("");
   }
 });
