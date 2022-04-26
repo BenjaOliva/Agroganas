@@ -88,8 +88,8 @@ function setContainer(array) {
       productsContainer.innerHTML +=
         `<article id="` +
         doc.id +
-        `" class="card card-product-list">
-    <div class="row no-gutters">
+        `" class="card card-product-list" style="margin-bottom: 2vh;">
+    <div class="row" style="padding: 1%;">
         <aside class="col-md-3">
         <br>
         <hr>
@@ -155,7 +155,13 @@ $("#modalGeneric").on("show.bs.modal", function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
   var slideRef = button.data("info"); // Extract info from data-* attributes
   var modal = $(this);
-  const modalData = slides.find(doc => doc.id === slideRef)
+  const modalData = slides.find((doc) => doc.id === slideRef);
   console.log(modalData);
+  if (modalData.showLogo === true) {
+    modal.find("#logo-section").attr("hidden", false);
+  } else {
+    modal.find("#logo-section").attr("hidden", true);
+  }
   modal.find(".modal-title").text(modalData.title);
+  modal.find(".modal-body").html(modalData.description);
 });

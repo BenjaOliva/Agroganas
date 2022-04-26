@@ -204,7 +204,10 @@ function vistaPublicaciones(action) {
 function vistaSlides() {
   $(".section-container").attr("hidden", true);
   containerSlides.attr("hidden", false);
+  setSlides();
+}
 
+function setSlides() {
   const slidesList = document.getElementById("slides-list");
 
   slidesList.innerHTML = "";
@@ -212,17 +215,19 @@ function vistaSlides() {
   if (slides.length > 0) {
     slides.forEach((slide, index) => {
       slidesList.innerHTML += `
-    <div class="col-12">
+    <div class="row" style="margin-bottom: 3vh; display: flex; justify-content: center;">
+    <div class="col-7"> 
         <div class="card">
             <div class="card-header">
-              Slide ${index + 1}
+              Slide ${index === 0 ? index + 1 : index + 2}
             </div>
             <div class="card-body">
               <h5 class="card-title">${slide.title}</h5>
               <button onclick="editSlide(${index})" class="btn btn-warning">Editar Slide</button>
             </div>
+          </div>
         </div>
-  </div>`;
+      </div>`;
     });
   } else {
     slidesList.innerHTML = `
@@ -233,20 +238,50 @@ function vistaSlides() {
 }
 
 function editSlide(slideIndex) {
+  $("#editSlideForm").find("#savingSlide").attr("hidden", true);
+  $("#editSlideForm").find(".modal-header").attr("hidden", false);
+  $("#editSlideForm").find(".modal-body").attr("hidden", false);
+  $("#editSlideForm").find(".modal-footer").attr("hidden", false);
+
   const slideData = slides[slideIndex];
-  console.log("Data: ", slideData);
   $("#editSlideModal").modal("show");
-  const formRef = document.getElementById("editSlideForm")
-  console.log(formRef.elements);
-  formRef.elements['title'].value = slideData?.title
-  editorUpdate.html.set(slideData?.description)
+  const formRef = document.getElementById("editSlideForm");
+  formRef.elements["title"].value = slideData?.title;
+  formRef.elements["id"].value = slideData?.id;
+
+  editorUpdate.html.set(slideData?.description);
 }
 
 document
   .getElementById("editSlideForm")
-  .addEventListener("submit", function (event) {
-    console.log(event);
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
+    const form = event.target;
+    const title = form.elements["title"].value;
+    const description = editorUpdate.html.get();
+    const id = form.elements["id"].value;
+    try {
+      $("#editSlideForm").find(".modal-header").attr("hidden", true);
+      $("#editSlideForm").find(".modal-body").attr("hidden", true);
+      $("#editSlideForm").find(".modal-footer").attr("hidden", true);
+      $("#editSlideForm").find("#savingSlide").attr("hidden", false);
+
+      db.collection("Slides")
+        .doc(id)
+        .update({ title, description })
+        .then(() => {
+          setSlides();
+          $("#editSlideModal").modal("hide");
+        });
+      slides[slides.findIndex((slide) => slide.id === id)] = {
+        id,
+        title,
+        description,
+      };
+    } catch (error) {
+      $("#editSlideForm").find("#savingSlide").attr("hidden", true);
+      $("#editSlideForm").find(".modal-body").attr("hidden", false);
+    }
   });
 
 function vistaAgronomias(action) {
@@ -351,8 +386,8 @@ async function getSearchCat(category, agro) {
     productsContainer.innerHTML +=
       `<article id="` +
       doc.id +
-      `" class="card card-product-list">
-<div class="row no-gutters">
+      `" class="card card-product-list" style="margin-bottom: 3vh;">
+<div class="row" style="padding: 1%;">
     <aside class="col-md-3">
     <br>
     <hr>

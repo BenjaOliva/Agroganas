@@ -848,6 +848,25 @@
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
                                 <form id="editSlideForm">
+                                    <div class="container" id="savingSlide" hidden>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="spinner-border" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <center>
+                                            <div>
+                                                <p>Guardando...</p>
+                                            </div>
+                                        </center>
+                                        <br>
+                                        <br>
+                                        <br>
+                                    </div>
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalCenterTitle">Editar Slide</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -860,6 +879,11 @@
                                             <input type="text" class="form-control" id="title" name="title"
                                                 placeholder="Escriba un titulo para la slide..." required>
                                         </div>
+                                        <div class="form-group" hidden>
+                                            <label for="exampleFormControlInput1">ID</label>
+                                            <input type="text" class="form-control" id="id" name="id"
+                                                placeholder="ID..." required>
+                                        </div>
                                         <div class="form-group">
                                             <label for="exampleFormControlTextarea1">
                                                 Texto del Slide
@@ -871,7 +895,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger"
                                             data-dismiss="modal">Cancelar</button>
-                                        <button type="submit" class="btn btn-primary">Guardar Slide</button>
+                                        <button type="submit" class="btn btn-success">Guardar Slide</button>
                                     </div>
                                 </form>
                             </div>
@@ -891,11 +915,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="container">
-                                        <div class="row">
-                                            <button onclick="editSlide()" class="btn btn-warning">Editar
-                                                Slide</button>
-                                        </div>
-                                        <div class="row d-flex justify-content-center" id="slides-list">
+                                        <div id="slides-list">
 
                                         </div><!-- /.row -->
                                     </div>
