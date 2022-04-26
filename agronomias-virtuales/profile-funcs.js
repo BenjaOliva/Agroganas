@@ -155,8 +155,8 @@ function setOfertas(array) {
                 var Ofer = '';
             }
 
-            ofertasContainer.innerHTML += `<article id="` + doc.id + `" class="card card-product-list">
-    <div class="row no-gutters">
+            ofertasContainer.innerHTML += `<article id="` + doc.id + `" class="card card-product-list" style="margin-bottom: 3vh;">
+    <div class="row" style="padding: 1%">
         <aside class="col-md-3">
         <br>
         <hr>
