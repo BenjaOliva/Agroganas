@@ -106,7 +106,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     vistaHome();
 
     // Firebase init vars - Start Admin
-    //initAdmin();
+    initAdmin();
   } else {
     // User is signed out.
     console.log("Sin Sesion!");
