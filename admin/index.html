@@ -331,6 +331,30 @@
                                 </div>
                                 <div class="card-body">
                                     <input type="file" class="my-pond" id="test" name="filepond" multiple />
+                                    <hr>
+                                    <form id="addLinks" style="width: 100%;">
+                                        <div class="row align-items-center">
+                                            <div class="col-10">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Links YouTube</label>
+                                                    <input type="url" class="form-control" id="youtubeLinksInput"
+                                                        placeholder="https://youtube.com/..." required>
+                                                    <small id="youtubeLinksInput" class="form-text text-muted">Coloque
+                                                        un
+                                                        link y seleccione "Agregar"</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <button type="submit" class="btn btn-success btn-sm">Agregar
+                                                    Link</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="row">
+                                        <ul id="linksList" class="list-group"
+                                            style="overflow-y: scroll; max-height: 30vh; -webkit-overflow-scrolling: touch; width: 100%;">
+                                        </ul>
+                                    </div>
                                     <form id="myForm">
                                         <hr>
                                         <div class="input-group mb-3">
@@ -338,8 +362,7 @@
                                                 <label class="input-group-text"
                                                     for="inputGroupSelect01">Agronomia</label>
                                             </div>
-                                            <select id="select-agronomia" class="custom-select" name="Agronomia"
-                                                required>
+                                            <select id="select-agronomia" class="custom-select" name="Agronomia">
                                                 <option value=""> -- SIN AGRONOMIA --</option>
                                             </select>
                                         </div>

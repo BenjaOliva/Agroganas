@@ -18,6 +18,11 @@ const btnSlides = document.getElementById("btnSlides");
 const btnPublicacionNew = document.getElementById("btnPublicacionNew");
 const btnPublicacionEdit = document.getElementById("btnPublicacionEdit");
 
+//Lista Youtube Links
+const youtubeLinksInput = document.getElementById("youtubeLinksInput");
+
+const addLinksForm = document.getElementById("addLinks");
+
 // Botones de Agronomias
 const btnAgronomiasNew = document.getElementById("btnAgronomiaNew");
 const btnAgronomiasEdit = document.getElementById("btnAgronomiaEdit");
@@ -101,7 +106,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     vistaHome();
 
     // Firebase init vars - Start Admin
-    initAdmin();
+    //initAdmin();
   } else {
     // User is signed out.
     console.log("Sin Sesion!");
@@ -1999,3 +2004,26 @@ function updateTheCharts(arrays, arrays2) {
   myPieChart.data.datasets[0].backgroundColor = colorsCat;
   myPieChart.update();
 }
+
+$(".list-group-item").click(function () {
+  this.remove();
+});
+
+addLinksForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const valueToAdd = e.target.elements[0].value;
+  if (valueToAdd) {
+    $("#linksList").append(
+      "<li class='list-group-item d-flex justify-content-between align-items-center'>" +
+        valueToAdd +
+        "<button class='btn btn-sm btn-danger remove-item'><i class='fa fa-close'></i></button></li>"
+    );
+  }
+});
+
+$("#linksList").on("click", ".remove-item", function () {
+  console.log($(this).parent()[0].textContent);
+  const valueToRemove = $(this).parent()[0].textContent;
+  
+  $(this).parent().remove();
+});
