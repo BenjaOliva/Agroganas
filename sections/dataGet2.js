@@ -7,6 +7,10 @@ var arrayToFilter;
 var imgThums = document.getElementById("imgThums");
 var imgSrcs = document.getElementById("imgSrcs");
 
+const videoPlayer = document.getElementById("videoPlayer");
+const prevVideo = document.getElementById("prevVideo");
+const nextVideo = document.getElementById("nextVideo");
+
 const productsContainer = document.getElementById("products-container");
 
 $("#search-form").attr("hidden", true);
@@ -36,8 +40,6 @@ if (typeof categoria === "undefined") {
   var categoria = "No recibido";
 }
 
-console.log(categoria); // Mostramos la categoria
-
 const db = firebase.firestore();
 
 switch (categoria) {
@@ -62,12 +64,6 @@ switch (categoria) {
   default:
     $("#first-title").html(categoria);
     break;
-}
-
-if (categoria == "Agroinsumos") {
-  document.getElementById("section-title").innerHTML += "Insumos Agricolas";
-} else {
-  document.getElementById("section-title").innerHTML += categoria;
 }
 
 const getProducts = () =>
@@ -276,7 +272,7 @@ function modalMedia(productId) {
             `;
       });
 
-      if (doc.data().Video != undefined) {
+      if (doc.data().Videos != undefined) {
         console.log("Hay video");
       } else {
         console.log("No hay video");
@@ -309,6 +305,7 @@ function getOneProduct(idToSearch) {
     .get()
     .then(async (doc) => {
       if (doc.exists) {
+        document.title = "Agroganas | " + doc.data().Nombre;
         const getAnunciante = (vendedor, agronomia) => {
           if (Boolean(vendedor)) {
             return vendedor;
@@ -318,14 +315,47 @@ function getOneProduct(idToSearch) {
         };
 
         datosGet = doc.data();
-        //console.table(datosGet);
-
+        console.log(datosGet);
         $("#detail-card").attr("hidden", false);
+        $("#video-section").attr("hidden", datosGet.Videos.length === 0);
 
         document.getElementById("details-first-image").src = datosGet.Imagen[0];
         document
           .getElementById("btnDetailsPhotos")
           .setAttribute("onclick", 'modalMedia("' + productIdDetails + '")');
+        $("#btnDetailsPhotos").html(
+          datosGet.Videos.length > 0
+            ? "Ver Imagenes y Videos"
+            : "Ver más Imagenes"
+        );
+
+        var currentVideo = 0;
+
+        if (datosGet.Videos.length) {
+          document.getElementById("videoPlayer").src =
+            datosGet.Videos[currentVideo];
+          $("#controls").attr("hidden", datosGet.Videos.length === 1);
+        }
+
+        prevVideo.addEventListener("click", () => {
+          console.log(currentVideo);
+          if (datosGet.Videos.length > 1) {
+            if (currentVideo > 0) {
+              currentVideo--;
+              $("#videoPlayer").attr("src", datosGet.Videos[currentVideo]);
+            }
+          }
+        });
+        nextVideo.addEventListener("click", () => {
+          console.log(currentVideo);
+          if (datosGet.Videos.length > 1) {
+            if (currentVideo < datosGet.Videos.length - 1) {
+              currentVideo++;
+              $("#videoPlayer").attr("src", datosGet.Videos[currentVideo]);
+            }
+          }
+        });
+
         document.getElementById("section-title").innerHTML =
           "Agroganas · " + datosGet.Categoria;
         document.getElementById("detail-title").innerHTML = datosGet.Nombre;

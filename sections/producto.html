@@ -26,21 +26,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Favicons -->
-    <link rel="apple-touch-icon"
-        href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png"
-        sizes="180x180">
-    <link rel="icon" href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png"
-        sizes="32x32" type="image/png">
-    <link rel="icon" href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png"
-        sizes="16x16" type="image/png">
-    <link rel="manifest" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/manifest.json">
-    <link rel="mask-icon" href="https://getbootstrap.com//docs/4.4/assets/img/favicons/safari-pinned-tab.svg"
-        color="#563d7c">
-    <link rel="icon" href="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png">
-    <meta name="msapplication-config"
-        content="http://www.agroganas.com/wp-content/uploads/2019/07/cropped-flaticon-agroganas-270x270.png">
-    <meta name="theme-color" content="#563d7c">
-
+    <link rel="icon" href="../assets/logo-only-icon.png" />
+    <link rel="shortcut icon" type="image/png" href="../assets/logo-only-icon.png" />
+    <link rel="apple-touch-icon" href="../assets/logo-only-icon.png" />
 
     <style>
         pre {
@@ -63,6 +51,22 @@
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
+        }
+
+        .videoWrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            padding-top: 25px;
+            height: 0;
+        }
+
+        .videoWrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
     <!-- Custom styles for this template -->
@@ -312,7 +316,7 @@
                                 <center>
                                     <button id="btnDetailsPhotos" type="button" class="btn btn-primary"
                                         data-toggle="modal" data-target="#imgModal">
-                                        Ver más Imagenes
+
                                     </button>
                                 </center>
                                 <br>
@@ -330,7 +334,7 @@
                                 <span>/per kg</span>
                             </p> <!-- price-detail-wrap .// -->
                             <dl class="item-property">
-                                <dt>Descripcion</dt>
+                                <dt>Descripción</dt>
                                 <dd>
                                     <p id="detail-description"></p>
                                 </dd>
@@ -344,7 +348,7 @@
                                 <dd id="detail-publicante"></dd>
                             </dl> <!-- publicante .// -->
                             <dl class="param param-feature">
-                                <dt>Ubicacion</dt>
+                                <dt>Ubicación</dt>
                                 <dd id="detail-ubicacion"></dd>
                             </dl> <!-- ubicacion .// -->
                             <dl class="param param-feature">
@@ -390,23 +394,23 @@
                             </div> <!-- row.// -->
                             <hr>
                             <div class="container"></div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <a id="detail-consultar" href="#" class="btn btn-success text-uppercase">
-                                            Consultar </a>
-                                    </div>
-                                    <div class="col-8 text-right">
-                                        <button class="btn btn-primary text-uppercase" type="button" id="share-btn"> <i
-                                                class="fa fa-share-alt" aria-hidden="true"></i>
-                                            Compartir </button>
-                                    </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <a id="detail-consultar" href="#" class="btn btn-success text-uppercase">
+                                        Consultar </a>
+                                </div>
+                                <div class="col-8 text-right">
+                                    <button class="btn btn-primary text-uppercase" type="button" id="share-btn"> <i
+                                            class="fa fa-share-alt" aria-hidden="true"></i>
+                                        Compartir </button>
                                 </div>
                             </div>
+                </div>
 
-                        </article> <!-- card-body.// -->
-                    </aside> <!-- col.// -->
-                </div> <!-- row.// -->
-            </div> <!-- card.// -->
+                </article> <!-- card-body.// -->
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
 
 
         </div>
@@ -430,30 +434,64 @@
                         <div class="row">
                             <div class="col">
                                 <div class="accordion" id="accordionExample">
-                                    <div class="card">
-                                        <div class="card-header" id="headingOne">
+                                    <div class="card" id="video-section">
+                                        <div class="card-header" id="headingTwo">
                                             <h2 class="mb-0">
-                                                <button class="btn btn-block text-left" type="button"
-                                                    data-toggle="collapse" data-target="#collapseOne"
-                                                    aria-expanded="true" aria-controls="collapseOne">
-                                                    <i class="fa fa-eye"></i> Imagenes
+                                                <button class="btn btn-block text-left collapsed" type="button"
+                                                    data-toggle="collapse" data-target="#collapseTwo"
+                                                    aria-expanded="false" aria-controls="collapseTwo">
+                                                    <i class="fa fa-play"></i> Videos
                                                 </button>
                                             </h2>
                                         </div>
-
-                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                             data-parent="#accordionExample">
                                             <div class="card-body">
-                                                <div class="container-fluid px-sm-1 py-5 mx-auto">
-                                                    <div class="row justify-content-center">
-                                                        <div class="d-flex">
-                                                            <div class="">
-                                                                <div class="d-flex flex-column thumbnails"
-                                                                    id="imgThums">
+                                                <center style="width: 100%;">
+                                                    <div class="videoWrapper">
+                                                        <iframe id="videoPlayer" allowfullscreen></iframe>
+                                                    </div>
+                                                </center>
+                                                <div style="width: 100%;" id="controls">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <button class="btn btn-primary btn-sm" id="prevVideo">
+                                                                <i class="fa fa-backward"></i> Video Anterior
+                                                        </div>
+                                                        <div class="col-6" style="text-align: end;">
+                                                            <button class="btn btn-primary btn-sm" id="nextVideo">
+                                                                Video Siguiente <i class="fa fa-forward"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-block text-left" type="button"
+                                                        data-toggle="collapse" data-target="#collapseOne"
+                                                        aria-expanded="true" aria-controls="collapseOne">
+                                                        <i class="fa fa-eye"></i> Imagenes
+                                                    </button>
+                                                </h2>
+                                            </div>
 
-                                                                </div>
-                                                                <div id="imgSrcs">
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <div class="container-fluid px-sm-1 py-5 mx-auto">
+                                                        <div class="row justify-content-center">
+                                                            <div class="d-flex">
+                                                                <div class="">
+                                                                    <div class="d-flex flex-column thumbnails"
+                                                                        id="imgThums">
 
+                                                                    </div>
+                                                                    <div id="imgSrcs">
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -462,41 +500,22 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="card" id="video-section" hidden>
-                                        <div class="card-header" id="headingTwo">
-                                            <h2 class="mb-0">
-                                                <button class="btn btn-block text-left collapsed" type="button"
-                                                    data-toggle="collapse" data-target="#collapseTwo"
-                                                    aria-expanded="false" aria-controls="collapseTwo">
-                                                    <i class="fa fa-play"></i> Video
-                                                </button>
-                                            </h2>
-                                        </div>
-                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                            data-parent="#accordionExample">
-                                            <div class="card-body">
-                                                Aqui se insertara el video si corresponde
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- FOOTER -->
-        <footer class="container">
-            <p class="float-right"><a href="#">Ir al principio de pagina</a></p>
-            <p>© 2020 Agroganas · <a href="terminos-y-condiciones.html">Terminos y Condiciones</a></p>
-        </footer>
+            <!-- FOOTER -->
+            <footer class="container">
+                <p class="float-right"><a href="#">Ir al principio de pagina</a></p>
+                <p>© 2020 Agroganas · <a href="terminos-y-condiciones.html">Terminos y Condiciones</a></p>
+            </footer>
     </main>
 
 

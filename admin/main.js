@@ -57,6 +57,8 @@ formEdit.addEventListener("submit", handleForm);
 
 var urlsToSave = [];
 
+var videosUrlsToSave = [];
+
 var datosGet;
 
 var AgronomiasVirtuales;
@@ -218,13 +220,15 @@ function setSlides() {
   slidesList.innerHTML = "";
 
   if (slides.length > 0) {
-    slides.forEach((slide, index) => {
+    const orderedSlides = slides.sort((a, b) => a.place - b.place);
+
+    orderedSlides.forEach((slide, index) => {
       slidesList.innerHTML += `
     <div class="row" style="margin-bottom: 3vh; display: flex; justify-content: center;">
     <div class="col-7"> 
         <div class="card">
             <div class="card-header">
-              Slide ${index === 0 ? index + 1 : index + 2}
+              Slide ${index + 1}
             </div>
             <div class="card-body">
               <h5 class="card-title">${slide.title}</h5>
@@ -629,6 +633,7 @@ async function AddRegistro() {
   var Oferta = document.getElementById("checkbox2").value;
   var Agronomia = document.getElementById("select-agronomia").value;
   var Principal = Boolean($("#checkboxPrincipal").val());
+  var Videos = videosUrlsToSave;
 
   // Add a new document with a generated id.
   await db
@@ -647,6 +652,7 @@ async function AddRegistro() {
       Destacado,
       Oferta,
       Principal,
+      Videos,
     })
     .then((doc) => {
       if (doc) {
@@ -708,12 +714,13 @@ async function AddRegistro() {
         var result = arrayPublicaciones.map((a) => a.Agronomia);
         var result2 = arrayPublicaciones.map((a) => a.Categoria);
         updateTheCharts(doubleArray(result), doubleArray(result2));
+        urlsToSave = [];
+        videosUrlsToSave = [];
       } else {
         console.log("No hay referencia a la agronomia");
         $("#modalLoading").modal("hide");
       }
     })
-    .then((urlsToSave = []))
     .catch((error) => {
       console.error("Error adding document: ", error);
       toastr.options = {
@@ -810,7 +817,7 @@ function imgPublicacionEdit(action) {
     case false:
       $("#btnNewImgs").attr(
         "onclick",
-        "if (window.confirm('ADVERTENCIA: Se borrarán las imagenes anteriores y se usaran éstas en su lugar, esta acciónn no es reversible, esta seguro de continuar?')){replaceImagesPublicacion(filesPublicacion)}"
+        "if (window.confirm('ADVERTENCIA: Se borrarán las imagenes anteriores y se usaran éstas en su lugar, esta acciónn no es reversible, está seguro de continuar?')){replaceImagesPublicacion(filesPublicacion)}"
       );
       break;
     case "logo":
@@ -1322,6 +1329,21 @@ async function fillEditForm(datos) {
   $("#modalPublicacionEdit").modal("show");
 
   tempData = datos;
+
+  const { Videos } = datos;
+
+  videosUrlsToSave = Videos ?? [];
+
+  $("#linksListEdit").empty();
+  
+  videosUrlsToSave.forEach((link) => {
+    $("#linksListEdit").append(
+      "<li class='list-group-item d-flex justify-content-between align-items-center'>" +
+        link +
+        "<button class='btn btn-sm btn-danger remove-item'><i class='fa fa-close'></i></button></li>"
+    );
+  });
+
   var formPublicacion = document.forms["editForm"];
 
   formPublicacion.elements["NombreEdit"].value = datos.Nombre;
@@ -1415,6 +1437,7 @@ formEdit.addEventListener("submit", async (e) => {
       Destacado: publicacionForm.elements["Destacado"].value,
       Oferta: publicacionForm.elements["Oferta"].value,
       Principal: Boolean($("#checkboxPrincipalEdit").val()),
+      Videos: videosUrlsToSave,
     })
     .catch((error) => {
       console.error("Error adding document: ", error);
@@ -1458,7 +1481,9 @@ formEdit.addEventListener("submit", async (e) => {
       docToEdit.Destacado = publicacionForm.elements["Destacado"].value;
       docToEdit.Oferta = publicacionForm.elements["Oferta"].value;
       docToEdit.Principal = Boolean($("#checkboxPrincipalEdit").val());
+      docToEdit.Videos = videosUrlsToSave;
 
+      videosUrlsToSave = [];
       var result = arrayPublicaciones.map((a) => a.Agronomia);
       var result2 = arrayPublicaciones.map((a) => a.Categoria);
       updateTheCharts(doubleArray(result), doubleArray(result2));
@@ -1970,14 +1995,11 @@ function doubleArray(array) {
   return [a, b];
 }
 
-var tempo;
-
 var colorsCat = [];
 
 var colorsAgros = [];
 
 function updateTheCharts(arrays, arrays2) {
-  tempo = arrays;
   colorsCat = [];
   colorsAgros = [];
   var index = arrays[0].indexOf("");
@@ -2013,6 +2035,7 @@ addLinksForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const valueToAdd = e.target.elements[0].value;
   if (valueToAdd) {
+    videosUrlsToSave.push(valueToAdd);
     $("#linksList").append(
       "<li class='list-group-item d-flex justify-content-between align-items-center'>" +
         valueToAdd +
@@ -2022,8 +2045,26 @@ addLinksForm.addEventListener("submit", (e) => {
 });
 
 $("#linksList").on("click", ".remove-item", function () {
-  console.log($(this).parent()[0].textContent);
   const valueToRemove = $(this).parent()[0].textContent;
-  
+  videosUrlsToSave = videosUrlsToSave.filter((item) => item !== valueToRemove);
   $(this).parent().remove();
 });
+
+$("#linksListEdit").on("click", ".remove-item", function () {
+  const valueToRemove = $(this).parent()[0].textContent;
+  videosUrlsToSave = videosUrlsToSave.filter((item) => item !== valueToRemove);
+  $(this).parent().remove();
+});
+
+function addNewURlsEdit() {
+  const valueToAdd = document.getElementById('youtubeLinksInputEdit').value;
+  console.log('ValueToAdd: ' + valueToAdd);
+  if (valueToAdd) {
+    videosUrlsToSave.push(valueToAdd);
+    $("#linksListEdit").append(
+      "<li class='list-group-item d-flex justify-content-between align-items-center'>" +
+        valueToAdd +
+        "<button class='btn btn-sm btn-danger remove-item'><i class='fa fa-close'></i></button></li>"
+    );
+  }
+}

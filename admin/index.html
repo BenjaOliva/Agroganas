@@ -1052,16 +1052,26 @@
                                 <div class="card-body">
                                     <div class="container-fluid px-sm-1 py-5 mx-auto">
                                         <div class="row justify-content-center">
-                                            <div class="d-flex">
-                                                <div class="col">
-                                                    <button class="btn btn-success"> Agregar Video
-                                                    </button>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="btn btn-danger"> Eliminar Video
-                                                    </button>
+                                            <div class="col-10">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlInput1">Links YouTube</label>
+                                                    <input type="url" class="form-control" id="youtubeLinksInputEdit"
+                                                        placeholder="https://youtube.com/..." required>
+                                                    <small id="youtubeLinksInput" class="form-text text-muted">Coloque
+                                                        un
+                                                        link y seleccione "Agregar"</small>
                                                 </div>
                                             </div>
+                                            <div class="col-2" style="align-self: center;">
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    onclick="addNewURlsEdit()">Agregar
+                                                    Link</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <ul id="linksListEdit" class="list-group"
+                                                style="overflow-y: scroll; max-height: 30vh; -webkit-overflow-scrolling: touch; width: 100%;">
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -1763,7 +1773,7 @@
     <script src="https://unpkg.com/jquery-filepond/filepond.jquery.js"></script>
     <script src="geoFilter.js?version=1"></script>
     <script src="ponds.js?version=1"></script>
-    <script src="main.js?version=2"></script>
+    <script src="main.js?version=1"></script>
     <script src="tabs.js?version=1"></script>
 
     <!-- include Chart.js -->
@@ -1780,6 +1790,7 @@
         integrity="sha512-M21u/bhNAlYd5NOd271FkyJrmFxRGOA492Y0g0T8d+5u7iGrAo6uTrBzxD3vV1HKMyTyYYehio3O+7LDvYHDYA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/font_size.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/link.min.js"></script>
     <script>
         var editorUpdate = new FroalaEditor('textarea#update-froala');
     </script>
