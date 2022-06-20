@@ -135,7 +135,7 @@ function loadProducts(array) {
         `<article id="` +
         doc.id +
         `" class="card card-product-list" style="margin-bottom: 3vh;">
-    <div class="row" style="padding: 1%">
+    <div class="row" style="padding: 3%">
         <aside class="col-md-3">
         <br>
         <hr>
