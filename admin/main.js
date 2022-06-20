@@ -708,6 +708,7 @@ async function AddRegistro() {
           Publicante,
           Propiedades,
           PropiedadesTexto,
+          Videos
         };
         arrayPublicaciones.push(newPublicacion);
 

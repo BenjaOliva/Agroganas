@@ -317,44 +317,57 @@ function getOneProduct(idToSearch) {
         datosGet = doc.data();
         console.log(datosGet);
         $("#detail-card").attr("hidden", false);
-        $("#video-section").attr("hidden", datosGet.Videos.length === 0);
+        $("#video-section").attr("hidden", datosGet.Videos?.length === 0);
 
         document.getElementById("details-first-image").src = datosGet.Imagen[0];
         document
           .getElementById("btnDetailsPhotos")
           .setAttribute("onclick", 'modalMedia("' + productIdDetails + '")');
         $("#btnDetailsPhotos").html(
-          datosGet.Videos.length > 0
+          datosGet.Videos?.length > 0
             ? "Ver Imagenes y Videos"
             : "Ver más Imagenes"
         );
 
         var currentVideo = 0;
 
-        if (datosGet.Videos.length) {
-          document.getElementById("videoPlayer").src =
-            datosGet.Videos[currentVideo];
-          $("#controls").attr("hidden", datosGet.Videos.length === 1);
-        }
+        $("#controls").attr(
+          "hidden",
+          datosGet.Videos?.length === 1 || datosGet.Videos === undefined
+        );
 
-        prevVideo.addEventListener("click", () => {
-          console.log(currentVideo);
-          if (datosGet.Videos.length > 1) {
-            if (currentVideo > 0) {
-              currentVideo--;
-              $("#videoPlayer").attr("src", datosGet.Videos[currentVideo]);
+        if (datosGet.Videos != undefined) {
+          document.getElementById("videoPlayer").src =
+            "https://youtube.com/embed/" + getId(datosGet.Videos[currentVideo]);
+          prevVideo.addEventListener("click", () => {
+            console.log(currentVideo);
+            if (datosGet.Videos?.length > 1) {
+              if (currentVideo > 0) {
+                currentVideo--;
+                $("#videoPlayer").attr(
+                  "src",
+                  "https://youtube.com/embed/" +
+                    getId(datosGet.Videos[currentVideo])
+                );
+              }
             }
-          }
-        });
-        nextVideo.addEventListener("click", () => {
-          console.log(currentVideo);
-          if (datosGet.Videos.length > 1) {
-            if (currentVideo < datosGet.Videos.length - 1) {
-              currentVideo++;
-              $("#videoPlayer").attr("src", datosGet.Videos[currentVideo]);
+          });
+          nextVideo.addEventListener("click", () => {
+            console.log(currentVideo);
+            if (datosGet.Videos?.length > 1) {
+              if (currentVideo < datosGet.Videos.length - 1) {
+                currentVideo++;
+                $("#videoPlayer").attr(
+                  "src",
+                  "https://youtube.com/embed/" +
+                    getId(datosGet.Videos[currentVideo])
+                );
+              }
             }
-          }
-        });
+          });
+        } else {
+          $("#video-section").attr("hidden", true);
+        }
 
         document.getElementById("section-title").innerHTML =
           "Agroganas · " + datosGet.Categoria;
@@ -400,4 +413,11 @@ function filtrarArray() {
   });
 
   loadProducts(newArray);
+}
+
+function getId(url) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+
+  return match && match[2].length === 11 ? match[2] : null;
 }
