@@ -335,8 +335,7 @@ function getOneProduct(idToSearch) {
           "hidden",
           datosGet.Videos?.length === 1 || datosGet.Videos === undefined
         );
-
-        if (datosGet.Videos != undefined) {
+        if (datosGet.Videos?.length > 0) {
           document.getElementById("videoPlayer").src =
             "https://youtube.com/embed/" + getId(datosGet.Videos[currentVideo]);
           prevVideo.addEventListener("click", () => {
