@@ -171,15 +171,15 @@
           <!-- /.carousel-item -->
           <div class="carousel-item ">
 
-            <img src="slides/agronomias-banner.jpeg" alt="slide-2" class="d-block img-fluid"
-              data-toggle="modal" data-target="#modalGeneric" data-info="Agronomias">
+            <img src="slides/agronomias-banner.jpeg" alt="slide-2" class="d-block img-fluid" data-toggle="modal"
+              data-target="#modalGeneric" data-info="Agronomias">
 
           </div>
           <!-- /.carousel-item -->
           <div class="carousel-item ">
 
-            <img src="slides/nuevoSorteo.jpeg" alt="slide-3" class="d-block img-fluid"
-              data-toggle="modal" data-target="#modalGeneric" data-info="Sorteo">
+            <img src="slides/nuevoSorteo.jpeg" alt="slide-3" class="d-block img-fluid" data-toggle="modal"
+              data-target="#modalGeneric" data-info="Sorteo">
 
           </div>
           <!-- /.carousel-item -->
@@ -349,45 +349,96 @@
         </div><!-- /.row -->
       </center>
 
-      <hr>
-      <div class="container" id="container-publicaciones">
-
-      </div>
-
-      <hr>
-      <div class="row">
-        <div class="col-lg">
-          <div class="card shadow p-3 mb-5 bg-info rounded">
-            <div class="card-body" align="center">
-              <h4 class="card-title">Publica tu Aviso GRATIS AHORA!</h4>
-              <p class="card-text">Completa el formulario de los datos de tu aviso.</p>
-              <a href="https://form.jotform.com/211314647300645" class="btn btn-dark">Click Aquí</a>
+      <hr />
+      <center>
+        <div class="col-md-10" style="text-align: left;">
+          <div class="row p-2 border rounded">
+            <div class="col-md-3 mt-1">
+              <img class="img-fluid img-responsive rounded product-image" src="assets/advertise.jpeg">
             </div>
-            <div class="card-footer">
-              <p class="text-center font-weight-bold" style="color: rgba(7, 2, 46, 0.712); font-size: x-large;">SIN
-                COSTOS NI COMISIONES
-              </p>
-              <p class="text-center font-weight-bold">Aproveche este espacio publicitario gratis. Arme su aviso en un
-                minuto.</p>
-              <p class="text-center font-weight-bold" style="font-size: x-large; font-style: italic;">Con Agroganás,
-                siempre ganás.</p>
+            <div class="col-md-6 mt-1">
+              <h5>Participá del Sorteo de Agroganás!</h5>
+              <p class="text-justify para mb-0">En Agroganás estamos sorteando <br />
+                "Coadyuvantes para 65
+                HAS"<br><br></p>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalGeneric"
+                data-info="Sorteo">
+                Ver Condiciones
+              </button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-      <div class="row">
-        <div class="col-lg">
-          <div class="card shadow p-3 mb-5 bg-success rounded">
-            <div class="card-body" align="center">
-              <h4 class="card-title">¡Publicá tu Agronomía Virtual!</h4>
-              <p class="card-text">Completá el formulario de los datos de tu aviso.</p>
-              <a href="https://form.jotform.com/211314647300645" class="btn btn-dark">Completar</a>
+            <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+              <center style="height: 100%; margin-top: 25%;">
+                <h6 class="text-success">Compartí el sorteo!</h6>
+                <div class="d-flex flex-column mt-4">
+                  <button class="btn btn-success text-uppercase" type="button" id="share-btn"> <i
+                      class="fa fa-share-alt" aria-hidden="true"></i>
+                    Compartir </button>
+              </center>
             </div>
           </div>
         </div>
+    </div>
+    </center>
+
+    <script>
+      var shareButton = document.getElementById('share-btn');
+
+      var url = window.location.href;
+
+      shareButton.addEventListener('click', event => {
+        if (navigator.share) {
+          navigator.share({
+            title: 'Publicacion de Agroganas',
+            url: url
+          }).then(() => {
+            console.log('Gracias por Compartir!');
+          })
+            .catch(console.error);
+        } else {
+          shareDialog.classList.add('is-open');
+        }
+      });
+
+    </script>
+
+    <hr>
+    <div class="container" id="container-publicaciones">
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow p-3 mb-5 bg-info rounded">
+          <div class="card-body" align="center">
+            <h4 class="card-title">Publica tu Aviso GRATIS AHORA!</h4>
+            <p class="card-text">Completa el formulario de los datos de tu aviso.</p>
+            <a href="https://form.jotform.com/211314647300645" class="btn btn-dark">Click Aquí</a>
+          </div>
+          <div class="card-footer">
+            <p class="text-center font-weight-bold" style="color: rgba(7, 2, 46, 0.712); font-size: x-large;">SIN
+              COSTOS NI COMISIONES
+            </p>
+            <p class="text-center font-weight-bold">Aproveche este espacio publicitario gratis. Arme su aviso en un
+              minuto.</p>
+            <p class="text-center font-weight-bold" style="font-size: x-large; font-style: italic;">Con Agroganás,
+              siempre ganás.</p>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <hr>
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow p-3 mb-5 bg-success rounded">
+          <div class="card-body" align="center">
+            <h4 class="card-title">¡Publicá tu Agronomía Virtual!</h4>
+            <p class="card-text">Completá el formulario de los datos de tu aviso.</p>
+            <a href="https://form.jotform.com/211314647300645" class="btn btn-dark">Completar</a>
+          </div>
+        </div>
+      </div>
+    </div>
     </div><!-- /.container -->
 
     <br>
