@@ -27,12 +27,12 @@ const Home = () => {
       case 2:
         toast({
           title: 'Que bueno verte de nuevo!',
-          description: "Toca aqui para ver las ofertas.",
+          description: 'Toca aqui para ver las ofertas.',
           status: 'info',
           duration: 3000,
-          variant: "left-accent",
+          variant: 'left-accent',
           isClosable: true,
-        })
+        });
         break;
       case 3:
         toast({
@@ -40,9 +40,9 @@ const Home = () => {
           description: "Dirigete a la seccion 'Contacto' para recibir ayuda",
           status: 'warning',
           duration: 4000,
-          variant: "left-accent",
+          variant: 'left-accent',
           isClosable: true,
-        })
+        });
         break;
       default:
         break;
@@ -50,8 +50,8 @@ const Home = () => {
   }, []);
 
   return (
-    <Container py={8} minWidth={'100%'}>
-      <ChakraCarousel gap={20}>
+    <Container my={8} minWidth={'100%'}>
+      <ChakraCarousel gap={10}>
         {data.slice(5, 15).map((post, index) => (
           <Flex
             key={index}
@@ -62,7 +62,8 @@ const Home = () => {
             bg="base.d100"
             rounded={5}
             flex={1}
-            p={5}>
+            p={5}
+            my={5}>
             <VStack mb={6}>
               <Heading fontSize={{ base: 'xl', md: '2xl' }} textAlign="left" w="full" mb={2}>
                 {capsFirst(post.title)}

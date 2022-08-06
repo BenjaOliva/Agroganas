@@ -18,7 +18,8 @@ import { headingStyles } from './components/heading';
 export default extendTheme(
   {
     config: {
-      initialColorMode: 'dark',
+      initialColorMode: 'light',
+      useSystemColorMode: false,
     },
   },
   { breakpoints }, // Breakpoints

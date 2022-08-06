@@ -16,6 +16,11 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
+  Menu,
+  MenuList,
+  MenuButton,
+  MenuItem,
+  Portal,
 } from '@chakra-ui/react';
 import IconBox from '../Icons/IconBox';
 import { Separator } from '../Separator/Separator';
@@ -23,6 +28,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../../assets/logo-only.png';
+import { ChevronRightIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
 // FUNCTIONS
 
 function Sidebar(props) {
@@ -63,7 +69,7 @@ function Sidebar(props) {
       if (prop.redirect) {
         return null;
       }
-      if (prop.category) {
+      if (prop.category && prop.category !== 'section') {
         var st = {};
         st[prop['state']] = !state[prop.state];
         return (
@@ -86,7 +92,9 @@ function Sidebar(props) {
           </>
         );
       }
-      return (
+      var isActive = '/' + location.pathname.split('/')[2] === prop.path;
+
+      return prop.category !== 'section' ? (
         <NavLink to={prop.layout + prop.path}>
           {activeRoute(prop.layout + prop.path) === 'active' ? (
             <Button
@@ -186,6 +194,84 @@ function Sidebar(props) {
             </Button>
           )}
         </NavLink>
+      ) : (
+        <Menu placement="end">
+          <MenuButton
+            as={Button}
+            rightIcon={<ChevronRightIcon opacity={0.5} />}
+            boxSize="initial"
+            boxShadow={isActive ? '0px 7px 11px rgba(0, 0, 0, 0.04)' : 'none'}
+            justifyContent="flex-start"
+            alignItems="center"
+            bg={isActive ? activeBg : 'transparent'}
+            transition={'0.2s linear'}
+            mb={{
+              xl: '12px',
+            }}
+            mx={{
+              xl: 'auto',
+            }}
+            py="12px"
+            ps={{
+              sm: '10px',
+              xl: '16px',
+            }}
+            borderRadius="15px"
+            _hover="none"
+            w="100%"
+            _active={{
+              bg: 'inherit',
+              transform: 'none',
+              borderColor: 'transparent',
+            }}
+            _focus={{
+              boxShadow: isActive ? '0px 7px 11px rgba(0, 0, 0, 0.04)' : 'none',
+            }}>
+            <Flex>
+              {isActive ? (
+                typeof prop.icon === 'string' ? (
+                  <Icon>{prop.icon}</Icon>
+                ) : (
+                  <IconBox
+                    bg="green.500"
+                    color="white"
+                    h="30px"
+                    w="30px"
+                    me="12px"
+                    transition={'0.2s linear'}>
+                    {prop.icon}
+                  </IconBox>
+                )
+              ) : typeof prop.icon === 'string' ? (
+                <Icon>{prop.icon}</Icon>
+              ) : (
+                <IconBox bg={inactiveBg} color="green.300" h="30px" w="30px" me="12px">
+                  {prop.icon}
+                </IconBox>
+              )}
+              <Text color={inactiveColor} my="auto" fontSize="sm" fontWeight={'bold'}>
+                {document.documentElement.dir === 'rtl' ? prop.rtlName : prop.name}
+              </Text>
+            </Flex>
+          </MenuButton>
+          <Portal>
+            <MenuList>
+              {prop.views.map((item, key) => {
+                return (
+                  <MenuItem
+                    key={key}
+                    icon={item.icon}
+                    as={NavLink}
+                    to={item.layout + prop.path + item.path}>
+                    <Text color={activeColor} fontSize="sm">
+                      {document.documentElement.dir === 'rtl' ? item.rtlName : item.name}
+                    </Text>
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
+          </Portal>
+        </Menu>
       );
     });
   };
@@ -278,7 +364,7 @@ export function SidebarResponsive(props) {
       if (prop.redirect) {
         return null;
       }
-      if (prop.category) {
+      if (prop.category && prop.category !== 'section') {
         var st = {};
         st[prop['state']] = !state[prop.state];
         return (
@@ -301,6 +387,88 @@ export function SidebarResponsive(props) {
           </>
         );
       }
+      if (prop.category === 'section') {
+        var isActive = '/' + location.pathname.split('/')[2] === prop.path;
+        console.log(isActive);
+        return (
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronRightIcon />}
+              boxSize="initial"
+              boxShadow={isActive ? '0px 7px 11px rgba(0, 0, 0, 0.04)' : 'none'}
+              justifyContent="flex-start"
+              alignItems="center"
+              bg={isActive ? activeBg : inactiveBg}
+              transition={'0.2s linear'}
+              mb={{
+                xl: '12px',
+              }}
+              mx={{
+                xl: 'auto',
+              }}
+              py="12px"
+              ps={{
+                sm: '10px',
+                xl: '16px',
+              }}
+              borderRadius="15px"
+              _hover="none"
+              w="100%"
+              _active={{
+                bg: 'inherit',
+                transform: 'none',
+                borderColor: 'transparent',
+              }}
+              _focus={{
+                boxShadow: isActive ? '0px 7px 11px rgba(0, 0, 0, 0.04)' : 'none',
+              }}>
+              <Flex>
+                {isActive ? (
+                  typeof prop.icon === 'string' ? (
+                    <Icon>{prop.icon}</Icon>
+                  ) : (
+                    <IconBox
+                      bg="green.500"
+                      color="white"
+                      h="30px"
+                      w="30px"
+                      me="12px"
+                      transition={'0.2s linear'}>
+                      {prop.icon}
+                    </IconBox>
+                  )
+                ) : typeof prop.icon === 'string' ? (
+                  <Icon>{prop.icon}</Icon>
+                ) : (
+                  <IconBox bg={inactiveBg} color="green.300" h="30px" w="30px" me="12px">
+                    {prop.icon}
+                  </IconBox>
+                )}
+                <Text color={inactiveColor} my="auto" fontSize="sm" fontWeight={'bold'}>
+                  {document.documentElement.dir === 'rtl' ? prop.rtlName : prop.name}
+                </Text>
+              </Flex>
+            </MenuButton>
+            <MenuList>
+              {prop.views.map((item, key) => {
+                return (
+                  <MenuItem
+                    key={key}
+                    icon={item.icon}
+                    as={NavLink}
+                    to={item.layout + prop.path + item.path}>
+                    <Text color={activeColor} fontSize="sm">
+                      {document.documentElement.dir === 'rtl' ? item.rtlName : item.name}
+                    </Text>
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
+          </Menu>
+        );
+      }
+
       return (
         <NavLink to={prop.layout + prop.path} key={key}>
           {activeRoute(prop.layout + prop.path) === 'active' ? (
@@ -335,7 +503,7 @@ export function SidebarResponsive(props) {
                 {typeof prop.icon === 'string' ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <IconBox bg="teal.300" color="white" h="30px" w="30px" me="12px">
+                  <IconBox bg="green.300" color="white" h="30px" w="30px" me="12px">
                     {prop.icon}
                   </IconBox>
                 )}
@@ -376,7 +544,7 @@ export function SidebarResponsive(props) {
                 {typeof prop.icon === 'string' ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
-                  <IconBox bg={inactiveBg} color="teal.300" h="30px" w="30px" me="12px">
+                  <IconBox bg={inactiveBg} color="green.300" h="30px" w="30px" me="12px">
                     {prop.icon}
                   </IconBox>
                 )}
@@ -427,13 +595,7 @@ export function SidebarResponsive(props) {
   // Color variables
   return (
     <Flex display={{ sm: 'flex', xl: 'none' }} ref={mainPanel} alignItems="center">
-      <HamburgerIcon
-        color={hamburgerColor}
-        w="18px"
-        h="18px"
-        ref={btnRef}
-        onClick={onOpen}
-      />
+      <HamburgerIcon color={hamburgerColor} w="18px" h="18px" ref={btnRef} onClick={onOpen} />
       <Drawer
         isOpen={isOpen}
         onClose={onClose}

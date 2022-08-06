@@ -10,6 +10,8 @@ import Home from './views/Ecommerce/Home';
 import SignIn from './views/Pages/SignIn';
 import Sales from './views/Dashboard/Sales';
 
+import { AddIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 import {
   HomeIcon,
   StatsIcon,
@@ -18,6 +20,8 @@ import {
   RocketIcon,
   SupportIcon,
 } from './components/Icons/Icons';
+import { FaEye, FaInfoCircle, FaLink, FaTree } from 'react-icons/fa';
+import { BsFileEarmarkText, BsFilePost, BsImages } from 'react-icons/bs';
 
 var adminRoutes = [
   {
@@ -28,43 +32,96 @@ var adminRoutes = [
     layout: '/admin',
   },
   {
-    path: '/posts',
     name: 'Publicaciones',
-    icon: <CartIcon color="inherit" />,
-    component: Tables,
-    layout: '/admin',
-  },
-  {
-    path: '/stats',
-    name: 'Estadisticas',
-    icon: <StatsIcon color="inherit" />,
-    component: Billing,
-    layout: '/admin',
-  },
-  {
-    path: '/clients',
-    name: 'Clientes',
-    icon: <RocketIcon color="inherit" />,
-    component: Sales,
-    layout: '/admin',
-  },
-  {
-    name: 'Configuraciones',
-    category: 'account',
+    category: 'section',
     state: 'pageCollapse',
+    path: '/posts',
+    layout: '/admin',
+    icon: <BsFilePost color="inherit" />,
     views: [
       {
-        path: '/profile',
-        name: 'Perfil',
-        icon: <PersonIcon color="inherit" />,
+        path: '/all-posts',
+        name: 'Publicaciones',
+        icon: <FaEye color="inherit" />,
+        component: Tables,
+        layout: '/admin',
+      },
+      {
+        path: '/add',
+        name: 'Agregar publicación',
+        icon: <AddIcon color="inherit" />,
         secondaryNavbar: true,
         component: Profile,
         layout: '/admin',
       },
       {
-        path: '/config',
-        name: 'Personalización',
-        icon: <SupportIcon color="inherit" />,
+        path: '/edit',
+        name: 'Editar publicación',
+        icon: <EditIcon color="inherit" />,
+        secondaryNavbar: true,
+        component: Theming,
+        layout: '/admin',
+      },
+    ],
+  },
+  {
+    name: 'Clientes',
+    category: 'section',
+    state: 'pageCollapse',
+    path: '/clients',
+    layout: '/admin',
+    icon: <FaTree color="inherit" />,
+    views: [
+      {
+        path: '/view',
+        name: 'Agronomías',
+        icon: <FaEye color="inherit" />,
+        secondaryNavbar: true,
+        component: Profile,
+        layout: '/admin',
+      },
+      {
+        path: '/add',
+        name: 'Agregar Agronomía',
+        icon: <AddIcon color="inherit" />,
+        secondaryNavbar: true,
+        component: Profile,
+        layout: '/admin',
+      },
+      {
+        path: '/edit',
+        name: 'Editar Agronomía',
+        icon: <EditIcon color="inherit" />,
+        secondaryNavbar: true,
+        component: Theming,
+        layout: '/admin',
+      },
+    ],
+  },
+  {
+    path: '/web',
+    name: 'Sitio Web',
+    icon: <FaLink color="inherit" />,
+    component: Billing,
+    layout: '/admin',
+  },
+  {
+    name: 'Documentación',
+    category: 'account',
+    state: 'pageCollapse',
+    views: [
+      {
+        path: '/terms',
+        name: 'Terminos y Condiciones',
+        icon: <FaInfoCircle color="inherit" />,
+        secondaryNavbar: true,
+        component: Profile,
+        layout: '/admin',
+      },
+      {
+        path: '/guides',
+        name: 'Guias de uso',
+        icon: <BsFileEarmarkText color="inherit" />,
         secondaryNavbar: true,
         component: Theming,
         layout: '/admin',
@@ -101,6 +158,6 @@ export var authRoutes = [
     component: SignIn,
     layout: '/auth',
   },
-]
+];
 
 export default adminRoutes;

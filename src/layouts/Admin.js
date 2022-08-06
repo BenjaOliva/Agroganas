@@ -99,6 +99,17 @@ function Dashboard(props) {
       if (prop.category === 'account') {
         return getRoutes(prop.views);
       }
+      if (prop.category === 'section') {
+        return prop.views.map((item, key) => {
+          return (
+            <Route
+              path={item.layout + prop.path + item.path}
+              component={item.component}
+              key={key}
+            />
+          );
+        });
+      }
       if (prop.layout === '/admin') {
         return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       } else {
@@ -113,7 +124,7 @@ function Dashboard(props) {
     <LoadingPage />
   ) : (
     <>
-      {!!user && (
+      {user && (
         <>
           <Sidebar
             routes={routes}
