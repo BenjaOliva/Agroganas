@@ -24,23 +24,21 @@ import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
 import { dashboardTableData } from '../../variables/general';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
-import { useTable, useSortBy, useGlobalFilter, useAsyncDebounce, usePagination } from 'react-table';
+import {
+  useTable,
+  useSortBy,
+  useGlobalFilter,
+  useAsyncDebounce,
+  usePagination,
+  useFilters,
+} from 'react-table';
 import { TableActions } from '../../components/Tables/TableActions';
 import { FaTrash } from 'react-icons/fa';
 import Pagination from './../../components/Tables/Pagination';
 import DashboardTableRow from '../../components/Tables/DashboardTableRow';
 
-function Tables() {
+function Tables({ tableData }) {
   const textColor = useColorModeValue('gray.700', 'white');
-  const [search, setSearch] = useState('');
-
-  const handleSearch = useAsyncDebounce((e) => {
-    setSearch(e.target.value || undefined);
-  }, 1500);
-
-  useEffect(() => {
-    console.log('Search: ', data);
-  }, [search]);
 
   const items = React.useMemo(
     () => [
@@ -264,18 +262,23 @@ function Tables() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    prepareRow,
+    footerGroups,
     page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable(
+    {
+      columns,
+      data,
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
+
+  const { globalFilter } = state;
 
   return (
     <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
@@ -283,9 +286,9 @@ function Tables() {
         <CardHeader p="6px 0px 22px 0px" w="100%">
           <SimpleGrid columns={1} spacing={5} w="100%">
             <Text fontSize="xl" color={textColor} fontWeight="bold">
-              Lista de Productos
+              Lista de Publicaciones
             </Text>
-            <TableActions handleSearch={handleSearch} />
+            <TableActions filter={globalFilter} setFilter={setGlobalFilter} />{' '}
           </SimpleGrid>
         </CardHeader>
         <CardBody>

@@ -67,6 +67,7 @@ const getProducts = async () => {
       let item = { id: doc.id, ...doc.data() };
       docsObject.push(item);
     });
+    console.log(docsObject);
     return docsObject;
   } catch (error) {
     console.log(error);

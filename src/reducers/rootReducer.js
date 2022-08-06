@@ -2,7 +2,7 @@ import getVisitCount from './../services/cookies';
 
 const initialState = {
   visit_counter: getVisitCount(),
-  loadingProducts: true,
+  loadingProducts: false,
   products: [],
 };
 

@@ -35,10 +35,6 @@ function Sidebar(props) {
   // to check for active links and opened collapses
   let location = useLocation();
 
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
-
   // this is for the rest of the collapses
   const [state, setState] = React.useState({});
   const mainPanel = React.useRef();
@@ -389,7 +385,6 @@ export function SidebarResponsive(props) {
       }
       if (prop.category === 'section') {
         var isActive = '/' + location.pathname.split('/')[2] === prop.path;
-        console.log(isActive);
         return (
           <Menu>
             <MenuButton

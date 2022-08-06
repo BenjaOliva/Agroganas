@@ -9,15 +9,17 @@ import '@fontsource/nunito';
 
 const App = () => {
   const dispatch = useDispatch();
-
+  const isDev = true;
   useEffect(() => {
     const getData = async () => {
       const data = await getProducts();
       return data;
     };
-    getData()
-      .then((res) => dispatch({ type: 'END_LOADING', data: res }))
-      .then((res) => console.log(res));
+    if (!isDev) {
+      getData()
+        .then((res) => dispatch({ type: 'END_LOADING', data: res }))
+        .then((res) => console.log(res));
+    }
   }, []);
 
   return (

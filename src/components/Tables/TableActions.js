@@ -15,7 +15,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
 } from '@chakra-ui/react';
@@ -23,9 +22,15 @@ import * as React from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { RiAddFill, RiArrowRightUpLine } from 'react-icons/ri';
 import ProductForm from './../Form/ProductForm';
+import { useAsyncDebounce } from 'react-table';
+import { useState } from 'react';
 
-export const TableActions = (props) => {
+export const TableActions = ({ filter, setFilter, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [value, setValue] = useState(filter);
+  const onChange = useAsyncDebounce((value) => {
+    setFilter(value || undefined);
+  }, 500);
 
   return (
     <>
@@ -42,7 +47,7 @@ export const TableActions = (props) => {
               md: '300px',
             }}
             id="search">
-            <InputGroup size="md">
+            <InputGroup size="sm">
               <FormLabel srOnly>Buscar...</FormLabel>
               <InputLeftElement pointerEvents="none" color="gray.400">
                 <BsSearch />
@@ -51,23 +56,14 @@ export const TableActions = (props) => {
                 rounded="base"
                 type="search"
                 placeholder="Buscar..."
-                onChange={(e) => props.handleSearch(e)}
+                value={value || ''}
+                onChange={(e) => {
+                  setValue(e.target.value);
+                  onChange(e.target.value);
+                }}
               />
             </InputGroup>
           </FormControl>
-          <Box
-            w={{
-              base: '300px',
-            }}
-            hidden={props.isSells}>
-            <Select rounded="base" size="md" placeholder="Todas las Marcas">
-              <option>Addidas</option>
-              <option>Nike</option>
-              <option>Reebook</option>
-              <option>Topper</option>
-              <option>Otras Marcas</option>
-            </Select>
-          </Box>
         </HStack>
         <ButtonGroup size="sm" variant="outline" hidden={props.isSells}>
           <Button iconSpacing="0.5" leftIcon={<RiAddFill fontSize="1.25em" />} onClick={onOpen}>
@@ -78,7 +74,7 @@ export const TableActions = (props) => {
           </Button>
         </ButtonGroup>
       </Stack>
-      <Modal size={"6xl"} isOpen={isOpen} onClose={onClose}>
+      <Modal size={'6xl'} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Cargar nuevo Producto</ModalHeader>

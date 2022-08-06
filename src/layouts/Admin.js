@@ -59,6 +59,9 @@ function Dashboard(props) {
         if (collapseActiveRoute !== activeRoute) {
           return collapseActiveRoute;
         }
+      }
+      if ('/' + window.location.pathname.split('/')[2] === routes[i].path) {
+        return routes[i].name;
       } else if (routes[i].category) {
         let categoryActiveRoute = getActiveRoute(routes[i].views);
         if (categoryActiveRoute !== activeRoute) {
