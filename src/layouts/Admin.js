@@ -27,18 +27,14 @@ function Dashboard(props) {
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
     if (loading) return;
-    if (!user) {
-      return history.push('/auth/signin');
-    } else {
-      toast({
-        title: 'Sesion Iniciada',
-        description: 'Bienvenido al administrador de Agroganas.',
-        status: 'success',
-        duration: 2000,
-        position: 'top',
-        isClosable: true,
-      });
-    }
+    toast({
+      title: 'Sesion Iniciada',
+      description: 'Bienvenido al administrador de Agroganas.',
+      status: 'success',
+      duration: 2000,
+      position: 'top',
+      isClosable: true,
+    });
   }, [user, loading]);
 
   const { ...rest } = props;

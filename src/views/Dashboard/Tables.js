@@ -17,6 +17,8 @@ import {
   ButtonGroup,
   Button,
   TableCaption,
+  TableContainer,
+  Center,
 } from '@chakra-ui/react';
 // Custom components
 import Card from '../../components/Card/Card.js';
@@ -24,14 +26,7 @@ import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
 import { dashboardTableData } from '../../variables/general';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
-import {
-  useTable,
-  useSortBy,
-  useGlobalFilter,
-  useAsyncDebounce,
-  usePagination,
-  useFilters,
-} from 'react-table';
+import { useTable, useSortBy, useGlobalFilter, usePagination, useFilters } from 'react-table';
 import { TableActions } from '../../components/Tables/TableActions';
 import { FaTrash } from 'react-icons/fa';
 import Pagination from './../../components/Tables/Pagination';
@@ -40,163 +35,42 @@ import DashboardTableRow from '../../components/Tables/DashboardTableRow';
 function Tables({ tableData }) {
   const textColor = useColorModeValue('gray.700', 'white');
 
-  const items = React.useMemo(
-    () => [
-      {
-        id: 'SKU-123456',
-        title: 'Producto 1',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-265489',
-        title: 'Producto 2',
-        brand: 'Nike',
-        stock: 73,
-        price: 967.33,
-        status: true,
-      },
-      {
-        id: 'SKU-254788',
-        title: 'Producto 3',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 4',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-254788',
-        title: 'Producto 5',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 6',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-254788',
-        title: 'Producto 7',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 8',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-254788',
-        title: 'Producto 9',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 10',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-254788',
-        title: 'Producto 11',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 12',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-254788',
-        title: 'Producto 13',
-        brand: 'Nike',
-        stock: 148,
-        price: 1256.33,
-        status: true,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 14',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 15',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 16',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 17',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 18',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-      {
-        id: 'SKU-987456',
-        title: 'Producto 19',
-        brand: 'Topper',
-        stock: 52,
-        price: 885.54,
-        status: false,
-      },
-    ],
-    []
-  );
+  var items = [
+    {
+      id: 'az23dgf2021dgf',
+      Nombre: 'Herbcida Cletodim 24%',
+      Descripcion:
+        'Actúa en post-emergencia para el control de gramíneas anuales y perennes. Una vez aplicado, se absorbe rápidamente por el follaje, translocándose por floema y xilema.',
+      Agronomia: 'Agronomía Test',
+      Categoria: 'Categoria Test',
+      Principal: false,
+      Destacado: true,
+      Oferta: true,
+      Imagen: 'https://via.placeholder.com/150',
+      Propiedades: '',
+      PrpiedadesTexto: 'Testing props',
+      Publicante: 'Publicante Test',
+      Provincia: 'Provincia Test',
+      Localidad: 'Localidad Test',
+    },
+    {
+      id: 'az23dgf2021dgf',
+      Nombre: 'Herbcida Cletodim 24%',
+      Descripcion:
+        'Actúa en post-emergencia para el control de gramíneas anuales y perennes. Una vez aplicado, se absorbe rápidamente por el follaje, translocándose por floema y xilema.',
+      Agronomia: 'Agronomía Test',
+      Categoria: 'Categoria Test',
+      Principal: false,
+      Destacado: true,
+      Oferta: true,
+      Imagen: 'https://via.placeholder.com/150',
+      Propiedades: '',
+      PrpiedadesTexto: 'Testing props',
+      Publicante: 'Publicante Test',
+      Provincia: 'Provincia Test',
+      Localidad: 'Localidad Test',
+    },
+  ];
 
   const [data, setData] = useState(items);
 
@@ -205,37 +79,75 @@ function Tables({ tableData }) {
       {
         Header: 'SKU (ID)',
         accessor: 'id',
+        Cell: ({ cell: { value } }) => (
+          <Text maxW={'100%'} isTruncated>
+            {value}
+          </Text>
+        ),
       },
       {
         Header: 'Titulo',
-        accessor: 'title',
+        accessor: 'Nombre',
       },
       {
-        Header: 'Marca',
-        accessor: 'brand',
+        Header: 'Categoria',
+        accessor: 'Categoria',
       },
       {
-        Header: 'Stock',
-        accessor: 'stock',
-        isNumeric: true,
+        Header: 'Agronomia',
+        accessor: 'Agronomia',
       },
       {
-        Header: 'Precio',
-        accessor: 'price',
-        isNumeric: true,
+        Header: 'En Principal',
+        centerTitle: true,
+        accessor: 'Principal',
+        Cell: ({
+          row: {
+            original: { Principal },
+          },
+        }) => (
+          <Center>
+            <Badge colorScheme={Principal ? 'green' : 'red'} borderRadius="5px">
+              {Principal ? 'Visible' : 'No Visible'}
+            </Badge>
+          </Center>
+        ),
+      },
+      {
+        Header: 'Destacado',
+        centerTitle: true,
+        accessor: 'Destacado',
+        Cell: ({
+          row: {
+            original: { Destacado },
+          },
+        }) => (
+          <Center>
+            <Badge colorScheme={Destacado ? 'green' : 'red'} borderRadius="5px">
+              {Destacado ? 'Destacado' : 'No Destacado'}
+            </Badge>
+          </Center>
+        ),
       },
       {
         Header: 'Estado',
+        centerTitle: true,
         accessor: 'status',
         Cell: ({
           row: {
             original: { status },
           },
-        }) => (
-          <Badge colorScheme={status ? 'green' : 'red'} borderRadius="5px">
-            {status ? 'Activo' : 'Oculto'}
-          </Badge>
-        ),
+        }) => {
+          console.log(status);
+
+          return (
+            <Center>
+              <Badge colorScheme={status ? 'green' : 'red'} borderRadius="5px">
+                {status ? 'Activo' : 'Oculto'}
+              </Badge>
+            </Center>
+          );
+        },
       },
       {
         Header: 'Acción',
@@ -282,7 +194,7 @@ function Tables({ tableData }) {
 
   return (
     <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
-      <Card overflowX={{ sm: 'scroll', xl: 'hidden' }}>
+      <Card>
         <CardHeader p="6px 0px 22px 0px" w="100%">
           <SimpleGrid columns={1} spacing={5} w="100%">
             <Text fontSize="xl" color={textColor} fontWeight="bold">
@@ -291,48 +203,55 @@ function Tables({ tableData }) {
             <TableActions filter={globalFilter} setFilter={setGlobalFilter} />{' '}
           </SimpleGrid>
         </CardHeader>
-        <CardBody>
-          <Table {...getTableProps()}>
-            <TableCaption>
-              <Pagination />
-            </TableCaption>
-            <Thead>
-              {headerGroups.map((headerGroup) => (
-                <Tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <Th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                      isNumeric={column.isNumeric}>
-                      {column.render('Header')}
-                      <chakra.span pl="4">
-                        {column.isSorted ? (
-                          column.isSortedDesc ? (
-                            <TriangleDownIcon aria-label="sorted descending" />
-                          ) : (
-                            <TriangleUpIcon aria-label="sorted ascending" />
-                          )
-                        ) : null}
-                      </chakra.span>
-                    </Th>
-                  ))}
-                </Tr>
-              ))}
-            </Thead>
-            <Tbody {...getTableBodyProps()}>
-              {page.map((row) => {
-                prepareRow(row);
-                return (
-                  <Tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => (
-                      <Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
-                        {cell.render('Cell')}
-                      </Td>
-                    ))}
+        <CardBody w="100%">
+          <TableContainer>
+            <Table {...getTableProps()} variant="simple">
+              <TableCaption>
+                <Pagination />
+              </TableCaption>
+              <Thead>
+                {headerGroups.map((headerGroup) => (
+                  <Tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => {
+                      console.log('centerTitle: ', column.centerTitle ? 'center' : 'left');
+
+                      return (
+                        <Th
+                          {...column.getHeaderProps(column.getSortByToggleProps())}
+                          isNumeric={column.isNumeric}
+                          textAlign={column.centerTitle ? 'center' : 'left'}>
+                          {column.render('Header')}
+                          <chakra.span pl="4">
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <TriangleDownIcon aria-label="sorted descending" />
+                              ) : (
+                                <TriangleUpIcon aria-label="sorted ascending" />
+                              )
+                            ) : null}
+                          </chakra.span>
+                        </Th>
+                      );
+                    })}
                   </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
+                ))}
+              </Thead>
+              <Tbody {...getTableBodyProps()} bgColor={useColorModeValue('white', 'gray.800')}>
+                {page.map((row) => {
+                  prepareRow(row);
+                  return (
+                    <Tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => (
+                        <Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
+                          {cell.render('Cell')}
+                        </Td>
+                      ))}
+                    </Tr>
+                  );
+                })}
+              </Tbody>
+            </Table>
+          </TableContainer>
         </CardBody>
       </Card>
       <Card my="22px" overflowX={{ sm: 'scroll', xl: 'hidden' }}>

@@ -6,13 +6,16 @@ import Ecommerce from './layouts/Ecommerce';
 import { useDispatch } from 'react-redux';
 import { getProducts } from './services/firebase';
 import '@fontsource/nunito';
+import { AuthProvider } from './contexts/AuthContext.js';
+import PrivateRoute from './components/PrivateRoute.js';
 
 const App = () => {
   const dispatch = useDispatch();
-  const isDev = true;
+  const isDev = false;
   useEffect(() => {
     const getData = async () => {
       const data = await getProducts();
+      console.log('test');
       return data;
     };
     if (!isDev) {
@@ -24,12 +27,14 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path={`/auth`} component={AuthLayout} />
-        <Route path={`/admin`} component={AdminLayout} />
-        <Route path={`/`} component={Ecommerce} />
-        <Redirect from="*" to={'/'} />
-      </Switch>
+      <AuthProvider>
+        <Switch>
+          <Route path={`/auth`} component={AuthLayout} />
+          <PrivateRoute path={`/admin`} component={AdminLayout} />
+          <Route path={`/`} component={Ecommerce} />
+          <Redirect from="*" to={'/'} />
+        </Switch>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

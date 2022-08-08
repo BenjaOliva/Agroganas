@@ -30,8 +30,11 @@ import ImageArchitect3 from '../../assets/img/ImageArchitect3.png';
 import ProfileBgImage from '../../assets/img/ProfileBackground.png';
 import { FaCube, FaFacebook, FaInstagram, FaPenFancy, FaPlus, FaTwitter } from 'react-icons/fa';
 import { IoDocumentsSharp } from 'react-icons/io5';
+import { useAuth } from '../../contexts/AuthContext';
 
 function Profile() {
+  const { currentUser } = useAuth();
+
   // Chakra color mode
   const textColor = useColorModeValue('gray.700', 'white');
   const bgProfile = useColorModeValue(
@@ -94,10 +97,10 @@ function Profile() {
                   color={textColor}
                   fontWeight="bold"
                   ms={{ sm: '8px', md: '0px' }}>
-                  Esthera Jackson
+                  {currentUser.name ?? 'Admin'}
                 </Text>
                 <Text fontSize={{ sm: 'sm', md: 'md' }} color={emailColor} fontWeight="semibold">
-                  esthera@simmmple.com
+                  {currentUser.email ?? ''}
                 </Text>
               </Flex>
             </Flex>

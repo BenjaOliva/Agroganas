@@ -17,43 +17,51 @@ import signInImage from '../../assets/img/signInImage.png';
 import { auth, signInWithEmailAndPassword } from '../../services/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, loading] = useAuthState(auth);
   const history = useHistory();
   const toast = useToast();
-  const [Error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+
   const logInWithEmailAndPassword = async (email, password) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setError(false);
-    } catch {
-      setError(true);
-    }
-  };
-
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
-    if (user) history.push('/admin');
-  }, [user, loading]);
-
-  useEffect(() => {
-    if (!!Error) {
+      setLoading(true);
+      await login(email, password).then(() => {
+        history.push('/admin');
+      });
+    } catch (error) {
+      console.error('error: ', error.code);
+      var message;
+      switch (error.code) {
+        case 'auth/user-not-found':
+          message = 'Usuario no encontrado';
+          break;
+        case 'auth/wrong-password':
+          message = 'Contraseña incorrecta';
+          break;
+        case 'auth/invalid-email':
+          message = 'Email incorrecto';
+          break;
+        default:
+          message = 'Error inesperado';
+          break;
+      }
       toast({
-        title: 'Usuario Invalido!',
-        description: 'Las credenciales no coinciden con un usuario Administrador',
+        title: 'Error',
+        description: message,
         status: 'error',
+        duration: 2000,
         position: 'top',
-        duration: 3000,
         isClosable: true,
       });
+    } finally {
+      setLoading(false);
     }
-  }, [Error]);
+  };
 
   const titleColor = useColorModeValue('green.600', 'green.500');
   const textColor = useColorModeValue('gray.400', 'white');
@@ -112,6 +120,7 @@ function SignIn() {
                 size="lg"
               />
               <Button
+                isLoading={loading}
                 type="submit"
                 bg="green.600"
                 w="100%"
