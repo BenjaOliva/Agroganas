@@ -10,9 +10,20 @@ import {
   chakra,
   Image,
   Skeleton,
+  Tag,
+  Button,
+  useToast,
 } from '@chakra-ui/react';
 import React from 'react';
-import { FaExclamation, FaHeart, FaPhone } from 'react-icons/fa';
+import {
+  FaClipboardCheck,
+  FaExclamation,
+  FaHeart,
+  FaMapMarkerAlt,
+  FaMarker,
+  FaPhone,
+  FaShareAlt,
+} from 'react-icons/fa';
 import { PostDTO } from '../../utils/interfaces';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -33,6 +44,8 @@ interface PostViewProps {
 
 const PostView: React.FC<PostViewProps> = ({ styles, postData }) => {
   console.log('Data: ', postData);
+  const toast = useToast();
+
   const [imageLoaded, setImageLoaded] = React.useState(false);
   return (
     <Stack
@@ -68,96 +81,111 @@ const PostView: React.FC<PostViewProps> = ({ styles, postData }) => {
             modules={[EffectCards]}
             effect="cards"
             onImagesReady={() => setImageLoaded(true)}>
-            <SwiperSlide>
-              <Image
-                rounded="md"
-                w={{ base: '100%', md: '30rem' }}
-                h="auto"
-                objectFit="cover"
-                src={postData.Imagen}
-                alt="product image"
-                onLoad={() =>
-                  setTimeout(() => {
-                    setImageLoaded(true);
-                  }, 2000)
-                }
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                rounded="md"
-                w={{ base: '100%', md: '30rem' }}
-                h="auto"
-                objectFit="cover"
-                src={postData.Imagen}
-                alt="product image"
-                onLoad={() =>
-                  setTimeout(() => {
-                    setImageLoaded(true);
-                  }, 2000)
-                }
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                rounded="md"
-                w={{ base: '100%', md: '30rem' }}
-                h="auto"
-                objectFit="cover"
-                src={postData.Imagen}
-                alt="product image"
-                onLoad={() =>
-                  setTimeout(() => {
-                    setImageLoaded(true);
-                  }, 2000)
-                }
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                rounded="md"
-                w={{ base: '100%', md: '30rem' }}
-                h="auto"
-                objectFit="cover"
-                src={postData.Imagen}
-                alt="product image"
-                onLoad={() =>
-                  setTimeout(() => {
-                    setImageLoaded(true);
-                  }, 2000)
-                }
-              />
-            </SwiperSlide>
+            {postData?.Imagen.map((image, index) => (
+              <SwiperSlide key={'image-' + index}>
+                <Image
+                  rounded="md"
+                  w={{ base: '100%', md: '30rem' }}
+                  h="auto"
+                  objectFit="cover"
+                  src={image}
+                  alt="product image"
+                  _hover={{ cursor: 'grab' }}
+                  onLoad={() =>
+                    setTimeout(() => {
+                      setImageLoaded(true);
+                    }, 2000)
+                  }
+                />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </Skeleton>
       </Flex>
-      <Stack direction="column" spacing={2} w="100%" mt={{ base: '5px !important', sm: 0 }}>
+      <Stack direction="column" spacing={2} mt={{ base: '5px !important', sm: 0 }}>
         <Flex justify="space-between" flexDirection={'column'}>
-          <chakra.h3 fontSize={{ base: 'lg', md: 'xl' }} fontWeight="bold" noOfLines={2}>
+          <chakra.h3 fontSize={{ base: 'lg', md: '2xl' }} fontWeight="bold" noOfLines={2}>
             {postData.Nombre}
           </chakra.h3>
-          <chakra.h4 fontSize={{ base: 'sm', md: 'md' }} fontWeight="bold" noOfLines={1}>
-            {postData.Agronomia}
+          <chakra.h4 fontSize={{ base: 'md', md: 'lg' }} fontWeight="medium" noOfLines={1}>
+            {postData.Publicante ?? postData.Agronomia}
           </chakra.h4>
         </Flex>
-        <Flex alignItems="center" color="gray.500">
-          <Icon as={FaPhone} />
+        <Tag size={'md'} colorScheme="green" w="fit-content">
+          {postData.Categoria}
+        </Tag>
+        <Flex alignItems="center" color="gray.400">
+          <Text fontSize={{ md: 'md', sm: 'sm' }} fontWeight="500">
+            {postData.Descripcion}
+          </Text>
         </Flex>
         <Stack
-          direction={{ base: 'column-reverse', sm: 'row' }}
+          direction={{ md: 'row', sm: 'column' }}
           justify="space-between"
-          alignItems={{ base: 'flex-start', sm: 'center' }}>
-          <Text fontSize="sm" mt={{ base: 1, sm: 0 }}>
-            Updated
-          </Text>
-          <Stack direction="row" spacing={1} mb="0 !important">
-            <IconButton aria-label="test">
-              <Icon as={FaHeart} w={4} h={4} />
-            </IconButton>
-            <IconButton aria-label="test2" bg="green.500" color="white">
-              <Icon as={FaPhone} w={4} h={4} />
-              <Text fontSize="sm">Show Phone no.</Text>
-            </IconButton>
+          alignItems={{ sm: 'flex-start', md: 'center' }}
+          spacing={{ sm: '10%' }}>
+          <Stack direction={'row'} spacing={2} alignItems={'center'}>
+            <Icon as={FaMapMarkerAlt} h={4} w={4} />
+            <Text fontSize="sm" mt={{ base: 1, sm: 0 }} noOfLines={1}>
+              {postData.Localidad} - {postData.Provincia}
+            </Text>
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={1}
+            mb="0 !important"
+            alignItems="center"
+            justifyContent={{ md: 'normal', sm: 'space-between' }}
+            width={{ md: 'auto', sm: 'full' }}>
+            <Button
+              leftIcon={<FaShareAlt />}
+              variant="outline"
+              size="md"
+              mr={2}
+              onClick={() => {
+                navigator.share &&
+                  navigator
+                    .share({
+                      title: 'Publicación de Agroganás - ' + postData.Nombre,
+                      url: 'https://agroganas.com/post/' + postData.id,
+                    })
+                    .then(() => {
+                      toast({
+                        title: 'Compartido',
+                        description: 'La publicación ha sido compartida con éxito',
+                        status: 'success',
+                        duration: 4000,
+                        isClosable: true,
+                      });
+                    })
+                    .catch((err) => {
+                      toast({
+                        title: 'Error',
+                        description: 'No se ha podido compartir la publicación',
+                        status: 'error',
+                        duration: 9000,
+                        isClosable: true,
+                      });
+                    });
+              }}>
+              Compartir
+            </Button>
+            <Button
+              as="a"
+              leftIcon={<FaClipboardCheck />}
+              variant="solid"
+              size="md"
+              mr={2}
+              colorScheme="green"
+              href={
+                'https://form.jotform.com/210891397728670?productoA=' +
+                postData.Nombre +
+                '&anunciante=' +
+                (postData.Publicante ?? postData.Agronomia)
+              }
+              target="_blank">
+              Consultar
+            </Button>
           </Stack>
         </Stack>
       </Stack>

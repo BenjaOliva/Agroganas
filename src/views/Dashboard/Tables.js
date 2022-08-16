@@ -69,7 +69,34 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
+      Propiedades: '',
+      PrpiedadesTexto: 'Testing props',
+      Publicante: null,
+      Provincia: 'Provincia Test',
+      Localidad: 'Localidad Test',
+    },
+    {
+      id: 'az23dgf2021dgf',
+      Nombre: 'Herbcida Cletodim 24%',
+      Descripcion:
+        'Actúa en post-emergencia para el control de gramíneas anuales y perennes. Una vez aplicado, se absorbe rápidamente por el follaje, translocándose por floema y xilema.',
+      Agronomia: 'Agronomía Test',
+      Categoria: 'Categoria Test',
+      Principal: false,
+      Destacado: true,
+      Oferta: true,
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -86,7 +113,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -103,7 +135,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -120,7 +157,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -137,7 +179,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -154,7 +201,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -171,7 +223,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -188,7 +245,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -205,7 +267,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -222,24 +289,12 @@ function Tables({ tableData }) {
       Principal: false,
       Destacado: true,
       Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
-      Propiedades: '',
-      PrpiedadesTexto: 'Testing props',
-      Publicante: 'Publicante Test',
-      Provincia: 'Provincia Test',
-      Localidad: 'Localidad Test',
-    },
-    {
-      id: 'az23dgf2021dgf',
-      Nombre: 'Herbcida Cletodim 24%',
-      Descripcion:
-        'Actúa en post-emergencia para el control de gramíneas anuales y perennes. Una vez aplicado, se absorbe rápidamente por el follaje, translocándose por floema y xilema.',
-      Agronomia: 'Agronomía Test',
-      Categoria: 'Categoria Test',
-      Principal: false,
-      Destacado: true,
-      Oferta: true,
-      Imagen: 'https://via.placeholder.com/150',
+      Imagen: [
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+        'https://via.placeholder.com/150',
+      ],
       Propiedades: '',
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
@@ -576,7 +631,13 @@ function Tables({ tableData }) {
           </Table>
         </Flex>
       </Card>
-      <Modal isOpen={isOpen} onClose={onClose} size="6xl">
+      <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          setLookUpData(null);
+          onClose();
+        }}
+        size="6xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Detalle de Publicación</ModalHeader>
