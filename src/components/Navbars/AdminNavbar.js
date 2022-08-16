@@ -100,7 +100,7 @@ export default function AdminNavbar(props) {
           <Breadcrumb>
             <BreadcrumbItem color={mainText}>
               <BreadcrumbLink href="#" color={secondaryText}>
-                Seccion
+                Sección
               </BreadcrumbLink>
             </BreadcrumbItem>
 

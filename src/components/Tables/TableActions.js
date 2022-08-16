@@ -67,7 +67,7 @@ export const TableActions = ({ filter, setFilter, ...props }) => {
         </HStack>
         <ButtonGroup size="sm" variant="outline" hidden={props.isSells}>
           <Button iconSpacing="0.5" leftIcon={<RiAddFill fontSize="1.25em" />} onClick={onOpen}>
-            Nuevo Producto
+            Nueva Publicación
           </Button>
           <Button iconSpacing="0.5" leftIcon={<RiArrowRightUpLine fontSize="1.25em" />}>
             Exportar Excel

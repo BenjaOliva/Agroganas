@@ -37,7 +37,7 @@ const Home = () => {
       case 3:
         toast({
           title: 'Estamos atentos a tus necesidades',
-          description: "Dirigete a la seccion 'Contacto' para recibir ayuda",
+          description: "Dirigete a la sección 'Contacto' para recibir ayuda",
           status: 'warning',
           duration: 4000,
           variant: 'left-accent',

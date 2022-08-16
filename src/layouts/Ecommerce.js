@@ -4,7 +4,7 @@ import { Box, chakra, ChakraProvider } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ecommerceRoutes as routes } from '../routes.js';
-import Navbar from './../components/common/Navbar';
+import Navbar from '../components/common/Navbar.js';
 import { Footer } from './../components/common/footer/Footer';
 import theme from '../theme/theme.js';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ import ReactGA from 'react-ga';
 
 export default function EcommerceLayout() {
   const loading = useSelector((state) => state.loadingProducts);
-  ReactGA.initialize('UA-218125664-1');
+  //ReactGA.initialize('UA-218125664-1');
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {

@@ -34,7 +34,7 @@ function SignIn() {
         history.push('/admin');
       });
     } catch (error) {
-      console.error('error: ', error.code);
+      console.error('error: ', error);
       var message;
       switch (error.code) {
         case 'auth/user-not-found':
@@ -118,6 +118,11 @@ function SignIn() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Contraseña..."
                 size="lg"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    logInWithEmailAndPassword(email, password);
+                  }
+                }}
               />
               <Button
                 isLoading={loading}

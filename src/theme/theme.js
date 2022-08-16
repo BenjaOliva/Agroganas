@@ -18,7 +18,7 @@ import { headingStyles } from './components/heading';
 export default extendTheme(
   {
     config: {
-      initialColorMode: 'light',
+      initialColorMode: 'dark',
       useSystemColorMode: false,
     },
   },

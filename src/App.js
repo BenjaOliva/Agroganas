@@ -11,7 +11,7 @@ import PrivateRoute from './components/PrivateRoute.js';
 
 const App = () => {
   const dispatch = useDispatch();
-  const isDev = false;
+  const isDev = true;
   useEffect(() => {
     const getData = async () => {
       const data = await getProducts();
