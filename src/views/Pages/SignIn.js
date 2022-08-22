@@ -105,6 +105,11 @@ function SignIn() {
                 type="text"
                 placeholder="Email..."
                 size="lg"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    logInWithEmailAndPassword(email, password);
+                  }
+                }}
               />
               <FormLabel ms="4px" fontSize="sm" fontWeight="normal">
                 Contraseña

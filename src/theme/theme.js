@@ -13,7 +13,6 @@ import { MainPanelComponent } from './additions/layout/MainPanel';
 import { PanelContentComponent } from './additions/layout/PanelContent';
 import { PanelContainerComponent } from './additions/layout/PanelContainer';
 import { headingStyles } from './components/heading';
-
 // import { mode } from "@chakra-ui/theme-tools";
 export default extendTheme(
   {

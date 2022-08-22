@@ -69,17 +69,20 @@ export const TableActions = ({ filter, setFilter, ...props }) => {
           <Button iconSpacing="0.5" leftIcon={<RiAddFill fontSize="1.25em" />} onClick={onOpen}>
             Nueva Publicación
           </Button>
-          <Button iconSpacing="0.5" leftIcon={<RiArrowRightUpLine fontSize="1.25em" />}>
+          <Button
+            iconSpacing="0.5"
+            leftIcon={<RiArrowRightUpLine fontSize="1.25em" />}
+            onClick={() => alert('Esta opción aún no esta disponible!')}>
             Exportar Excel
           </Button>
         </ButtonGroup>
       </Stack>
-      <Modal size={'6xl'} isOpen={isOpen} onClose={onClose}>
+      <Modal size={'6xl'} isOpen={isOpen} onClose={onClose} scrollBehavior="inside" isCentered>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Cargar nuevo Producto</ModalHeader>
+        <ModalContent p={0}>
+          <ModalHeader>Crear Publicación</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody p={0}>
             <ProductForm onClose={onClose} />
           </ModalBody>
         </ModalContent>

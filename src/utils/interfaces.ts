@@ -8,7 +8,7 @@ export interface PostDTO {
   Destacado: boolean;
   Oferta: boolean;
   Imagen: string[];
-  Propiedades: string;
+  Propiedades: string[];
   PrpiedadesTexto: string;
   Publicante?: string;
   Provincia: string;

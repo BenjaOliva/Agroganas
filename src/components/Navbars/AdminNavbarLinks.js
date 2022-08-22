@@ -34,7 +34,7 @@ const LogOutmodal = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose} initialFocusRef={initialFocusRef}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Seguro desea cerrar sesion ?</ModalHeader>
+        <ModalHeader>Seguro desea cerrar sesión ?</ModalHeader>
         <ModalFooter>
           <Button variant="ghost" onClick={onClose}>
             Cancelar
@@ -68,8 +68,9 @@ export default function HeaderLinks(props) {
       <Flex
         pe={{ sm: '0px', md: '16px' }}
         w={{ sm: '100%', md: 'auto' }}
-        alignItems="flex-end"
-        flexDirection="column">
+        justifyContent="space-between"
+        alignItems="center"
+        flexDirection="row">
         <Box mb={{ sm: '20px', md: '0px' }}>
           <Menu ms="0px" px="0px" me={{ sm: '2px', md: '16px' }}>
             <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>

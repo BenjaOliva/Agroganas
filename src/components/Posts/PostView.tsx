@@ -13,6 +13,15 @@ import {
   Tag,
   Button,
   useToast,
+  List,
+  ListItem,
+  ListIcon,
+  SimpleGrid,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
 } from '@chakra-ui/react';
 import React from 'react';
 import {
@@ -36,6 +45,7 @@ import 'swiper/modules/effect-cards/effect-cards.scss'; // Effect Cards module
 import './styles.css';
 
 import { EffectCards } from 'swiper';
+import { IoMdCheckmarkCircle } from 'react-icons/io';
 
 interface PostViewProps {
   styles: StackProps;
@@ -102,7 +112,7 @@ const PostView: React.FC<PostViewProps> = ({ styles, postData }) => {
           </Swiper>
         </Skeleton>
       </Flex>
-      <Stack direction="column" spacing={2} mt={{ base: '5px !important', sm: 0 }}>
+      <Stack direction="column" spacing={2} mt={{ base: '5px !important', sm: 0 }} w="100%">
         <Flex justify="space-between" flexDirection={'column'}>
           <chakra.h3 fontSize={{ base: 'lg', md: '2xl' }} fontWeight="bold" noOfLines={2}>
             {postData.Nombre}
@@ -111,14 +121,54 @@ const PostView: React.FC<PostViewProps> = ({ styles, postData }) => {
             {postData.Publicante ?? postData.Agronomia}
           </chakra.h4>
         </Flex>
-        <Tag size={'md'} colorScheme="green" w="fit-content">
+        <Tag
+          size={'md'}
+          colorScheme="green"
+          w="fit-content"
+          _hover={{ cursor: 'pointer' }}
+          onClick={() => {
+            console.log('Clicked');
+          }}>
           {postData.Categoria}
         </Tag>
-        <Flex alignItems="center" color="gray.400">
-          <Text fontSize={{ md: 'md', sm: 'sm' }} fontWeight="500">
-            {postData.Descripcion}
-          </Text>
-        </Flex>
+        <Accordion defaultIndex={[0]} allowToggle w="100%">
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="left">
+                  Descripción
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <Text fontSize={{ md: 'md', sm: 'sm' }} fontWeight="500">
+                {postData.Descripcion}
+              </Text>
+            </AccordionPanel>
+          </AccordionItem>
+
+          <AccordionItem>
+            <h2>
+              <AccordionButton>
+                <Box flex="1" textAlign="left">
+                  Propiedades
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </h2>
+            <AccordionPanel pb={4}>
+              <SimpleGrid as={List} spacing={2} columns={{ sm: 2, md: 3 }}>
+                {postData?.Propiedades.map((propiedad, index) => (
+                  <ListItem key={'propiedad-' + index}>
+                    <ListIcon as={IoMdCheckmarkCircle} color="green.500" />
+                    {propiedad}
+                  </ListItem>
+                ))}
+              </SimpleGrid>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
         <Stack
           direction={{ md: 'row', sm: 'column' }}
           justify="space-between"

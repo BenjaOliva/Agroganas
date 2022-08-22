@@ -54,14 +54,30 @@ import { FaTrash } from 'react-icons/fa';
 import Pagination from './../../components/Tables/Pagination';
 import DashboardTableRow from '../../components/Tables/DashboardTableRow';
 import PostView from '../../components/Posts/PostView.tsx';
+import { useSelector } from 'react-redux';
 
 function Tables({ tableData }) {
   const textColor = useColorModeValue('gray.700', 'white');
   const headerBgColor = useColorModeValue('gray.300', 'gray.900');
+  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure();
+
+  const [deletePost, setDeletePost] = useState(null);
+
+  const itemsFetched = useSelector((state) => state.posts);
+
+  useEffect(() => {
+    if (deletePost) {
+      console.log(deletePost);
+      onDeleteOpen();
+    } else {
+      onDeleteClose();
+    }
+  }, [deletePost]);
+
   var items = [
     {
-      id: 'az23dgf2021dgf',
-      Nombre: 'Herbcida Cletodim 23%',
+      id: 'testID-1',
+      Nombre: 'Herbcida Cletodim 23%Herbcida Cletodim 23%Herbcida Cletodim 23%Herbcida Cletodim 23%Herbcida Cletodim 23%Herbcida Cletodim 23%',
       Descripcion:
         'Actúa en post-emergencia para el control de gramíneas anuales y perennes. Una vez aplicado, se absorbe rápidamente por el follaje, translocándose por floema y xilema.',
       Agronomia: 'Agronomía Test',
@@ -75,14 +91,25 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: [
+        'test',
+        'test2',
+        'test3',
+        'test4',
+        'test5',
+        'test6',
+        'test7',
+        'test8',
+        'test9',
+        'test10',
+      ],
       PrpiedadesTexto: 'Testing props',
       Publicante: null,
       Provincia: 'Provincia Test',
       Localidad: 'Localidad Test',
     },
     {
-      id: 'az23dgf2021dgf',
+      id: 'testID-2',
       Nombre: 'Herbcida Cletodim 24%',
       Descripcion:
         'Actúa en post-emergencia para el control de gramíneas anuales y perennes. Una vez aplicado, se absorbe rápidamente por el follaje, translocándose por floema y xilema.',
@@ -97,7 +124,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -119,7 +146,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -141,7 +168,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -163,7 +190,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -185,7 +212,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -207,7 +234,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -229,7 +256,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -251,7 +278,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -273,7 +300,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -295,7 +322,7 @@ function Tables({ tableData }) {
         'https://via.placeholder.com/150',
         'https://via.placeholder.com/150',
       ],
-      Propiedades: '',
+      Propiedades: ['test', 'test2', 'test3'],
       PrpiedadesTexto: 'Testing props',
       Publicante: 'Publicante Test',
       Provincia: 'Provincia Test',
@@ -306,6 +333,12 @@ function Tables({ tableData }) {
   const [lookUpData, setLookUpData] = useState(null);
 
   const [data, setData] = useState(items);
+
+  useEffect(() => {
+    if (data) {
+      console.log('table: ', data);
+    }
+  }, [data]);
 
   const columns = React.useMemo(
     () => [
@@ -321,6 +354,11 @@ function Tables({ tableData }) {
       {
         Header: 'Titulo',
         accessor: 'Nombre',
+        Cell: ({ cell: { value } }) => (
+          <Text isTruncated>
+            {value}
+          </Text>
+        ),
       },
       {
         Header: 'Categoria',
@@ -383,7 +421,11 @@ function Tables({ tableData }) {
       {
         Header: 'Acción',
         accessor: 'action',
-        Cell: () => (
+        Cell: ({
+          row: {
+            original: { Nombre, id },
+          },
+        }) => (
           <ButtonGroup size="sm" isAttached variant="outline">
             <Button colorScheme={'orange'} borderRadius="5px">
               Editar
@@ -392,6 +434,9 @@ function Tables({ tableData }) {
               borderRadius="5px"
               colorScheme={'red'}
               aria-label="Add to friends"
+              onClick={() => {
+                setDeletePost({ id, Nombre });
+              }}
               icon={<FaTrash />}
             />
           </ButtonGroup>
@@ -444,6 +489,30 @@ function Tables({ tableData }) {
 
   return (
     <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
+      <Modal isOpen={isDeleteOpen} onClose={onDeleteClose} size="2xl" isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Seguro que desea eliminar la publicación ? </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              {deletePost?.Nombre} será eliminada permanentemente. Esta acción no se puede deshacer.
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="ghost"
+              mr={3}
+              onClick={() => {
+                onDeleteClose();
+                setDeletePost(null);
+              }}>
+              Cancelar
+            </Button>
+            <Button colorScheme={'red'}>Eliminar publicación</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Card>
         <CardHeader p="6px 0px 22px 0px" w="100%">
           <SimpleGrid columns={1} spacing={5} w="100%">
@@ -455,57 +524,60 @@ function Tables({ tableData }) {
         </CardHeader>
         <CardBody w="100%" height={'70vh'}>
           <VStack w="100%">
-            <TableContainer height={'90%'} overflowY="scroll" pos={'relative'}>
-              <Table {...getTableProps()} variant="simple">
-                <Thead pos={'sticky'} top={0} bgColor={headerBgColor}>
-                  {headerGroups.map((headerGroup) => (
-                    <Tr {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => (
-                        <Th
-                          {...column.getHeaderProps(column.getSortByToggleProps())}
-                          isNumeric={column.isNumeric}
-                          textAlign={column.centerTitle ? 'center' : 'left'}>
-                          {column.render('Header')}
-                          <chakra.span pl="4">
-                            {column.isSorted ? (
-                              column.isSortedDesc ? (
-                                <TriangleDownIcon aria-label="sorted descending" />
-                              ) : (
-                                <TriangleUpIcon aria-label="sorted ascending" />
-                              )
-                            ) : null}
-                          </chakra.span>
-                        </Th>
-                      ))}
-                    </Tr>
-                  ))}
-                </Thead>
-                <Tbody {...getTableBodyProps()} bgColor={useColorModeValue('white', 'gray.800')}>
-                  {page.map((row) => {
-                    prepareRow(row);
-                    return (
-                      <Tr
-                        {...row.getRowProps()}
-                        _hover={{
-                          bg: isDark ? 'gray.700' : 'gray.200',
-                          cursor: 'pointer',
-                        }}>
-                        {row.cells.map((cell) => (
-                          <Td
-                            {...cell.getCellProps()}
-                            isNumeric={cell.column.isNumeric}
-                            onClick={() =>
-                              cell.column.id !== 'action' && setLookUpData(row.original)
-                            }>
-                            {cell.render('Cell')}
-                          </Td>
+            {data && data.length > 0 && (
+              <TableContainer height={'90%'} overflowY="scroll" pos={'relative'}>
+                <Table {...getTableProps()} variant="simple">
+                  <Thead pos={'sticky'} top={0} bgColor={headerBgColor}>
+                    {headerGroups.map((headerGroup) => (
+                      <Tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                          <Th
+                            {...column.getHeaderProps(column.getSortByToggleProps())}
+                            isNumeric={column.isNumeric}
+                            textAlign={column.centerTitle ? 'center' : 'left'}>
+                            {column.render('Header')}
+                            <chakra.span pl="4">
+                              {column.isSorted ? (
+                                column.isSortedDesc ? (
+                                  <TriangleDownIcon aria-label="sorted descending" />
+                                ) : (
+                                  <TriangleUpIcon aria-label="sorted ascending" />
+                                )
+                              ) : null}
+                            </chakra.span>
+                          </Th>
                         ))}
                       </Tr>
-                    );
-                  })}
-                </Tbody>
-              </Table>
-            </TableContainer>
+                    ))}
+                  </Thead>
+                  <Tbody {...getTableBodyProps()} bgColor={useColorModeValue('white', 'gray.800')}>
+                    {page.map((row) => {
+                      prepareRow(row);
+                      return (
+                        <Tr
+                          {...row.getRowProps()}
+                          _hover={{
+                            bg: isDark ? 'gray.700' : 'gray.200',
+                            cursor: 'pointer',
+                          }}>
+                          {row.cells.map((cell) => (
+                            <Td
+                              {...cell.getCellProps()}
+                              isNumeric={cell.column.isNumeric}
+                              maxW={{ sm: '80vw', md: '25vw'}}
+                              onClick={() =>
+                                cell.column.id !== 'action' && setLookUpData(row.original)
+                              }>
+                              {cell.render('Cell')}
+                            </Td>
+                          ))}
+                        </Tr>
+                      );
+                    })}
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            )}
             <Flex justifyContent="space-between" m={4} alignItems="center" w="100%">
               <Flex>
                 <Tooltip label="Primer página">
