@@ -6,7 +6,7 @@ import Footer from '../components/Footer/Footer.js';
 import AdminNavbar from '../components/Navbars/AdminNavbar.js';
 import Sidebar from '../components/Sidebar/Sidebar.js';
 import React, { useState, useEffect } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import routes from '../routes.js';
 // Custom Chakra theme
 import theme from '../theme/theme.js';
@@ -17,12 +17,10 @@ import PanelContainer from '../components/Layout/PanelContainer';
 import PanelContent from '../components/Layout/PanelContent';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../services/firebase';
-import { useHistory } from 'react-router-dom';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import LoadingPage from './../components/extra/Loading/LoadingScreen';
 
 function Dashboard(props) {
-  const history = useHistory();
   const toast = useToast();
   const [user, loading] = useAuthState(auth);
   useEffect(() => {
@@ -151,10 +149,7 @@ function Dashboard(props) {
             {getRoute() ? (
               <PanelContent>
                 <PanelContainer>
-                  <Switch>
-                    {getRoutes(routes)}
-                    <Redirect from="/admin" to="/admin/dashboard" />
-                  </Switch>
+                  <Outlet />
                 </PanelContainer>
               </PanelContent>
             ) : null}
@@ -167,7 +162,7 @@ function Dashboard(props) {
               isOpen={isOpen}
               onClose={onClose}
               isChecked={fixed}
-              onSwitch={(value) => {
+              onRouter={(value) => {
                 setFixed(value);
               }}
               onOpaque={() => setSidebarVariant('opaque')}

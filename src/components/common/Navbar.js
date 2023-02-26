@@ -12,31 +12,21 @@ import {
   VStack,
   IconButton,
   CloseButton,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Divider,
   Link,
   Center,
 } from '@chakra-ui/react';
 import logo from '../../assets/logo-agro.png';
 import logoDark from '../../assets/logo-only.png';
-import {
-  AiOutlineMenu,
-  AiFillHome,
-  AiFillInfoCircle,
-  AiOutlineSearch,
-  AiFillPhone,
-} from 'react-icons/ai';
-import { useHistory } from 'react-router-dom';
+import { AiOutlineMenu, AiFillHome, AiFillInfoCircle, AiFillPhone } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 import ShoppingCartButton from './shoppingCart';
 import { ColorModeSwitcher, ColorModeSwitcherMenuButton } from './../../ColorModeSwitcher';
 import { Link as ReachLink } from 'react-router-dom';
 export default function Navbar() {
   const bg = useColorModeValue('white', 'gray.800');
   const mobileNav = useDisclosure();
-  const themeLogo = useColorModeValue(true, false);
-  const navigate = useHistory();
+  const navigate = useNavigate();
 
   return (
     <React.Fragment>
@@ -80,28 +70,28 @@ export default function Navbar() {
                   w="full"
                   variant="ghost"
                   leftIcon={<AiFillHome />}
-                  onClick={() => navigate.push('/')}>
+                  onClick={() => navigate('/')}>
                   Home
                 </Button>
                 <Button
                   w="full"
                   variant="ghost"
                   leftIcon={<AiFillInfoCircle />}
-                  onClick={() => navigate.push('/about')}>
+                  onClick={() => navigate('/about')}>
                   Acerca De
                 </Button>
                 <Button
                   w="full"
                   variant="ghost"
                   leftIcon={<AiFillPhone />}
-                  onClick={() => navigate.push('/contacto')}>
+                  onClick={() => navigate('/contacto')}>
                   Contacto
                 </Button>
                 <Divider />
                 <ColorModeSwitcherMenuButton />
               </VStack>
             </Box>
-            <Box onClick={() => navigate.push('/')} cursor="pointer" textAlign={'center'}>
+            <Box onClick={() => navigate('/')} cursor="pointer" textAlign={'center'}>
               <Center>
                 <Image
                   boxSize={{ lg: '10vh', md: '7vh', base: '20%' }}

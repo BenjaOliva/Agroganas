@@ -1,13 +1,20 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
-import AuthLayout from './layouts/Auth.js';
-import AdminLayout from './layouts/Admin.js';
-import Ecommerce from './layouts/Ecommerce';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+
 import { useDispatch } from 'react-redux';
 import { getProducts } from './services/firebase';
 import '@fontsource/nunito';
 import { AuthProvider } from './contexts/AuthContext.js';
-import PrivateRoute from './components/PrivateRoute.js';
+import { routes } from './config/routes';
+
+const router = createBrowserRouter([
+  ...routes,
+  {
+    // Fallback route - No Match redirect to landing ( " / " )
+    path: '*',
+    element: <Navigate to={'/'} />,
+  },
+]);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -26,16 +33,11 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Switch>
-          <Route path={`/auth`} component={AuthLayout} />
-          <PrivateRoute path={`/admin`} component={AdminLayout} />
-          <Route path={`/`} component={Ecommerce} />
-          <Redirect from="*" to={'/'} />
-        </Switch>
-      </AuthProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <div style={{ WebkitTapHighlightColor: 'transparent' }}>
+        <RouterProvider router={router} />
+      </div>
+    </AuthProvider>
   );
 };
 

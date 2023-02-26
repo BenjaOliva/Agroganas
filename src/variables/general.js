@@ -23,10 +23,8 @@ import {
   FaBell,
   FaCreditCard,
   FaFilePdf,
-  FaHtml5,
-  FaShoppingCart,
   FaShippingFast,
-  FaCheckCircle
+  FaCheckCircle,
 } from 'react-icons/fa';
 import { SiDropbox } from 'react-icons/si';
 

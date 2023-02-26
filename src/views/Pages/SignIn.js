@@ -14,15 +14,13 @@ import {
 } from '@chakra-ui/react';
 // Assets
 import signInImage from '../../assets/img/signInImage.png';
-import { auth, signInWithEmailAndPassword } from '../../services/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+  const history = useNavigate();
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
@@ -31,7 +29,7 @@ function SignIn() {
     try {
       setLoading(true);
       await login(email, password).then(() => {
-        history.push('/admin');
+        history('/admin');
       });
     } catch (error) {
       console.error('error: ', error);

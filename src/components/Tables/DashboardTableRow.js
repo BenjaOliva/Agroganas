@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Flex,
-  Icon,
-  Progress,
-  Td,
-  Text,
-  Tr,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, Progress, Td, Text, Tr, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 
 function DashboardTableRow(props) {

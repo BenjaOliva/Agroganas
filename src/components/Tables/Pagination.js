@@ -40,6 +40,7 @@ export default function Pagination() {
   const MButton = (props) => {
     const DoubleArrow = props.left ? ArrowLeftIcon : ArrowRightIcon;
     const [hovered, setHovered] = React.useState(false);
+    const isLight = useColorModeValue(true, false);
     return (
       <chakra.a
         w={8}
@@ -54,12 +55,12 @@ export default function Pagination() {
             as={DoubleArrow}
             boxSize={3}
             cursor="pointer"
-            color={useColorModeValue('brand.800', 'brand.700')}
+            color={isLight ? 'brand.800' : 'brand.700'}
           />
         ) : (
           <Icon
             as={HiDotsHorizontal}
-            color={useColorModeValue('gray.100', 'gray.200')}
+            color={isLight ? 'gray.100' : 'gray.200'}
             boxSize={4}
             opacity={0.5}
           />

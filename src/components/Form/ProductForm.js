@@ -14,10 +14,8 @@ import {
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
   FormHelperText,
   Textarea,
-  InputLeftElement,
   Checkbox,
   Center,
   Switch,
@@ -27,14 +25,8 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
 } from '@chakra-ui/react';
 import { FilePond, registerPlugin } from 'react-filepond';
-import { CUIAutoComplete } from 'chakra-ui-autocomplete';
-import { Autocomplete, Option } from 'chakra-ui-simple-autocomplete';
 
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
@@ -45,7 +37,6 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import ChakraTagInputTag from './../TagInput/Tag';
 
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
@@ -85,18 +76,17 @@ const ProductForm = ({ onClose }) => {
     { value: 'xs', label: 'XS' },
   ];
 
-  const [colors, setColors] = React.useState([]);
-  const [size, setSize] = React.useState([]);
+  const isDark = useColorModeValue(false, true);
 
   return Loading ? null : (
-    <Box bg={useColorModeValue('gray.50', 'inherit')}>
+    <Box bg={isDark ? 'gray.50' : 'inherit'}>
       <Box>
         <GridItem mt={[5, null, 0]} colSpan={{ md: 2 }}>
           <chakra.form method="POST" overflow={{ sm: 'hidden' }} onSubmit={handleSubmit(onSubmit)}>
             <Stack
               px={4}
               py={5}
-              bg={useColorModeValue('white', 'gray.700')}
+              bg={isDark ? 'white' : 'gray.700'}
               spacing={6}
               p={{ sm: 4, md: 6 }}>
               <Accordion allowToggle>
@@ -114,7 +104,7 @@ const ProductForm = ({ onClose }) => {
                       <FormLabel
                         fontSize="sm"
                         fontWeight="md"
-                        color={useColorModeValue('gray.700', 'gray.50')}>
+                        color={isDark ? 'gray.700' : 'gray.50'}>
                         Imágenes de la Publicación
                       </FormLabel>
                       <FilePond
@@ -146,7 +136,7 @@ const ProductForm = ({ onClose }) => {
                       <FormLabel
                         fontSize="sm"
                         fontWeight="md"
-                        color={useColorModeValue('gray.700', 'gray.50')}>
+                        color={isDark ? 'gray.700' : 'gray.50'}>
                         Titulo
                       </FormLabel>
                       <Input
@@ -166,7 +156,7 @@ const ProductForm = ({ onClose }) => {
                       <FormLabel
                         fontSize="sm"
                         fontWeight="md"
-                        color={useColorModeValue('gray.700', 'gray.50')}>
+                        color={isDark ? 'gray.700' : 'gray.50'}>
                         Descripción
                       </FormLabel>
                       <Textarea
@@ -193,7 +183,7 @@ const ProductForm = ({ onClose }) => {
                         <FormLabel
                           fontSize="sm"
                           fontWeight="md"
-                          color={useColorModeValue('gray.700', 'gray.50')}>
+                          color={isDark ? 'gray.700' : 'gray.50'}>
                           Categoría
                         </FormLabel>
                         <Select
@@ -213,7 +203,7 @@ const ProductForm = ({ onClose }) => {
                         <FormLabel
                           fontSize="sm"
                           fontWeight="md"
-                          color={useColorModeValue('gray.700', 'gray.50')}>
+                          color={isDark ? 'gray.700' : 'gray.50'}>
                           Agronomía
                         </FormLabel>
                         <Select

@@ -77,7 +77,7 @@ export default function HeaderLinks(props) {
               <Avatar
                 size={'sm'}
                 src={
-                  currentUser.displayName
+                  currentUser?.displayName
                     ? 'https://ui-avatars.com/api/?uppercase=true&name=' + currentUser.displayName
                     : 'https://ui-avatars.com/api/?uppercase=true&name=Administrador'
                 }

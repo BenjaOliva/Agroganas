@@ -1,15 +1,14 @@
 // Chakra imports
 import { Box, chakra, ChakraProvider } from '@chakra-ui/react';
 // Layout components
-import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import { ecommerceRoutes as routes } from '../routes.js';
 import Navbar from '../components/common/Navbar.js';
 import { Footer } from './../components/common/footer/Footer';
 import theme from '../theme/theme.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LoadingPage from './../components/extra/Loading/LoadingScreen';
-import ReactGA from 'react-ga';
 
 export default function EcommerceLayout() {
   const loading = useSelector((state) => state.loadingProducts);
@@ -35,7 +34,7 @@ export default function EcommerceLayout() {
             <Navbar />
           </Box>
           <Box>
-            <Switch>{getRoutes(routes)}</Switch>
+            <Outlet />
           </Box>
           <chakra.footer>
             <Footer />

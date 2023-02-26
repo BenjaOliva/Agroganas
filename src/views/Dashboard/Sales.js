@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // Chakra imports
 import {
   Flex,
@@ -32,21 +32,11 @@ import { Separator } from './../../components/Separator/Separator';
 
 function Sales() {
   const textColor = useColorModeValue('gray.700', 'white');
-  const iconTeal = useColorModeValue('teal.300', 'teal.300');
-  const borderColor = useColorModeValue('#dee2e6', 'gray.500');
-  const bgButton = useColorModeValue(
-    'linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)',
-    'gray.800'
-  );
   const [search, setSearch] = useState('');
 
   const handleSearch = useAsyncDebounce((e) => {
     setSearch(e.target.value || undefined);
   }, 1500);
-
-  useEffect(() => {
-    console.log('Search: ', data);
-  }, [search]);
 
   function setDateTest() {
     let date = new Date();
@@ -157,22 +147,12 @@ function Sales() {
     []
   );
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
-  } = useTable({ columns, data }, useGlobalFilter, useSortBy, usePagination);
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = useTable(
+    { columns, data },
+    useGlobalFilter,
+    useSortBy,
+    usePagination
+  );
 
   return (
     <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
@@ -180,7 +160,7 @@ function Sales() {
         <Card p="16px" display="flex" align="center" justify="center">
           <CardBody>
             <Flex direction="column" align="center" w="100%" py="14px">
-              <IconBox  h={'60px'} w={'60px'} bg={'purple.400'}>
+              <IconBox h={'60px'} w={'60px'} bg={'purple.400'}>
                 <Icon h={'24px'} w={'24px'} color="white" as={FaFileInvoiceDollar} />
               </IconBox>
               <Flex
@@ -207,7 +187,7 @@ function Sales() {
         <Card p="16px" display="flex" align="center" justify="center">
           <CardBody>
             <Flex direction="column" align="center" w="100%" py="14px">
-              <IconBox  h={'60px'} w={'60px'} bg={'green.700'}>
+              <IconBox h={'60px'} w={'60px'} bg={'green.700'}>
                 <Icon h={'24px'} w={'24px'} color="white" as={FaDollarSign} />
               </IconBox>
               <Flex
@@ -234,7 +214,7 @@ function Sales() {
         <Card p="16px" display="flex" align="center" justify="center">
           <CardBody>
             <Flex direction="column" align="center" w="100%" py="14px">
-              <IconBox  h={'60px'} w={'60px'} bg={'blue.800'}>
+              <IconBox h={'60px'} w={'60px'} bg={'blue.800'}>
                 <Icon h={'24px'} w={'24px'} color="white" as={FaCashRegister} />
               </IconBox>
               <Flex

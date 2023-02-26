@@ -8,18 +8,14 @@ import {
   DrawerContent,
   DrawerHeader,
   Flex,
-  Icon,
-  Link,
   Switch,
   Text,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
-import GitHubButton from 'react-github-btn';
 import { Separator } from '../Separator/Separator';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { FaTwitter, FaFacebook } from 'react-icons/fa';
 
 export default function Configurator(props) {
   const { secondary, isOpen, onClose, fixed, ...rest } = props;
@@ -31,15 +27,6 @@ export default function Configurator(props) {
   if (props.secondary) {
     fixedDisplay = 'none';
   }
-
-  let bgButton = useColorModeValue(
-    'linear-gradient(81.62deg, #313860 2.25%, #151928 79.87%)',
-    'white'
-  );
-  let colorButton = useColorModeValue('white', 'gray.700');
-  const secondaryButtonBg = useColorModeValue('white', 'transparent');
-  const secondaryButtonBorder = useColorModeValue('gray.700', 'white');
-  const secondaryButtonColor = useColorModeValue('gray.700', 'white');
   const settingsRef = React.useRef();
   return (
     <>

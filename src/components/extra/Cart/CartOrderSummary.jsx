@@ -10,7 +10,7 @@ import {
 import * as React from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { formatPrice } from './PriceTag';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const OrderSummaryItem = (props) => {
   const { label, value, children } = props;
@@ -25,7 +25,7 @@ const OrderSummaryItem = (props) => {
 };
 
 export const CartOrderSummary = (props) => {
-  const navigate = useHistory();
+  const navigate = useNavigate();
 
   return (
     <Stack spacing="3" borderWidth="1px" rounded="lg" padding="3" width="full">

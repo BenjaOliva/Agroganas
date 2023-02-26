@@ -8,20 +8,14 @@ import Contacto from './views/Ecommerce/Contacto';
 import About from './views/Ecommerce/About';
 import Home from './views/Ecommerce/Home';
 import SignIn from './views/Pages/SignIn';
-import Sales from './views/Dashboard/Sales';
 
 import { AddIcon } from '@chakra-ui/icons';
 import { EditIcon } from '@chakra-ui/icons';
 import {
   HomeIcon,
-  StatsIcon,
-  CartIcon,
-  PersonIcon,
-  RocketIcon,
-  SupportIcon,
 } from './components/Icons/Icons';
 import { FaEye, FaInfoCircle, FaLink, FaTree } from 'react-icons/fa';
-import { BsFileEarmarkText, BsFilePost, BsImages } from 'react-icons/bs';
+import { BsFileEarmarkText, BsFilePost } from 'react-icons/bs';
 
 var adminRoutes = [
   {
